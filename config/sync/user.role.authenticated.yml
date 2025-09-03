@@ -1,0 +1,65 @@
+uuid: dbf16eb0-9a55-4208-a32e-a8daaa7e8566
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - filter.format.full_html
+    - filter.format.restricted_html
+    - filter.format.webform_default
+    - node.type.advert
+    - node.type.agent
+  module:
+    - comment
+    - contact
+    - field_permissions
+    - file
+    - filter
+    - fontawesome
+    - node
+    - search
+    - shortcut
+    - system
+    - webform
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access fontawesome additional settings'
+  - 'access shortcuts'
+  - 'access site-wide contact form'
+  - 'create advert content'
+  - 'create agent content'
+  - 'delete own files'
+  - 'edit own webform submission'
+  - 'post comments'
+  - 'search content'
+  - 'skip comment approval'
+  - 'use text format basic_html'
+  - 'use text format full_html'
+  - 'use text format restricted_html'
+  - 'use text format webform_default'
+  - 'view field_advert_locality_district'
+  - 'view field_advert_locality_province'
+  - 'view field_advert_locality_sector'
+  - 'view field_advert_price_in_rwf'
+  - 'view field_advert_reference'
+  - 'view field_advert_relative_path'
+  - 'view field_advert_rented_sold'
+  - 'view field_advertiser_featured'
+  - 'view field_agent_category'
+  - 'view field_agent_relative_path'
+  - 'view field_how_to_submit_advert'
+  - 'view field_pr_reference'
+  - 'view field_pr_relative_path'
+  - 'view field_price_in_rwf'
+  - 'view own field_advert_relative_path'
+  - 'view own field_advertiser_featured'
+  - 'view own field_agent_category'
+  - 'view own field_agent_relative_path'
+  - 'view own field_pr_relative_path'

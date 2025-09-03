@@ -1,0 +1,12 @@
+_core:
+  default_config_hash: qMiZok246dDn_jV9DKuJ4DSazkrBhZ0Hy0jcrdvScEA
+langcode: en
+data_source: ipinfodb_web_service
+roles_to_geolocate:
+  anonymous: anonymous
+  authenticated: authenticated
+  administrator: '0'
+  site_manager: '0'
+  validator: '0'
+save_user_location_creation: true
+allowed_pages: /node/add/advert

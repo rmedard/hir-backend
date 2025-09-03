@@ -1,0 +1,34 @@
+uuid: 2b8f16d4-b90e-42e4-8e4c-d1a53d102f13
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.single_advert
+  module:
+    - node
+    - views
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_views_block__single_advert_block_single_bid_advert
+theme: houseinrwanda_theme
+region: content
+weight: -14
+provider: null
+plugin: 'views_block:single_advert-block_single_bid_advert'
+settings:
+  id: 'views_block:single_advert-block_single_bid_advert'
+  label: ''
+  label_display: '0'
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: none
+  exposed: {  }
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      advert: advert

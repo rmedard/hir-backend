@@ -1,0 +1,8 @@
+uuid: 3d3d4cc3-e6d1-4044-8a9b-56dd225cef99
+langcode: en
+status: true
+dependencies: {  }
+id: adverts-secondary-menu
+label: 'Properties Tabs Menu'
+description: ''
+locked: false

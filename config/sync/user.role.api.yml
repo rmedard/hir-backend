@@ -1,0 +1,93 @@
+uuid: 9875c5eb-f305-4c86-905e-bb2c980b3e0c
+langcode: en
+status: true
+dependencies:
+  config:
+    - rest.resource.webform_rest_elements
+  module:
+    - field_permissions
+    - file
+    - rest
+    - system
+    - webform_node
+id: api
+label: api
+weight: 5
+is_admin: null
+permissions:
+  - 'access content'
+  - 'create field_advert_business_comment'
+  - 'create field_advert_is_synchronised'
+  - 'create field_advertiser_is_synchronised'
+  - 'create field_pr_is_synchronised'
+  - 'delete own files'
+  - 'edit field_advert_business_comment'
+  - 'edit field_advert_is_synchronised'
+  - 'edit field_advertiser_is_synchronised'
+  - 'edit field_pr_is_synchronised'
+  - 'edit own field_advert_business_comment'
+  - 'edit own field_advert_is_synchronised'
+  - 'edit own field_advertiser_is_synchronised'
+  - 'edit own field_pr_is_synchronised'
+  - 'restful get webform_rest_elements'
+  - 'view field_advert_bid_start_value'
+  - 'view field_advert_business_comment'
+  - 'view field_advert_creator_geolocation'
+  - 'view field_advert_creator_location'
+  - 'view field_advert_is_first_published'
+  - 'view field_advert_is_synchronised'
+  - 'view field_advert_locality_district'
+  - 'view field_advert_locality_province'
+  - 'view field_advert_locality_sector'
+  - 'view field_advert_reference'
+  - 'view field_advert_relative_path'
+  - 'view field_advert_rented_sold'
+  - 'view field_advert_signature'
+  - 'view field_advertiser_featured'
+  - 'view field_advertiser_is_synchronised'
+  - 'view field_agent_category'
+  - 'view field_bid_security_amount'
+  - 'view field_bid_starting_value'
+  - 'view field_dr_reference'
+  - 'view field_how_to_submit_advert'
+  - 'view field_mailchimp_category_id'
+  - 'view field_mailchimp_interest_id'
+  - 'view field_mailchimp_list_id'
+  - 'view field_pr_expiry_date'
+  - 'view field_pr_is_synchronised'
+  - 'view field_pr_proposed_properties'
+  - 'view field_pr_reference'
+  - 'view field_price_in_rwf'
+  - 'view field_target_pr_id'
+  - 'view own field_advert_bid_start_value'
+  - 'view own field_advert_business_comment'
+  - 'view own field_advert_creator_geolocation'
+  - 'view own field_advert_creator_location'
+  - 'view own field_advert_is_first_published'
+  - 'view own field_advert_is_synchronised'
+  - 'view own field_advert_locality_district'
+  - 'view own field_advert_locality_province'
+  - 'view own field_advert_locality_sector'
+  - 'view own field_advert_price_in_rwf'
+  - 'view own field_advert_reference'
+  - 'view own field_advert_relative_path'
+  - 'view own field_advert_rented_sold'
+  - 'view own field_advert_signature'
+  - 'view own field_advertiser_featured'
+  - 'view own field_advertiser_is_synchronised'
+  - 'view own field_agent_category'
+  - 'view own field_bid_security_amount'
+  - 'view own field_bid_starting_value'
+  - 'view own field_dr_reference'
+  - 'view own field_how_to_submit_advert'
+  - 'view own field_mailchimp_category_id'
+  - 'view own field_mailchimp_interest_id'
+  - 'view own field_mailchimp_list_id'
+  - 'view own field_pr_expiry_date'
+  - 'view own field_pr_is_synchronised'
+  - 'view own field_pr_proposed_properties'
+  - 'view own field_pr_reference'
+  - 'view own field_price_in_rwf'
+  - 'view own field_target_pr_id'
+  - 'view webform submissions any node'
+  - 'view webform submissions own node'

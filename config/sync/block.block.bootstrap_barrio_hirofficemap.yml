@@ -1,0 +1,31 @@
+uuid: 4bf71e86-90d9-4b6f-ac73-fcdf8bded5e6
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:cc076efa-4059-4720-b3cb-ef5921a6cbbf'
+  module:
+    - block_content
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_hirofficemap
+theme: bootstrap_barrio
+region: content
+weight: -12
+provider: null
+plugin: 'block_content:cc076efa-4059-4720-b3cb-ef5921a6cbbf'
+settings:
+  id: 'block_content:cc076efa-4059-4720-b3cb-ef5921a6cbbf'
+  label: 'HiR Office Map'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    context_mapping: {  }
+    pages: /contact

@@ -1,0 +1,23 @@
+uuid: 564ea98f-9a45-4265-8b0f-db34dcd87550
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_total_floors
+    - node.type.advert
+id: node.advert.field_advert_total_floors
+field_name: field_advert_total_floors
+entity_type: node
+bundle: advert
+label: 'Number of floors'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: 50
+  prefix: ''
+  suffix: ''
+field_type: integer

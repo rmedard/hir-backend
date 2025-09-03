@@ -1,0 +1,21 @@
+uuid: 43452907-1ff8-4207-a4e3-44a5062f0f60
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_neighborhood_descr
+    - node.type.property_request
+  module:
+    - text
+id: node.property_request.field_pr_neighborhood_descr
+field_name: field_pr_neighborhood_descr
+entity_type: node
+bundle: property_request
+label: 'Neighborhood description'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

@@ -1,0 +1,25 @@
+uuid: a14c05c6-ced2-4d6e-a415-4e1592bce2e0
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:banner_block:be85d63d-a7a8-4b3f-baa2-ad06061a4628'
+  module:
+    - block_content
+  theme:
+    - houseinrwanda_theme
+id: topbannerchogmshortrentals
+theme: houseinrwanda_theme
+region: top_header_form
+weight: 0
+provider: null
+plugin: 'block_content:be85d63d-a7a8-4b3f-baa2-ad06061a4628'
+settings:
+  id: 'block_content:be85d63d-a7a8-4b3f-baa2-ad06061a4628'
+  label: 'Top Banner - CHOGM - Short Rentals'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

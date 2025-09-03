@@ -1,0 +1,8 @@
+uuid: b0275c73-8360-4a97-bcf5-bd72724d6621
+langcode: en
+status: true
+dependencies: {  }
+id: posting_plan_block
+label: 'Posting Plan Block'
+revision: false
+description: ''

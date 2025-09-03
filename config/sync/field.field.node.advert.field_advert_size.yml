@@ -1,0 +1,23 @@
+uuid: fcb6f1a0-723e-42ae-ace8-3d9b0e0d9230
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_size
+    - node.type.advert
+id: node.advert.field_advert_size
+field_name: field_advert_size
+entity_type: node
+bundle: advert
+label: 'Plot size'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.0
+  max: null
+  prefix: ''
+  suffix: ' m²'
+field_type: decimal

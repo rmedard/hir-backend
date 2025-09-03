@@ -1,0 +1,25 @@
+uuid: a259b51c-0453-4fe3-8907-a02e856fbc55
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.property_requests_plan_block
+    - field.storage.block_content.field_pr_plan_weight
+id: block_content.property_requests_plan_block.field_pr_plan_weight
+field_name: field_pr_plan_weight
+entity_type: block_content
+bundle: property_requests_plan_block
+label: Weight
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

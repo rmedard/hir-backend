@@ -1,0 +1,23 @@
+uuid: f456ecea-d21d-4aef-81ac-0cd83488dc49
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_website
+    - node.type.agent
+  module:
+    - link
+id: node.agent.field_agent_website
+field_name: field_agent_website
+entity_type: node
+bundle: agent
+label: Website
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 16
+field_type: link

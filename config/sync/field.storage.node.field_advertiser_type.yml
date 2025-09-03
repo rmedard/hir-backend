@@ -1,0 +1,64 @@
+uuid: b1a942bd-8f95-4f6b-b8c4-bc780ebbc6f0
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+    - options
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: node.field_advertiser_type
+field_name: field_advertiser_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: real_estate
+      label: 'Real estate agency'
+    -
+      value: pro_dev
+      label: 'Property developer'
+    -
+      value: hotel
+      label: Hotel
+    -
+      value: commissioner
+      label: Commissioner/Freelance
+    -
+      value: valuer
+      label: Valuer
+    -
+      value: architect
+      label: Architect
+    -
+      value: auctioneer
+      label: Auctioneer
+    -
+      value: property_agent
+      label: 'Property agent'
+    -
+      value: property_manager
+      label: 'Property manager'
+    -
+      value: property_lawyers
+      label: 'Property lawyers'
+    -
+      value: property_consultants
+      label: 'Property consultants'
+    -
+      value: contractors
+      label: Contractors
+    -
+      value: other
+      label: Other
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

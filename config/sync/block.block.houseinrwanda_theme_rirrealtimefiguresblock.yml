@@ -1,0 +1,20 @@
+uuid: 66a8b35b-eab4-43cc-8642-5d9d3e19ceb5
+langcode: en
+status: true
+dependencies:
+  module:
+    - rir_interface
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_rirrealtimefiguresblock
+theme: houseinrwanda_theme
+region: footer_third
+weight: 0
+provider: null
+plugin: rir_realtime_block
+settings:
+  id: rir_realtime_block
+  label: 'RiR Realtime Figures Block'
+  label_display: '0'
+  provider: rir_interface
+visibility: {  }

@@ -1,0 +1,20 @@
+uuid: c97283b1-9ecc-46af-addb-4c837ca1a24b
+langcode: en
+status: true
+dependencies:
+  module:
+    - rir_interface
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_riraddressblock
+theme: houseinrwanda_theme
+region: footer_first
+weight: 0
+provider: null
+plugin: rir_address_block
+settings:
+  id: rir_address_block
+  label: 'RiR Address Block'
+  label_display: '0'
+  provider: rir_interface
+visibility: {  }

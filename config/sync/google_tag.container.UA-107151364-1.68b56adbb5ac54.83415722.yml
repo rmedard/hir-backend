@@ -1,0 +1,29 @@
+uuid: 4efceba6-01fb-4571-bec1-21826e840de5
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+id: UA-107151364-1.68b56adbb5ac54.83415722
+label: UA-107151364-1
+weight: 0
+tag_container_ids:
+  - UA-107151364-1
+advanced_settings: {  }
+dimensions_metrics: {  }
+conditions:
+  request_path:
+    id: request_path
+    negate: true
+    pages: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*\r\n/user/*/*"
+events:
+  custom: {  }
+  generate_lead:
+    value: ''
+    currency: ''
+  login:
+    method: CMS
+  search: {  }
+  sign_up:
+    method: CMS
+  webform_purchase: {  }

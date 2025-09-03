@@ -1,0 +1,21 @@
+uuid: 6c66a6b4-691d-4d0f-b4e4-86a2bf7ffdc4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_urgency
+    - node.type.property_request
+  module:
+    - options
+id: node.property_request.field_pr_urgency
+field_name: field_pr_urgency
+entity_type: node
+bundle: property_request
+label: Urgency
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

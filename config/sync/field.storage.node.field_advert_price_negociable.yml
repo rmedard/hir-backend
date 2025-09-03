@@ -1,0 +1,22 @@
+uuid: a101f7f3-5a9c-4977-ac48-96d8fa1d0ae1
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: node.field_advert_price_negociable
+field_name: field_advert_price_negociable
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

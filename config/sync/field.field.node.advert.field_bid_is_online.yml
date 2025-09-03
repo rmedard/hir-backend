@@ -1,0 +1,23 @@
+uuid: 42f10cf6-46bc-448d-b851-cd7a99ef1299
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_bid_is_online
+    - node.type.advert
+id: node.advert.field_bid_is_online
+field_name: field_bid_is_online
+entity_type: node
+bundle: advert
+label: 'Online bid'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

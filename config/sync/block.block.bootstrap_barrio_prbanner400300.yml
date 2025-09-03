@@ -1,0 +1,25 @@
+uuid: 215ac0b5-872b-445f-9c46-3aa4cbd759ee
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:banner_block:2c69c507-2763-4c4a-a6c5-412cc6e103d7'
+  module:
+    - block_content
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_prbanner400300
+theme: bootstrap_barrio
+region: top_header
+weight: -22
+provider: null
+plugin: 'block_content:2c69c507-2763-4c4a-a6c5-412cc6e103d7'
+settings:
+  id: 'block_content:2c69c507-2763-4c4a-a6c5-412cc6e103d7'
+  label: 'PR Banner 400 400'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

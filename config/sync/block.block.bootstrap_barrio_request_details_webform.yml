@@ -1,0 +1,31 @@
+uuid: 8855bb99-b2f9-4adc-af1f-01f7f8b6b113
+langcode: en
+status: true
+dependencies:
+  config:
+    - webform.webform.interest_form
+  module:
+    - system
+    - webform
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_request_details_webform
+theme: bootstrap_barrio
+region: top_header
+weight: -18
+provider: null
+plugin: webform_block
+settings:
+  id: webform_block
+  label: 'Request details about this property'
+  label_display: visible
+  provider: webform
+  webform_id: interest_form
+  default_data: ''
+  redirect: false
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    context_mapping: {  }
+    pages: "/property/*\r\n/advert/*"

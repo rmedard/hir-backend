@@ -1,0 +1,8 @@
+uuid: f48cb703-e2cd-4c5f-98d9-1d628510b817
+langcode: en
+status: true
+dependencies: {  }
+id: french_short_date
+label: 'French Short Date'
+locked: false
+pattern: 'd/m/Y H:i:s'

@@ -1,0 +1,30 @@
+uuid: af1cd073-77d5-4231-b152-a2d90c347e73
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:56323ff4-2afc-4d95-983c-e4f4b960b527'
+  module:
+    - block_content
+    - system
+  theme:
+    - houseinrwanda_theme
+id: claudiaenterprisepacknewsthumbnail
+theme: houseinrwanda_theme
+region: sidebar_horizontal
+weight: -15
+provider: null
+plugin: 'block_content:56323ff4-2afc-4d95-983c-e4f4b960b527'
+settings:
+  id: 'block_content:56323ff4-2afc-4d95-983c-e4f4b960b527'
+  label: 'Claudia - Enterprise Pack, News Thumbnail'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: "<front>\r\n/property/sale/house/kimironko-modern-3-bedroom-house-green-space-sale-kigali"

@@ -1,0 +1,25 @@
+uuid: 7485506a-2adf-4310-a675-26d918569900
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:b2e2405f-beff-4c49-a234-20e297c0484c'
+  module:
+    - block_content
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_kimironko_market
+theme: houseinrwanda_theme
+region: sidebar_second
+weight: -23
+provider: null
+plugin: 'block_content:b2e2405f-beff-4c49-a234-20e297c0484c'
+settings:
+  id: 'block_content:b2e2405f-beff-4c49-a234-20e297c0484c'
+  label: Kimironko_Market
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

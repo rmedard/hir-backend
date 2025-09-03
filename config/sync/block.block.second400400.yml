@@ -1,0 +1,30 @@
+uuid: 01eb3d30-f021-4baf-ae8c-3b2c71a0f34e
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:banner_block:05772f8c-d510-4dc6-ab55-12381905ebd2'
+  module:
+    - block_content
+    - system
+  theme:
+    - houseinrwanda_theme
+id: second400400
+theme: houseinrwanda_theme
+region: sidebar_horizontal
+weight: -18
+provider: null
+plugin: 'block_content:05772f8c-d510-4dc6-ab55-12381905ebd2'
+settings:
+  id: 'block_content:05772f8c-d510-4dc6-ab55-12381905ebd2'
+  label: 'Second 400 * 400 '
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: "<front>\r\n/news/*\r\n/form/*\r\n/news/home-sweet-home-modern-house-stunning-garden-and-equipment-included"

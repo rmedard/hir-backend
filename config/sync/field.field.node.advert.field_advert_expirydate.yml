@@ -1,0 +1,24 @@
+uuid: 60a88e24-f0f0-48dc-b97e-33103a2416e9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_expirydate
+    - node.type.advert
+  module:
+    - datetime
+id: node.advert.field_advert_expirydate
+field_name: field_advert_expirydate
+entity_type: node
+bundle: advert
+label: 'Expiry date'
+description: 'The publication period depends on the posting plan you have selected.'
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: relative
+    default_date: '+7 days'
+default_value_callback: ''
+settings: {  }
+field_type: datetime

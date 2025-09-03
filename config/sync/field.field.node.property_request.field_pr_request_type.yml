@@ -1,0 +1,23 @@
+uuid: 619910f4-6e4f-40cc-a1c0-48907f14d944
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_request_type
+    - node.type.property_request
+  module:
+    - options
+id: node.property_request.field_pr_request_type
+field_name: field_pr_request_type
+entity_type: node
+bundle: property_request
+label: 'Request type'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: rent
+default_value_callback: ''
+settings: {  }
+field_type: list_string

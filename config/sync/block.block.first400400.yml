@@ -1,0 +1,25 @@
+uuid: f87cd4c1-3d35-46cf-9cc3-2eabb6c85c76
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:banner_block:9882e211-d2e3-4d15-aecd-11571b703a2c'
+  module:
+    - block_content
+  theme:
+    - houseinrwanda_theme
+id: first400400
+theme: houseinrwanda_theme
+region: sidebar_horizontal
+weight: -19
+provider: null
+plugin: 'block_content:9882e211-d2e3-4d15-aecd-11571b703a2c'
+settings:
+  id: 'block_content:9882e211-d2e3-4d15-aecd-11571b703a2c'
+  label: 'First 400 * 400'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

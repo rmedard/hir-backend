@@ -1,0 +1,23 @@
+uuid: e94364c4-e5cf-435a-9d5b-0fd6a3ab4033
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_currency
+    - node.type.property_request
+  module:
+    - options
+id: node.property_request.field_pr_currency
+field_name: field_pr_currency
+entity_type: node
+bundle: property_request
+label: Currency
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: rwf
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,20 @@
+uuid: c37e2d75-abd3-4f2e-b8b0-85012e930ae6
+langcode: en
+status: true
+dependencies:
+  module:
+    - rir_interface
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_geolocationgoogleplacesapiattributionblock
+theme: bootstrap_barrio
+region: top_header
+weight: 0
+provider: null
+plugin: geolocation_google_places_api_attribution_block
+settings:
+  id: geolocation_google_places_api_attribution_block
+  label: 'Geolocation - Google Places API Attribution block'
+  label_display: '0'
+  provider: rir_interface
+visibility: {  }

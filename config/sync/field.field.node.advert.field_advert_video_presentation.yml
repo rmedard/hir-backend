@@ -1,0 +1,21 @@
+uuid: d8e9678c-7248-4f0b-b1c7-2ca80e9ac544
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_video_presentation
+    - node.type.advert
+  module:
+    - youtube
+id: node.advert.field_advert_video_presentation
+field_name: field_advert_video_presentation
+entity_type: node
+bundle: advert
+label: 'Video presentation'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: youtube

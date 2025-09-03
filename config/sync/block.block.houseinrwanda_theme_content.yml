@@ -1,0 +1,22 @@
+uuid: 79e6e6ed-4ed5-47e9-a842-192df771ade8
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - houseinrwanda_theme
+_core:
+  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
+id: houseinrwanda_theme_content
+theme: houseinrwanda_theme
+region: content
+weight: -15
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

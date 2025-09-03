@@ -1,0 +1,30 @@
+uuid: 5f57f813-e48b-463c-8e1f-93016e410df8
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.adverts-secondary-menu
+  module:
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_advertssecondarymenu
+theme: bootstrap_barrio
+region: content
+weight: -17
+provider: null
+plugin: 'system_menu_block:adverts-secondary-menu'
+settings:
+  id: 'system_menu_block:adverts-secondary-menu'
+  label: 'Rent Adverts Secondary Menu'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    context_mapping: {  }
+    pages: '/properties/*'

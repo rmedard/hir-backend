@@ -1,0 +1,139 @@
+uuid: b211e361-d054-4d3a-9ac3-6fb89bbc4bbf
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.property_request.field_how_to_submit_advert
+    - field.field.node.property_request.field_pr_area_city_interest
+    - field.field.node.property_request.field_pr_currency
+    - field.field.node.property_request.field_pr_email
+    - field.field.node.property_request.field_pr_equipment
+    - field.field.node.property_request.field_pr_expiry_date
+    - field.field.node.property_request.field_pr_first_name
+    - field.field.node.property_request.field_pr_is_synchronised
+    - field.field.node.property_request.field_pr_last_name
+    - field.field.node.property_request.field_pr_maximum
+    - field.field.node.property_request.field_pr_minimum
+    - field.field.node.property_request.field_pr_minimum_bathrooms
+    - field.field.node.property_request.field_pr_minimum_bedrooms
+    - field.field.node.property_request.field_pr_more_details
+    - field.field.node.property_request.field_pr_neighborhood_descr
+    - field.field.node.property_request.field_pr_payable
+    - field.field.node.property_request.field_pr_phone_number
+    - field.field.node.property_request.field_pr_property_type
+    - field.field.node.property_request.field_pr_proposed_properties
+    - field.field.node.property_request.field_pr_reference
+    - field.field.node.property_request.field_pr_relative_path
+    - field.field.node.property_request.field_pr_request_type
+    - field.field.node.property_request.field_pr_required_service
+    - field.field.node.property_request.field_pr_urgency
+    - node.type.property_request
+  module:
+    - options
+    - user
+id: node.property_request.teaser
+targetEntityType: node
+bundle: property_request
+mode: teaser
+content:
+  field_pr_area_city_interest:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_pr_currency:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_pr_first_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_pr_maximum:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_pr_minimum:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_pr_minimum_bathrooms:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_pr_minimum_bedrooms:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_pr_property_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_pr_reference:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_pr_request_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  addtoany: true
+  field_how_to_submit_advert: true
+  field_pr_email: true
+  field_pr_equipment: true
+  field_pr_expiry_date: true
+  field_pr_is_synchronised: true
+  field_pr_last_name: true
+  field_pr_more_details: true
+  field_pr_neighborhood_descr: true
+  field_pr_payable: true
+  field_pr_phone_number: true
+  field_pr_proposed_properties: true
+  field_pr_relative_path: true
+  field_pr_required_service: true
+  field_pr_urgency: true
+  published_at: true

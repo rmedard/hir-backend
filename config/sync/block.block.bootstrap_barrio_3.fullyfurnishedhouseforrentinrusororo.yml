@@ -1,0 +1,25 @@
+uuid: 8b2db813-25f9-4045-9167-6ad172b2317c
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:banner_block:1bdd9584-79de-4b0f-af94-7ac6d427d133'
+  module:
+    - block_content
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_3.fullyfurnishedhouseforrentinrusororo
+theme: bootstrap_barrio
+region: sidebar_second
+weight: -21
+provider: null
+plugin: 'block_content:1bdd9584-79de-4b0f-af94-7ac6d427d133'
+settings:
+  id: 'block_content:1bdd9584-79de-4b0f-af94-7ac6d427d133'
+  label: '3. Fully furnished house for rent in Rusororo '
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

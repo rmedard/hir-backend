@@ -1,0 +1,244 @@
+uuid: 803329fe-3f83-4f0d-b667-5e3a484d3706
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.agent.field_advertiser_featured
+    - field.field.node.agent.field_advertiser_is_synchronised
+    - field.field.node.agent.field_advertiser_type
+    - field.field.node.agent.field_agent_category
+    - field.field.node.agent.field_agent_cell
+    - field.field.node.agent.field_agent_district
+    - field.field.node.agent.field_agent_email
+    - field.field.node.agent.field_agent_facebook
+    - field.field.node.agent.field_agent_linkedin
+    - field.field.node.agent.field_agent_logo
+    - field.field.node.agent.field_agent_operations_area
+    - field.field.node.agent.field_agent_phone
+    - field.field.node.agent.field_agent_rating
+    - field.field.node.agent.field_agent_relative_path
+    - field.field.node.agent.field_agent_sector
+    - field.field.node.agent.field_agent_street
+    - field.field.node.agent.field_agent_summary
+    - field.field.node.agent.field_agent_tin_nbr
+    - field.field.node.agent.field_agent_twitter
+    - field.field.node.agent.field_agent_village
+    - field.field.node.agent.field_agent_website
+    - field.field.node.agent.field_introductory_images
+    - image.style.thumbnail
+    - node.type.agent
+  module:
+    - field_group
+    - image
+    - link
+    - publication_date
+    - telephone
+    - text
+third_party_settings:
+  field_group:
+    group_address:
+      children:
+        - field_agent_sector
+        - field_agent_village
+        - field_agent_cell
+        - field_agent_street
+        - field_agent_district
+      label: Address
+      region: content
+      parent_name: ''
+      weight: 10
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        id: ''
+        description: ''
+        required_fields: true
+id: node.agent.default
+targetEntityType: node
+bundle: agent
+mode: default
+content:
+  field_advertiser_is_synchronised:
+    type: options_buttons
+    weight: 18
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_advertiser_type:
+    type: options_select
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_agent_category:
+    type: options_select
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_agent_cell:
+    type: string_textfield
+    weight: 36
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_agent_district:
+    type: entity_reference_autocomplete
+    weight: 38
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_agent_email:
+    type: email_default
+    weight: 6
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
+  field_agent_facebook:
+    type: link_default
+    weight: 15
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_agent_linkedin:
+    type: link_default
+    weight: 17
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_agent_logo:
+    type: image_image
+    weight: 1
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_agent_operations_area:
+    type: string_textfield
+    weight: 5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_agent_phone:
+    type: telephone_default
+    weight: 7
+    region: content
+    settings:
+      placeholder: 'E.g.: +250712345678'
+    third_party_settings: {  }
+  field_agent_relative_path:
+    type: string_textfield
+    weight: 19
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_agent_sector:
+    type: string_textfield
+    weight: 33
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_agent_street:
+    type: string_textfield
+    weight: 37
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_agent_summary:
+    type: text_textarea
+    weight: 9
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_agent_tin_nbr:
+    type: string_textfield
+    weight: 8
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_agent_twitter:
+    type: link_default
+    weight: 16
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_agent_village:
+    type: string_textfield
+    weight: 34
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_agent_website:
+    type: link_default
+    weight: 14
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_introductory_images:
+    type: image_image
+    weight: 13
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  published_at:
+    type: publication_date_timestamp
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 11
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_advertiser_featured: true
+  field_agent_rating: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

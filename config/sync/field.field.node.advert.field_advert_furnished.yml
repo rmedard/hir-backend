@@ -1,0 +1,23 @@
+uuid: 826b4be6-7645-464e-8944-2a9d9e384fe8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_furnished
+    - node.type.advert
+id: node.advert.field_advert_furnished
+field_name: field_advert_furnished
+entity_type: node
+bundle: advert
+label: Furnished
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

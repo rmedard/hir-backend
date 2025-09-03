@@ -1,0 +1,19 @@
+uuid: ee5b8602-2a13-4486-9d24-6b395d553c71
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_business_comment
+    - node.type.advert
+id: node.advert.field_advert_business_comment
+field_name: field_advert_business_comment
+entity_type: node
+bundle: advert
+label: 'Business Comment'
+description: 'Business comment can be anything business related. E.g: Why this advert was not validated, unpublished, etc.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

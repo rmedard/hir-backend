@@ -1,0 +1,28 @@
+uuid: 8a98d8f0-cba2-45ba-ae53-62af395ba1a9
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - rir_interface
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_riradvertdetails
+theme: bootstrap_barrio
+region: content
+weight: -9
+provider: null
+plugin: rir_advert_details
+settings:
+  id: rir_advert_details
+  label: 'RiR Advert Details'
+  label_display: '0'
+  provider: rir_interface
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      advert: advert

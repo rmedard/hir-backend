@@ -1,0 +1,25 @@
+uuid: 3730c96c-3889-409c-8f66-101017b512d1
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:fc06ebb3-d1f7-4ec9-8d48-791a2ddcca1a'
+  module:
+    - block_content
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_rirsidebarone1
+theme: houseinrwanda_theme
+region: sidebar_first
+weight: -20
+provider: null
+plugin: 'block_content:fc06ebb3-d1f7-4ec9-8d48-791a2ddcca1a'
+settings:
+  id: 'block_content:fc06ebb3-d1f7-4ec9-8d48-791a2ddcca1a'
+  label: 'RIR Sidebar One 1'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

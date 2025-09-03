@@ -1,0 +1,23 @@
+uuid: 7dbc42f0-db92-4ba7-ac0b-a02a9976639a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_bid_start_value
+    - node.type.advert
+id: node.advert.field_advert_bid_start_value
+field_name: field_advert_bid_start_value
+entity_type: node
+bundle: advert
+label: 'Starting value'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

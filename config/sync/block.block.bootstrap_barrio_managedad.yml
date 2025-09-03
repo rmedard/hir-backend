@@ -1,0 +1,27 @@
+uuid: 0589bad8-72a2-49ae-ab00-6c25b27589c4
+langcode: en
+status: true
+dependencies:
+  module:
+    - adsense
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_managedad
+theme: bootstrap_barrio
+region: top_header
+weight: -14
+provider: null
+plugin: adsense_managed_ad_block
+settings:
+  id: adsense_managed_ad_block
+  label: 'Managed ad'
+  label_display: '0'
+  provider: adsense
+  ad_slot: '5254503023'
+  ad_format: 728x90
+  ad_width: 250
+  ad_height: 250
+  ad_shape: {  }
+  ad_align: right
+  ad_layout_key: ''
+visibility: {  }

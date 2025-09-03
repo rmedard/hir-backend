@@ -1,0 +1,23 @@
+uuid: 09168e75-d1c3-441c-9f62-40ade41560b4
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_content
+    - field_permissions
+    - text
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: block_content.field_plan_details
+field_name: field_plan_details
+entity_type: block_content
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

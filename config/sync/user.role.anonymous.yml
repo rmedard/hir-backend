@@ -1,0 +1,55 @@
+uuid: 1a03f5c7-e8d8-46d4-a8a3-61b2df1acb19
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - filter.format.full_html
+    - filter.format.restricted_html
+    - node.type.advert
+    - node.type.agent
+  module:
+    - comment
+    - contact
+    - field_permissions
+    - filter
+    - node
+    - search
+    - system
+    - webform
+_core:
+  default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
+id: anonymous
+label: 'Anonymous user'
+weight: 0
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'create advert content'
+  - 'create agent content'
+  - 'edit own webform submission'
+  - 'search content'
+  - 'use text format basic_html'
+  - 'use text format full_html'
+  - 'use text format restricted_html'
+  - 'view field_advert_locality_district'
+  - 'view field_advert_locality_province'
+  - 'view field_advert_locality_sector'
+  - 'view field_advert_price_in_rwf'
+  - 'view field_advert_reference'
+  - 'view field_advert_relative_path'
+  - 'view field_advert_rented_sold'
+  - 'view field_advertiser_featured'
+  - 'view field_agent_category'
+  - 'view field_agent_relative_path'
+  - 'view field_how_to_submit_advert'
+  - 'view field_pr_reference'
+  - 'view field_pr_relative_path'
+  - 'view field_price_in_rwf'
+  - 'view own field_advert_relative_path'
+  - 'view own field_advertiser_featured'
+  - 'view own field_agent_category'
+  - 'view own field_agent_relative_path'
+  - 'view own field_pr_relative_path'

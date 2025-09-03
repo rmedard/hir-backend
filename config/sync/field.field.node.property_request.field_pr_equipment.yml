@@ -1,0 +1,23 @@
+uuid: 4cf2bdc8-4282-46c7-8434-55d05ec5869f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_equipment
+    - node.type.property_request
+  module:
+    - options
+id: node.property_request.field_pr_equipment
+field_name: field_pr_equipment
+entity_type: node
+bundle: property_request
+label: Equipment
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: not_furnished
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,19 @@
+uuid: 5d1c4772-5509-4364-9e54-e96c6bb287c3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_village
+    - node.type.advert
+id: node.advert.field_advert_village
+field_name: field_advert_village
+entity_type: node
+bundle: advert
+label: Village/Umudugudu
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,23 @@
+uuid: c8a25fb3-d863-4092-bad6-34f47849e18d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_facebook
+    - node.type.agent
+  module:
+    - link
+id: node.agent.field_agent_facebook
+field_name: field_agent_facebook
+entity_type: node
+bundle: agent
+label: Facebook
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 16
+field_type: link

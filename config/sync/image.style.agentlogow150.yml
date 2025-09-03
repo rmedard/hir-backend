@@ -1,0 +1,15 @@
+uuid: 2590618b-2580-4c62-abdb-8d0cdb6514d4
+langcode: en
+status: true
+dependencies: {  }
+name: agentlogow150
+label: AgentLogoH150
+effects:
+  63e8f295-9ed9-4b29-8c45-a196880802a4:
+    uuid: 63e8f295-9ed9-4b29-8c45-a196880802a4
+    id: image_scale
+    weight: 1
+    data:
+      width: null
+      height: 105
+      upscale: true

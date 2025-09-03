@@ -1,0 +1,24 @@
+uuid: ea81760f-7a97-4de2-b94e-5820f12ce142
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+third_party_settings:
+  field_permissions:
+    permission_type: custom
+id: node.field_target_pr_id
+field_name: field_target_pr_id
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

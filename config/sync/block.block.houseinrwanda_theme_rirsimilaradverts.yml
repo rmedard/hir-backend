@@ -1,0 +1,28 @@
+uuid: a81ade67-7f82-43b2-99d5-1fed2d151aaa
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - rir_interface
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_rirsimilaradverts
+theme: houseinrwanda_theme
+region: sidebar_horizontal
+weight: -20
+provider: null
+plugin: rir_similar_adverts
+settings:
+  id: rir_similar_adverts
+  label: 'RiR Similar Adverts'
+  label_display: '0'
+  provider: rir_interface
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      advert: advert

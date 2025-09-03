@@ -1,0 +1,23 @@
+uuid: 6bf661e3-4237-4a07-a875-4b35413020be
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_property_type
+    - node.type.advert
+  module:
+    - options
+id: node.advert.field_advert_property_type
+field_name: field_advert_property_type
+entity_type: node
+bundle: advert
+label: 'Property type'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: house
+default_value_callback: ''
+settings: {  }
+field_type: list_string

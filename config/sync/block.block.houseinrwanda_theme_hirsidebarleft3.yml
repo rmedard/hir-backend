@@ -1,0 +1,30 @@
+uuid: 809c73b1-bcad-4dc1-8210-f5322b06e711
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:80bddeba-bcc7-4e13-92ba-0cc4e602bc18'
+  module:
+    - block_content
+    - system
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_hirsidebarleft3
+theme: houseinrwanda_theme
+region: sidebar_first
+weight: -21
+provider: null
+plugin: 'block_content:80bddeba-bcc7-4e13-92ba-0cc4e602bc18'
+settings:
+  id: 'block_content:80bddeba-bcc7-4e13-92ba-0cc4e602bc18'
+  label: 'Hir Sidebar Left 3'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '/property/*'

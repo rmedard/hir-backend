@@ -1,0 +1,20 @@
+_core:
+  default_config_hash: AyT9s8OUcclfALRE_imByOMgtZ19eOlqdF6zI3p7yqo
+langcode: en
+uuid: e1d7c108-e63c-4401-957b-922708ee9d2f
+name: 'House in Rwanda'
+mail: info@houseinrwanda.com
+slogan: 'Find house, apartment, room, plot/land, commerce to rent, to buy, to sell or to auction in Rwanda'
+page:
+  403: /node/366
+  404: /node/365
+  front: /properties/featured
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: ''
+phone: '+250 788 315 661'
+emailSender: no-reply@houseinrwanda.com
+emailReplyTo: info@houseinrwanda.com
+playStoreLink: 'https://play.google.com/store/apps/details?id=com.houseinrwanda.houseinrwanda&pli=1'
+appleStoreLink: 'https://apps.apple.com/us/app/house-in-rwanda/id6478082664'

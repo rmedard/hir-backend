@@ -1,0 +1,33 @@
+uuid: 93b81355-05b8-4a83-8782-cfb1629f5a4d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_advert_type
+field_name: field_advert_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: rent
+      label: Rent
+    -
+      value: buy
+      label: Sale
+    -
+      value: auction
+      label: Auction
+    -
+      value: short_rent
+      label: 'Short Rent'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

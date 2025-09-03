@@ -1,0 +1,9 @@
+uuid: a6c2ef51-4a87-457d-bdb0-34423914c346
+langcode: en
+status: true
+dependencies: {  }
+name: Districts
+vid: districts
+description: null
+weight: 0
+new_revision: false

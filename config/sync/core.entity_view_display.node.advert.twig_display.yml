@@ -1,0 +1,449 @@
+uuid: c55217ce-1f32-4ce1-8ea7-da53045c9a2b
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.twig_display
+    - field.field.node.advert.field_advert_advertiser
+    - field.field.node.advert.field_advert_bathrooms
+    - field.field.node.advert.field_advert_bedrooms
+    - field.field.node.advert.field_advert_bid_security_amount
+    - field.field.node.advert.field_advert_bid_start_value
+    - field.field.node.advert.field_advert_bid_starting_value
+    - field.field.node.advert.field_advert_business_comment
+    - field.field.node.advert.field_advert_cell
+    - field.field.node.advert.field_advert_contact_email
+    - field.field.node.advert.field_advert_contact_name
+    - field.field.node.advert.field_advert_contact_tel
+    - field.field.node.advert.field_advert_creator_geolocation
+    - field.field.node.advert.field_advert_creator_location
+    - field.field.node.advert.field_advert_currency
+    - field.field.node.advert.field_advert_expirydate
+    - field.field.node.advert.field_advert_furnished
+    - field.field.node.advert.field_advert_is_agent
+    - field.field.node.advert.field_advert_is_first_published
+    - field.field.node.advert.field_advert_is_synchronised
+    - field.field.node.advert.field_advert_living_area
+    - field.field.node.advert.field_advert_locality
+    - field.field.node.advert.field_advert_locality_district
+    - field.field.node.advert.field_advert_locality_province
+    - field.field.node.advert.field_advert_locality_sector
+    - field.field.node.advert.field_advert_location
+    - field.field.node.advert.field_advert_payment
+    - field.field.node.advert.field_advert_picture
+    - field.field.node.advert.field_advert_posting_plan
+    - field.field.node.advert.field_advert_price
+    - field.field.node.advert.field_advert_price_in_rwf
+    - field.field.node.advert.field_advert_price_negociable
+    - field.field.node.advert.field_advert_property_type
+    - field.field.node.advert.field_advert_reference
+    - field.field.node.advert.field_advert_relative_path
+    - field.field.node.advert.field_advert_rented_sold
+    - field.field.node.advert.field_advert_signature
+    - field.field.node.advert.field_advert_size
+    - field.field.node.advert.field_advert_street
+    - field.field.node.advert.field_advert_total_floors
+    - field.field.node.advert.field_advert_type
+    - field.field.node.advert.field_advert_video_presentation
+    - field.field.node.advert.field_advert_village
+    - field.field.node.advert.field_agent_side_reference
+    - field.field.node.advert.field_bid_expiration
+    - field.field.node.advert.field_bid_is_online
+    - field.field.node.advert.field_bid_reference
+    - field.field.node.advert.field_bid_security_amount
+    - field.field.node.advert.field_bid_starting_value
+    - field.field.node.advert.field_price_in_rwf
+    - field.field.node.advert.field_property_description
+    - field.field.node.advert.field_target_pr_id
+    - field.field.node.advert.field_visit_cellphone
+    - field.field.node.advert.field_visit_cellphone_2
+    - field.field.node.advert.field_visit_contact_name
+    - field.field.node.advert.field_visit_email_address1
+    - field.field.node.advert.field_visit_email_address2
+    - filter.format.plain_text
+    - node.type.advert
+  module:
+    - geolocation
+    - user
+    - youtube
+id: node.advert.twig_display
+targetEntityType: node
+bundle: advert
+mode: twig_display
+content:
+  addtoany:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_advert_location:
+    type: geolocation_map
+    label: hidden
+    settings:
+      set_marker: true
+      show_label: false
+      common_map: true
+      show_delta_label: false
+      use_overridden_map_settings: false
+      title: ''
+      info_text:
+        value: ''
+        format: plain_text
+      centre:
+        fit_bounds:
+          enable: true
+          weight: -101
+          settings:
+            reset_zoom: true
+            min_zoom: null
+          map_center_id: fit_bounds
+        ipstack:
+          enable: false
+          weight: 0
+          settings:
+            location_option_id: ipstack
+            access_key: ''
+          map_center_id: location_plugins
+        freeogeoip:
+          enable: false
+          weight: 0
+          settings:
+            location_option_id: freeogeoip
+          map_center_id: location_plugins
+        fixed_value:
+          enable: false
+          weight: 0
+          settings:
+            location_option_id: fixed_value
+            latitude: null
+            longitude: null
+          map_center_id: location_plugins
+        fixed_boundaries:
+          enable: false
+          weight: 0
+          settings:
+            south: ''
+            west: ''
+            north: ''
+            east: ''
+          map_center_id: fixed_boundaries
+        client_location:
+          enable: false
+          weight: 0
+          map_center_id: client_location
+      map_provider_id: google_maps
+      map_provider_settings:
+        map_features:
+          marker_infobubble:
+            enabled: false
+            weight: 0
+            settings:
+              close_other: 1
+              close_button: 0
+              close_button_src: ''
+              shadow_style: 0
+              padding: 10
+              border_radius: 8
+              border_width: 2
+              border_color: '#039be5'
+              background_color: '#fff'
+              min_width: null
+              max_width: 550
+              min_height: null
+              max_height: null
+              arrow_style: 2
+              arrow_position: 30
+              arrow_size: 10
+          control_streetview:
+            enabled: false
+            weight: 0
+            settings:
+              position: TOP_LEFT
+              behavior: default
+          control_zoom:
+            enabled: true
+            weight: 0
+            settings:
+              position: RIGHT_CENTER
+              behavior: default
+              style: LARGE
+          map_restriction:
+            enabled: false
+            weight: 0
+            settings:
+              north: ''
+              south: ''
+              east: ''
+              west: ''
+              strict: true
+          map_type_style:
+            enabled: false
+            weight: 0
+            settings:
+              style: '[]'
+          marker_clusterer:
+            enabled: false
+            weight: 0
+            settings:
+              image_path: ''
+              styles: ''
+              max_zoom: 15
+              minimum_cluster_size: 2
+              zoom_on_click: true
+              average_center: false
+              grid_size: 60
+          marker_icon:
+            enabled: false
+            weight: 0
+            settings:
+              marker_icon_path: ''
+              anchor:
+                x: 0
+                'y': 0
+              origin:
+                x: 0
+                'y': 0
+              label_origin:
+                x: 0
+                'y': 0
+              size:
+                width: null
+                height: null
+              scaled_size:
+                width: null
+                height: null
+          marker_infowindow:
+            enabled: true
+            weight: 0
+            settings:
+              info_window_solitary: true
+              disable_auto_pan: true
+              info_auto_display: false
+              max_width: null
+          control_recenter:
+            enabled: false
+            weight: 0
+            settings:
+              position: TOP_LEFT
+          marker_label:
+            enabled: false
+            weight: 0
+            settings:
+              color: ''
+              font_family: ''
+              font_size: ''
+              font_weight: ''
+          marker_opacity:
+            enabled: false
+            weight: 0
+            settings:
+              opacity: 1.0
+          geolocation_marker_scroll_to_id:
+            enabled: false
+            weight: 0
+            settings:
+              scroll_target_id: ''
+          marker_zoom_to_animate:
+            enabled: false
+            weight: 0
+            settings:
+              marker_zoom_anchor_id: ''
+          spiderfying:
+            enabled: false
+            weight: 0
+            settings:
+              spiderfiable_marker_path: /modules/contrib/geolocation/modules/geolocation_google_maps/images/marker-plus.svg
+              markersWontMove: true
+              markersWontHide: false
+              keepSpiderfied: true
+              ignoreMapClick: false
+              nearbyDistance: 20
+              circleSpiralSwitchover: 9
+              circleFootSeparation: 23
+              spiralFootSeparation: 26
+              spiralLengthStart: 11
+              spiralLengthFactor: 4
+              legWeight: 1.5
+          google_maps_layer_traffic:
+            enabled: false
+            weight: 0
+          control_rotate:
+            enabled: false
+            weight: 0
+            settings:
+              position: TOP_LEFT
+              behavior: default
+          control_maptype:
+            enabled: true
+            weight: 0
+            settings:
+              position: RIGHT_BOTTOM
+              behavior: default
+              style: DEFAULT
+          context_popup:
+            enabled: false
+            weight: 0
+            settings:
+              content:
+                value: ''
+                format: basic_html
+          google_maps_layer_bicycling:
+            enabled: false
+            weight: 0
+          client_location_indicator:
+            enabled: false
+            weight: 0
+          map_disable_tilt:
+            enabled: false
+            weight: 0
+          control_locate:
+            enabled: true
+            weight: 0
+            settings:
+              position: TOP_LEFT
+          map_disable_poi:
+            enabled: false
+            weight: 0
+          map_disable_user_interaction:
+            enabled: false
+            weight: 0
+          drawing:
+            enabled: false
+            weight: 0
+            settings:
+              polyline: false
+              strokeColor: '#FF0000'
+              strokeOpacity: '0.8'
+              strokeWeight: '2'
+              geodesic: false
+              polygon: false
+              fillColor: '#FF0000'
+              fillOpacity: '0.35'
+          control_fullscreen:
+            enabled: false
+            weight: 0
+            settings:
+              position: TOP_LEFT
+              behavior: default
+          control_geocoder:
+            enabled: false
+            weight: 0
+            settings:
+              position: TOP_LEFT
+              geocoder: google_geocoding_api
+              settings:
+                label: Address
+                description: 'Enter an address to be localized.'
+                autocomplete_min_length: 1
+                component_restrictions:
+                  route: ''
+                  country: ''
+                  administrative_area: ''
+                  locality: ''
+                  postal_code: ''
+                boundary_restriction:
+                  south: ''
+                  west: ''
+                  north: ''
+                  east: ''
+          control_loading_indicator:
+            enabled: false
+            weight: 0
+            settings:
+              position: TOP_LEFT
+              loading_label: Loading
+          google_maps_layer_transit:
+            enabled: false
+            weight: 0
+        type: ROADMAP
+        zoom: 16
+        minZoom: 0
+        maxZoom: 20
+        height: 400px
+        width: 100%
+        gestureHandling: auto
+      data_provider_settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_advert_video_presentation:
+    type: youtube_video
+    label: hidden
+    settings:
+      youtube_size: responsive
+      youtube_width: ''
+      youtube_height: ''
+      youtube_autoplay: false
+      youtube_mute: false
+      youtube_loop: false
+      youtube_controls: false
+      youtube_autohide: false
+      youtube_iv_load_policy: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  location_province:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -3
+    region: content
+hidden:
+  field_advert_advertiser: true
+  field_advert_bathrooms: true
+  field_advert_bedrooms: true
+  field_advert_bid_security_amount: true
+  field_advert_bid_start_value: true
+  field_advert_bid_starting_value: true
+  field_advert_business_comment: true
+  field_advert_cell: true
+  field_advert_contact_email: true
+  field_advert_contact_name: true
+  field_advert_contact_tel: true
+  field_advert_creator_geolocation: true
+  field_advert_creator_location: true
+  field_advert_currency: true
+  field_advert_expirydate: true
+  field_advert_furnished: true
+  field_advert_is_agent: true
+  field_advert_is_first_published: true
+  field_advert_is_synchronised: true
+  field_advert_living_area: true
+  field_advert_locality: true
+  field_advert_locality_district: true
+  field_advert_locality_province: true
+  field_advert_locality_sector: true
+  field_advert_payment: true
+  field_advert_picture: true
+  field_advert_posting_plan: true
+  field_advert_price: true
+  field_advert_price_in_rwf: true
+  field_advert_price_negociable: true
+  field_advert_property_type: true
+  field_advert_reference: true
+  field_advert_relative_path: true
+  field_advert_rented_sold: true
+  field_advert_signature: true
+  field_advert_size: true
+  field_advert_street: true
+  field_advert_total_floors: true
+  field_advert_type: true
+  field_advert_village: true
+  field_agent_side_reference: true
+  field_bid_expiration: true
+  field_bid_is_online: true
+  field_bid_reference: true
+  field_bid_security_amount: true
+  field_bid_starting_value: true
+  field_price_in_rwf: true
+  field_property_description: true
+  field_target_pr_id: true
+  field_visit_cellphone: true
+  field_visit_cellphone_2: true
+  field_visit_contact_name: true
+  field_visit_email_address1: true
+  field_visit_email_address2: true
+  links: true
+  published_at: true

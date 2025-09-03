@@ -1,0 +1,19 @@
+uuid: 6c28a700-f2ee-421f-8050-a8f963242a99
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_email
+    - node.type.agent
+id: node.agent.field_agent_email
+field_name: field_agent_email
+entity_type: node
+bundle: agent
+label: Email
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

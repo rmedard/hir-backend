@@ -1,0 +1,25 @@
+uuid: 4c706fde-152b-4024-927e-98eaae673801
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:34733610-9083-4c66-a27d-6153b3795047'
+  module:
+    - block_content
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_08.abeautifulhousewithatinyensuitguestroomforaquicksell
+theme: bootstrap_barrio
+region: sidebar_second
+weight: -22
+provider: null
+plugin: 'block_content:34733610-9083-4c66-a27d-6153b3795047'
+settings:
+  id: 'block_content:34733610-9083-4c66-a27d-6153b3795047'
+  label: '10 A well constructed house for sale located in Nyamirambo '
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

@@ -1,0 +1,25 @@
+uuid: 8092a423-7bb5-4c85-a33d-4b77239ae4ed
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_price
+    - node.type.advert
+id: node.advert.field_advert_price
+field_name: field_advert_price
+entity_type: node
+bundle: advert
+label: Price
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0.0
+default_value_callback: ''
+settings:
+  min: 0.0
+  max: 9999999999.0
+  prefix: ''
+  suffix: ''
+field_type: decimal

@@ -1,0 +1,30 @@
+uuid: 1eaffe0c-24ab-4398-a5e8-81d0b165f19a
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:ecc185ac-2460-4087-9de9-4ebd186cc3bc'
+  module:
+    - block_content
+    - system
+  theme:
+    - houseinrwanda_theme
+id: videoembed
+theme: houseinrwanda_theme
+region: sidebar_horizontal
+weight: -13
+provider: null
+plugin: 'block_content:ecc185ac-2460-4087-9de9-4ebd186cc3bc'
+settings:
+  id: 'block_content:ecc185ac-2460-4087-9de9-4ebd186cc3bc'
+  label: 'Video Embed'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: /property/rent/house/fully-furnished-private-modern-house-kanombe

@@ -1,0 +1,18 @@
+uuid: bdba9706-e496-46d1-b0f6-0d459dca33b7
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+_core:
+  default_config_hash: Om6FEO7vZZMkPIbVvfxtdkWerQ2PvQM4sWUd6Q3ZnfI
+id: administrator
+label: Administrator
+weight: 2
+is_admin: true
+permissions:
+  - 'create field_advert_price_in_rwf'
+  - 'edit field_advert_price_in_rwf'
+  - 'edit own field_advert_price_in_rwf'
+  - 'view field_advert_price_in_rwf'
+  - 'view own field_advert_price_in_rwf'

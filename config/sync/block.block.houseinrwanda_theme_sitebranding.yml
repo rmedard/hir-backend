@@ -1,0 +1,23 @@
+uuid: cfff5a09-9357-4ee9-be6f-87283725901b
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_sitebranding
+theme: houseinrwanda_theme
+region: top_header
+weight: -15
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  label_display: '0'
+  provider: system
+  use_site_logo: true
+  use_site_name: false
+  use_site_slogan: false
+visibility: {  }

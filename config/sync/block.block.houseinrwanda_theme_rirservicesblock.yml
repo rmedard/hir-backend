@@ -1,0 +1,20 @@
+uuid: 2b5fcd3d-120b-4759-9643-45c66381bea0
+langcode: en
+status: true
+dependencies:
+  module:
+    - rir_interface
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_rirservicesblock
+theme: houseinrwanda_theme
+region: footer_second
+weight: 0
+provider: null
+plugin: rir_services_block
+settings:
+  id: rir_services_block
+  label: 'RiR Services Block'
+  label_display: '0'
+  provider: rir_interface
+visibility: {  }

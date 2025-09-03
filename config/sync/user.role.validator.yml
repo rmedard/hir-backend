@@ -1,0 +1,73 @@
+uuid: 2b4f3931-d3ad-43f2-9296-54d242c5033c
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+    - node.type.advert
+    - node.type.agent
+    - node.type.news
+    - node.type.property_request
+  module:
+    - block_content_permissions
+    - field_permissions
+    - file
+    - filter
+    - node
+    - publication_date
+    - system
+    - toolbar
+    - webform
+id: validator
+label: Validator
+weight: 4
+is_admin: null
+permissions:
+  - 'access toolbar'
+  - 'administer nodes'
+  - 'bypass node access'
+  - 'create banner_block block content'
+  - 'create field_advert_business_comment'
+  - 'create field_advert_rented_sold'
+  - 'create field_advertiser_featured'
+  - 'create field_agent_category'
+  - 'create field_how_to_submit_advert'
+  - 'create field_pr_proposed_properties'
+  - 'create news content'
+  - 'delete own files'
+  - 'edit any advert content'
+  - 'edit any agent content'
+  - 'edit any news content'
+  - 'edit any property_request content'
+  - 'edit field_advert_business_comment'
+  - 'edit field_advert_rented_sold'
+  - 'edit field_advertiser_featured'
+  - 'edit field_agent_category'
+  - 'edit field_how_to_submit_advert'
+  - 'edit field_pr_expiry_date'
+  - 'edit field_pr_proposed_properties'
+  - 'edit own field_advert_business_comment'
+  - 'edit own field_advert_rented_sold'
+  - 'edit own field_advertiser_featured'
+  - 'edit own field_agent_category'
+  - 'edit own field_how_to_submit_advert'
+  - 'edit own field_pr_proposed_properties'
+  - 'set advert published on date'
+  - 'update any banner_block block content'
+  - 'use text format full_html'
+  - 'view any webform submission'
+  - 'view field_advert_business_comment'
+  - 'view field_advert_relative_path'
+  - 'view field_advert_rented_sold'
+  - 'view field_advertiser_featured'
+  - 'view field_agent_category'
+  - 'view field_pr_expiry_date'
+  - 'view field_pr_proposed_properties'
+  - 'view own field_advert_business_comment'
+  - 'view own field_advert_relative_path'
+  - 'view own field_advert_rented_sold'
+  - 'view own field_advertiser_featured'
+  - 'view own field_agent_category'
+  - 'view own field_how_to_submit_advert'
+  - 'view own field_pr_proposed_properties'
+  - 'view the administration theme'

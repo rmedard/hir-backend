@@ -1,0 +1,15 @@
+uuid: 46d79b19-3c4a-433e-bf06-1087f0a9231a
+langcode: en
+status: true
+dependencies: {  }
+name: agent_thumbnail
+label: 'Agent thumbnail (275x275)'
+effects:
+  92f88afc-fe83-476c-bc66-094d8374dff1:
+    uuid: 92f88afc-fe83-476c-bc66-094d8374dff1
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 275
+      height: 275
+      anchor: center-center

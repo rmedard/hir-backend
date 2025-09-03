@@ -1,0 +1,23 @@
+uuid: f63b75a5-b056-4cd0-9ec0-7e189dca9974
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advertiser_type
+    - node.type.agent
+  module:
+    - options
+id: node.agent.field_advertiser_type
+field_name: field_advertiser_type
+entity_type: node
+bundle: agent
+label: 'Advertiser Type'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: real_estate
+default_value_callback: ''
+settings: {  }
+field_type: list_string

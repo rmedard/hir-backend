@@ -1,0 +1,15 @@
+uuid: 92f1ef49-f90f-4f3b-9bf3-7e287218a0be
+langcode: en
+status: true
+dependencies: {  }
+name: email_banner
+label: 'Email Banner'
+effects:
+  51812d3f-ca4c-480e-b40b-6c2130a26f89:
+    uuid: 51812d3f-ca4c-480e-b40b-6c2130a26f89
+    id: image_scale
+    weight: 1
+    data:
+      width: 564
+      height: null
+      upscale: true

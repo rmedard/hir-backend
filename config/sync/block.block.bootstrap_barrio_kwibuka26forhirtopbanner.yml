@@ -1,0 +1,25 @@
+uuid: 6cfb0245-3613-467c-8671-7f92c7670182
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:e1e0d86d-1343-4e34-90d2-e614196a9e6a'
+  module:
+    - block_content
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_kwibuka26forhirtopbanner
+theme: bootstrap_barrio
+region: top_header
+weight: 0
+provider: null
+plugin: 'block_content:e1e0d86d-1343-4e34-90d2-e614196a9e6a'
+settings:
+  id: 'block_content:e1e0d86d-1343-4e34-90d2-e614196a9e6a'
+  label: 'Kwibuka26 | For HiR (Top-Banner)'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

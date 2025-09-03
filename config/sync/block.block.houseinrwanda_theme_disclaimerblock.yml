@@ -1,0 +1,33 @@
+uuid: 1beac67a-ae5e-49f2-bd7d-a2acb75b30c6
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:e757d126-4fb5-4f78-92ea-7bbd88d260a1'
+  module:
+    - block_content
+    - webform
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_disclaimerblock
+theme: houseinrwanda_theme
+region: content
+weight: -12
+provider: null
+plugin: 'block_content:e757d126-4fb5-4f78-92ea-7bbd88d260a1'
+settings:
+  id: 'block_content:e757d126-4fb5-4f78-92ea-7bbd88d260a1'
+  label: 'Disclaimer Block'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  webform:
+    id: webform
+    negate: false
+    context_mapping:
+      webform: '@webform.webform_route_context:webform'
+    webforms:
+      property_request_form: property_request_form

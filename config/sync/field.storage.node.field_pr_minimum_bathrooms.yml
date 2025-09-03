@@ -1,0 +1,46 @@
+uuid: 33b7034b-4b22-40e2-80f9-a1db55d39ad0
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+    - options
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: node.field_pr_minimum_bathrooms
+field_name: field_pr_minimum_bathrooms
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: '1'
+      label: '1 bathroom/toilet'
+    -
+      value: '2'
+      label: '2 bathrooms/toilets'
+    -
+      value: '3'
+      label: '3 bathrooms/toilets'
+    -
+      value: '4'
+      label: '4 bathrooms/toilets'
+    -
+      value: '5'
+      label: '5 bathrooms/toilets'
+    -
+      value: '6'
+      label: '6 bathrooms/toilets'
+    -
+      value: '7'
+      label: '7+ bathrooms/toilets'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,22 @@
+uuid: 27c51db7-a2ae-4f70-bdb9-3875cc858393
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+third_party_settings:
+  field_permissions:
+    permission_type: custom
+id: node.field_advertiser_is_synchronised
+field_name: field_advertiser_is_synchronised
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

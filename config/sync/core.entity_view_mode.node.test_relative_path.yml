@@ -1,0 +1,11 @@
+uuid: b5d0867a-4c2e-4565-87db-425fc63c3e51
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.test_relative_path
+label: 'Test: Relative Path'
+description: ''
+targetEntityType: node
+cache: true

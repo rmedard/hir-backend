@@ -1,0 +1,23 @@
+uuid: 3eb3b633-6d02-4e0e-b0a5-edc106a0d337
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_category
+    - node.type.agent
+  module:
+    - options
+id: node.agent.field_agent_category
+field_name: field_agent_category
+entity_type: node
+bundle: agent
+label: Category
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: standard
+default_value_callback: ''
+settings: {  }
+field_type: list_string

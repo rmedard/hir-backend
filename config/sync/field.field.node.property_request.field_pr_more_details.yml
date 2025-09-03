@@ -1,0 +1,21 @@
+uuid: 363db933-002f-4e00-83ae-7fd16a5a3a91
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_more_details
+    - node.type.property_request
+  module:
+    - text
+id: node.property_request.field_pr_more_details
+field_name: field_pr_more_details
+entity_type: node
+bundle: property_request
+label: 'More property details'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

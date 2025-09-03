@@ -1,0 +1,19 @@
+uuid: 5a2df498-530a-464d-bbae-bcca4af4d459
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_visit_email_address1
+    - node.type.advert
+id: node.advert.field_visit_email_address1
+field_name: field_visit_email_address1
+entity_type: node
+bundle: advert
+label: 'Email address'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

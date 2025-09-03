@@ -1,0 +1,22 @@
+uuid: 2d28f153-9648-46f1-8d5b-0e8d043ed616
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: property_requests_pattern
+label: 'Property requests pattern'
+type: 'canonical_entities:node'
+pattern: '/property-request/[node:field_pr_reference]'
+selection_criteria:
+  babc531c-2ae2-4966-9ba3-026bbc94df92:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: babc531c-2ae2-4966-9ba3-026bbc94df92
+    context_mapping:
+      node: node
+    bundles:
+      property_request: property_request
+selection_logic: and
+weight: -5
+relationships: {  }

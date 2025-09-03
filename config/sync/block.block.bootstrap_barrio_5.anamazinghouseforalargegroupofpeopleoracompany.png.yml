@@ -1,0 +1,31 @@
+uuid: 4d80860b-2262-4adf-999c-cdc9736720ca
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:banner_block:7d683a3e-0743-4877-837a-4be615fbb6d0'
+  module:
+    - block_content
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_5.anamazinghouseforalargegroupofpeopleoracompany.png
+theme: bootstrap_barrio
+region: sidebar_first
+weight: -20
+provider: null
+plugin: 'block_content:7d683a3e-0743-4877-837a-4be615fbb6d0'
+settings:
+  id: 'block_content:7d683a3e-0743-4877-837a-4be615fbb6d0'
+  label: '5. An amazing house for a large group of people or a company.png'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    context_mapping: {  }
+    pages: '<front>'

@@ -1,0 +1,18 @@
+uuid: bd357560-6d38-420f-ae6c-1c43fde4d504
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.property_request
+id: node.property_request.title
+field_name: title
+entity_type: node
+bundle: property_request
+label: Identifier
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,40 @@
+uuid: 9ba4a408-5593-4338-b5f0-32ae55c12cc9
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+    - options
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: node.field_advert_payment
+field_name: field_advert_payment
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: monthly
+      label: Monthly
+    -
+      value: weekly
+      label: Weekly
+    -
+      value: daily
+      label: Daily
+    -
+      value: nightly
+      label: Nightly
+    -
+      value: yearly
+      label: Yearly
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

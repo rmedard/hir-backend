@@ -1,0 +1,20 @@
+uuid: 34537a10-c29f-4590-9b6c-ab99d1f4f646
+langcode: en
+status: true
+dependencies:
+  module:
+    - rir_interface
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_riraddressblock
+theme: bootstrap_barrio
+region: top_header
+weight: 0
+provider: null
+plugin: rir_address_block
+settings:
+  id: rir_address_block
+  label: 'RiR Address Block'
+  label_display: '0'
+  provider: rir_interface
+visibility: {  }

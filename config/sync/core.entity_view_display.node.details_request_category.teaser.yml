@@ -1,0 +1,32 @@
+uuid: f50c11ed-3a69-40fb-ac3f-cb81d8dc982b
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.details_request_category.field_dr_reference
+    - field.field.node.details_request_category.field_mailchimp_category_id
+    - field.field.node.details_request_category.field_mailchimp_interest_id
+    - field.field.node.details_request_category.field_mailchimp_list_id
+    - field.field.node.details_request_category.field_mailchimp_segment_id
+    - node.type.details_request_category
+  module:
+    - user
+id: node.details_request_category.teaser
+targetEntityType: node
+bundle: details_request_category
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  addtoany: true
+  field_dr_reference: true
+  field_mailchimp_category_id: true
+  field_mailchimp_interest_id: true
+  field_mailchimp_list_id: true
+  field_mailchimp_segment_id: true
+  published_at: true

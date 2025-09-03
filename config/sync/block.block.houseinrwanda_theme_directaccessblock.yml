@@ -1,0 +1,20 @@
+uuid: 3ac9f7e8-0dea-41ad-b2fe-38038f18f8b2
+langcode: en
+status: true
+dependencies:
+  module:
+    - rir_interface
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_directaccessblock
+theme: houseinrwanda_theme
+region: sidebar_horizontal
+weight: -22
+provider: null
+plugin: direct_access_block
+settings:
+  id: direct_access_block
+  label: 'Direct Access Block'
+  label_display: '0'
+  provider: rir_interface
+visibility: {  }

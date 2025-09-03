@@ -1,0 +1,9 @@
+uuid: 3419cbb9-4c69-4dfe-a2fb-486b16fcd424
+langcode: en
+status: true
+dependencies: {  }
+name: Sectors
+vid: sectors
+description: 'National Administrative subdivisions of Rwandan territory'
+weight: 0
+new_revision: false

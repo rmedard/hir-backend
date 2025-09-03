@@ -1,0 +1,22 @@
+uuid: b1c5a734-614f-42e3-a609-4dee250b69d0
+langcode: en
+status: true
+dependencies:
+  theme:
+    - houseinrwanda_theme
+_core:
+  default_config_hash: X9I1OB0W3WlWtrK-CNcg6hNWwa8wficanpH8pYnDZDE
+id: houseinrwanda_theme_local_tasks
+theme: houseinrwanda_theme
+region: content
+weight: -17
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: true
+visibility: {  }

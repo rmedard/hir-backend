@@ -1,0 +1,47 @@
+uuid: 9c41b5ec-93ca-4c11-898d-729c417d6950
+langcode: en
+status: true
+dependencies: {  }
+id: advert_images_slider_optionset
+label: 'Advert Images Slider Optionset'
+options:
+  animation: fade
+  animationSpeed: 600
+  direction: horizontal
+  slideshow: true
+  easing: swing
+  smoothHeight: false
+  reverse: false
+  slideshowSpeed: 7000
+  animationLoop: true
+  randomize: false
+  startAt: 0
+  itemWidth: 0
+  itemMargin: 0
+  minItems: 0
+  maxItems: 0
+  move: 0
+  directionNav: true
+  controlNav: '0'
+  thumbCaptions: false
+  thumbCaptionsBoth: false
+  keyboard: true
+  multipleKeyboard: false
+  mousewheel: false
+  touch: true
+  prevText: Previous
+  nextText: Next
+  namespace: flex-
+  selector: '.slides > li'
+  sync: '#advert-slider-thumbnails'
+  asNavFor: ''
+  initDelay: 0
+  useCSS: true
+  video: false
+  pausePlay: false
+  pauseText: Pause
+  playText: Play
+  pauseOnAction: true
+  pauseOnHover: false
+  controlsContainer: ''
+  manualControls: ''

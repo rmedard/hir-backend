@@ -1,0 +1,77 @@
+uuid: 0292f0c2-71fd-4fcd-ac4e-70c01c889e94
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.details_request_category.field_dr_reference
+    - field.field.node.details_request_category.field_mailchimp_category_id
+    - field.field.node.details_request_category.field_mailchimp_interest_id
+    - field.field.node.details_request_category.field_mailchimp_list_id
+    - field.field.node.details_request_category.field_mailchimp_segment_id
+    - node.type.details_request_category
+id: node.details_request_category.default
+targetEntityType: node
+bundle: details_request_category
+mode: default
+content:
+  field_dr_reference:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_mailchimp_category_id:
+    type: string_textfield
+    weight: 27
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_mailchimp_interest_id:
+    type: string_textfield
+    weight: 28
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_mailchimp_list_id:
+    type: string_textfield
+    weight: 26
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_mailchimp_segment_id:
+    type: string_textfield
+    weight: 29
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 121
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

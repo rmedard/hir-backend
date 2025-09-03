@@ -1,0 +1,23 @@
+uuid: 715fbf67-fd9c-4e4f-a329-2f86f5217c27
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_linkedin
+    - node.type.agent
+  module:
+    - link
+id: node.agent.field_agent_linkedin
+field_name: field_agent_linkedin
+entity_type: node
+bundle: agent
+label: Linkedin
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 16
+field_type: link

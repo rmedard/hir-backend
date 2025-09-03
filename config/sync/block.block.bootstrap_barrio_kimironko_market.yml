@@ -1,0 +1,25 @@
+uuid: 560103f0-dcf0-409d-b105-edaaf190b0a2
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:banner_block:b2e2405f-beff-4c49-a234-20e297c0484c'
+  module:
+    - block_content
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_kimironko_market
+theme: bootstrap_barrio
+region: sidebar_second
+weight: -23
+provider: null
+plugin: 'block_content:b2e2405f-beff-4c49-a234-20e297c0484c'
+settings:
+  id: 'block_content:b2e2405f-beff-4c49-a234-20e297c0484c'
+  label: Kimironko_Market
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

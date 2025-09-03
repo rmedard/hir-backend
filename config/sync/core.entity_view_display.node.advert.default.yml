@@ -1,0 +1,458 @@
+uuid: 6cf358dc-029b-4abc-8f38-1540d170e9e4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.advert.field_advert_advertiser
+    - field.field.node.advert.field_advert_bathrooms
+    - field.field.node.advert.field_advert_bedrooms
+    - field.field.node.advert.field_advert_bid_security_amount
+    - field.field.node.advert.field_advert_bid_start_value
+    - field.field.node.advert.field_advert_bid_starting_value
+    - field.field.node.advert.field_advert_business_comment
+    - field.field.node.advert.field_advert_cell
+    - field.field.node.advert.field_advert_contact_email
+    - field.field.node.advert.field_advert_contact_name
+    - field.field.node.advert.field_advert_contact_tel
+    - field.field.node.advert.field_advert_creator_geolocation
+    - field.field.node.advert.field_advert_creator_location
+    - field.field.node.advert.field_advert_currency
+    - field.field.node.advert.field_advert_expirydate
+    - field.field.node.advert.field_advert_furnished
+    - field.field.node.advert.field_advert_is_agent
+    - field.field.node.advert.field_advert_is_first_published
+    - field.field.node.advert.field_advert_is_synchronised
+    - field.field.node.advert.field_advert_living_area
+    - field.field.node.advert.field_advert_locality
+    - field.field.node.advert.field_advert_locality_district
+    - field.field.node.advert.field_advert_locality_province
+    - field.field.node.advert.field_advert_locality_sector
+    - field.field.node.advert.field_advert_location
+    - field.field.node.advert.field_advert_payment
+    - field.field.node.advert.field_advert_picture
+    - field.field.node.advert.field_advert_posting_plan
+    - field.field.node.advert.field_advert_price
+    - field.field.node.advert.field_advert_price_in_rwf
+    - field.field.node.advert.field_advert_price_negociable
+    - field.field.node.advert.field_advert_property_type
+    - field.field.node.advert.field_advert_reference
+    - field.field.node.advert.field_advert_relative_path
+    - field.field.node.advert.field_advert_rented_sold
+    - field.field.node.advert.field_advert_signature
+    - field.field.node.advert.field_advert_size
+    - field.field.node.advert.field_advert_street
+    - field.field.node.advert.field_advert_total_floors
+    - field.field.node.advert.field_advert_type
+    - field.field.node.advert.field_advert_video_presentation
+    - field.field.node.advert.field_advert_village
+    - field.field.node.advert.field_agent_side_reference
+    - field.field.node.advert.field_bid_expiration
+    - field.field.node.advert.field_bid_is_online
+    - field.field.node.advert.field_bid_reference
+    - field.field.node.advert.field_bid_security_amount
+    - field.field.node.advert.field_bid_starting_value
+    - field.field.node.advert.field_price_in_rwf
+    - field.field.node.advert.field_property_description
+    - field.field.node.advert.field_target_pr_id
+    - field.field.node.advert.field_visit_cellphone
+    - field.field.node.advert.field_visit_cellphone_2
+    - field.field.node.advert.field_visit_contact_name
+    - field.field.node.advert.field_visit_email_address1
+    - field.field.node.advert.field_visit_email_address2
+    - image.style.flexslider_full
+    - image.style.flexslider_thumbnail
+    - node.type.advert
+  module:
+    - colorbox
+    - datetime
+    - geolocation
+    - options
+    - telephone
+    - text
+    - user
+    - youtube
+id: node.advert.default
+targetEntityType: node
+bundle: advert
+mode: default
+content:
+  addtoany:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 15
+    region: content
+  field_advert_advertiser:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 30
+    region: content
+  field_advert_bathrooms:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 18
+    region: content
+  field_advert_bedrooms:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 19
+    region: content
+  field_advert_bid_security_amount:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_advert_bid_start_value:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 38
+    region: content
+  field_advert_bid_starting_value:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_advert_business_comment:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 39
+    region: content
+  field_advert_cell:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 20
+    region: content
+  field_advert_contact_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 21
+    region: content
+  field_advert_contact_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 22
+    region: content
+  field_advert_contact_tel:
+    type: telephone_link
+    label: above
+    settings:
+      title: ''
+    third_party_settings: {  }
+    weight: 23
+    region: content
+  field_advert_creator_geolocation:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_advert_currency:
+    type: list_key
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 24
+    region: content
+  field_advert_expirydate:
+    type: datetime_custom
+    label: above
+    settings:
+      timezone_override: ''
+      date_format: 'F d, Y'
+    third_party_settings: {  }
+    weight: 17
+    region: content
+  field_advert_furnished:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_advert_is_synchronised:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 40
+    region: content
+  field_advert_locality:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 33
+    region: content
+  field_advert_locality_district:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 35
+    region: content
+  field_advert_locality_province:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 36
+    region: content
+  field_advert_locality_sector:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 34
+    region: content
+  field_advert_location:
+    type: geolocation_latlng
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 32
+    region: content
+  field_advert_payment:
+    type: list_key
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 25
+    region: content
+  field_advert_picture:
+    type: colorbox
+    label: hidden
+    settings:
+      colorbox_image_style: ''
+      colorbox_gallery: post
+      colorbox_gallery_custom: ''
+      colorbox_caption: title
+      colorbox_caption_custom: ''
+      colorbox_node_style: flexslider_thumbnail
+      colorbox_node_style_first: flexslider_full
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_advert_price:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 26
+    region: content
+  field_advert_price_negociable:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 27
+    region: content
+  field_advert_property_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 28
+    region: content
+  field_advert_reference:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 29
+    region: content
+  field_advert_relative_path:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 41
+    region: content
+  field_advert_size:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 16
+    region: content
+  field_advert_street:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_advert_total_floors:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 37
+    region: content
+  field_advert_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_advert_video_presentation:
+    type: youtube_video
+    label: hidden
+    settings:
+      youtube_size: responsive
+      youtube_width: ''
+      youtube_height: ''
+      youtube_autoplay: false
+      youtube_mute: false
+      youtube_loop: false
+      youtube_controls: false
+      youtube_autohide: true
+      youtube_iv_load_policy: false
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_property_description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_target_pr_id:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_visit_cellphone:
+    type: telephone_link
+    label: above
+    settings:
+      title: ''
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_visit_cellphone_2:
+    type: telephone_link
+    label: above
+    settings:
+      title: ''
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_visit_contact_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 31
+    region: content
+  field_visit_email_address1:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_visit_email_address2:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 14
+    region: content
+  published_at:
+    type: timestamp_ago
+    label: above
+    settings:
+      future_format: '@interval hence'
+      past_format: '@interval ago'
+      granularity: 2
+    third_party_settings: {  }
+    weight: 7
+    region: content
+hidden:
+  field_advert_creator_location: true
+  field_advert_is_agent: true
+  field_advert_is_first_published: true
+  field_advert_living_area: true
+  field_advert_posting_plan: true
+  field_advert_price_in_rwf: true
+  field_advert_rented_sold: true
+  field_advert_signature: true
+  field_advert_village: true
+  field_agent_side_reference: true
+  field_bid_expiration: true
+  field_bid_is_online: true
+  field_bid_reference: true
+  field_bid_security_amount: true
+  field_bid_starting_value: true
+  field_price_in_rwf: true
+  links: true
+  location_province: true

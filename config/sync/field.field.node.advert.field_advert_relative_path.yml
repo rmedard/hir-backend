@@ -1,0 +1,19 @@
+uuid: 0622f237-ee9a-484b-8081-d40a274f8395
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_relative_path
+    - node.type.advert
+id: node.advert.field_advert_relative_path
+field_name: field_advert_relative_path
+entity_type: node
+bundle: advert
+label: 'Relative path'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

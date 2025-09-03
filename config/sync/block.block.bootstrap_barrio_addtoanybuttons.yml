@@ -1,0 +1,20 @@
+uuid: 142a1815-907e-4777-af12-b543941bab74
+langcode: en
+status: false
+dependencies:
+  module:
+    - addtoany
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_addtoanybuttons
+theme: bootstrap_barrio
+region: top_header
+weight: -14
+provider: null
+plugin: addtoany_block
+settings:
+  id: addtoany_block
+  label: 'AddToAny buttons'
+  label_display: '0'
+  provider: addtoany
+visibility: {  }

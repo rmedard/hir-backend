@@ -1,0 +1,21 @@
+uuid: c85ad020-d7b1-4e09-b371-6bd66f9d768c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_bid_expiration
+    - node.type.advert
+  module:
+    - datetime
+id: node.advert.field_bid_expiration
+field_name: field_bid_expiration
+entity_type: node
+bundle: advert
+label: 'Bid Expiration'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

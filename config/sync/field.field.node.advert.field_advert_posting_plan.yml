@@ -1,0 +1,23 @@
+uuid: 988397cd-2a0d-4ebb-b1db-a351b80ca277
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_posting_plan
+    - node.type.advert
+  module:
+    - options
+id: node.advert.field_advert_posting_plan
+field_name: field_advert_posting_plan
+entity_type: node
+bundle: advert
+label: 'Posting plan'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: featured
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,30 @@
+uuid: 2b25b776-5a55-482b-b107-dd40b732df9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_location
+    - node.type.advert
+  module:
+    - geolocation
+id: node.advert.field_advert_location
+field_name: field_advert_location
+entity_type: node
+bundle: advert
+label: Location
+description: 'Please locate your property on the map. The starting point is on KN 1 roundabout (Sainte famille - Church). You can zoom the map in or out to find your neighborhood'
+required: false
+translatable: false
+default_value:
+  -
+    lat: '-1.9440359734305226'
+    lng: '30.061930250376463'
+    lat_sin: null
+    lat_cos: null
+    lng_rad: null
+    data: null
+    controls:
+      location: ''
+default_value_callback: ''
+settings: {  }
+field_type: geolocation

@@ -1,0 +1,95 @@
+uuid: b4de7952-9a4d-4777-892f-b5ae27eb37c6
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.slider
+    - field.field.node.agent.field_advertiser_featured
+    - field.field.node.agent.field_advertiser_is_synchronised
+    - field.field.node.agent.field_advertiser_type
+    - field.field.node.agent.field_agent_category
+    - field.field.node.agent.field_agent_cell
+    - field.field.node.agent.field_agent_district
+    - field.field.node.agent.field_agent_email
+    - field.field.node.agent.field_agent_facebook
+    - field.field.node.agent.field_agent_linkedin
+    - field.field.node.agent.field_agent_logo
+    - field.field.node.agent.field_agent_operations_area
+    - field.field.node.agent.field_agent_phone
+    - field.field.node.agent.field_agent_rating
+    - field.field.node.agent.field_agent_relative_path
+    - field.field.node.agent.field_agent_sector
+    - field.field.node.agent.field_agent_street
+    - field.field.node.agent.field_agent_summary
+    - field.field.node.agent.field_agent_tin_nbr
+    - field.field.node.agent.field_agent_twitter
+    - field.field.node.agent.field_agent_village
+    - field.field.node.agent.field_agent_website
+    - field.field.node.agent.field_introductory_images
+    - node.type.agent
+  module:
+    - image
+    - options
+    - user
+id: node.agent.slider
+targetEntityType: node
+bundle: agent
+mode: slider
+content:
+  field_advertiser_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_agent_category:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_agent_logo:
+    type: image_url
+    label: hidden
+    settings:
+      image_style: medium
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_agent_phone:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  rate_vote_widget:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: right
+hidden:
+  addtoany: true
+  field_advertiser_featured: true
+  field_advertiser_is_synchronised: true
+  field_agent_cell: true
+  field_agent_district: true
+  field_agent_email: true
+  field_agent_facebook: true
+  field_agent_linkedin: true
+  field_agent_operations_area: true
+  field_agent_rating: true
+  field_agent_relative_path: true
+  field_agent_sector: true
+  field_agent_street: true
+  field_agent_summary: true
+  field_agent_tin_nbr: true
+  field_agent_twitter: true
+  field_agent_village: true
+  field_agent_website: true
+  field_introductory_images: true
+  links: true
+  published_at: true

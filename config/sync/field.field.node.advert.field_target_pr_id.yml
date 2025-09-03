@@ -1,0 +1,23 @@
+uuid: aa2b63c2-8be1-4a0e-8cd5-26d7c4797dad
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_target_pr_id
+    - node.type.advert
+id: node.advert.field_target_pr_id
+field_name: field_target_pr_id
+entity_type: node
+bundle: advert
+label: 'Target PR Id'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

@@ -1,0 +1,21 @@
+uuid: c2cd42eb-4ede-4931-9057-34cbc2f983a1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_minimum_bedrooms
+    - node.type.property_request
+  module:
+    - options
+id: node.property_request.field_pr_minimum_bedrooms
+field_name: field_pr_minimum_bedrooms
+entity_type: node
+bundle: property_request
+label: 'Minimum bedrooms'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

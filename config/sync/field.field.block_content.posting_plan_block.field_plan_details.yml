@@ -1,0 +1,21 @@
+uuid: b9d93a82-cf5e-402a-bfc6-11005274145a
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.posting_plan_block
+    - field.storage.block_content.field_plan_details
+  module:
+    - text
+id: block_content.posting_plan_block.field_plan_details
+field_name: field_plan_details
+entity_type: block_content
+bundle: posting_plan_block
+label: 'Plan details'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

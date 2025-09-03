@@ -1,0 +1,282 @@
+uuid: 3977eed4-be48-4931-a232-6a3c421f2740
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.property_request
+  module:
+    - jsonapi_defaults
+third_party_settings:
+  jsonapi_defaults:
+    default_filter:
+      'filter:status': '1'
+    page_limit: 50
+id: node--property_request
+disabled: false
+path: property_request
+resourceType: node--property_request
+resourceFields:
+  nid:
+    disabled: false
+    fieldName: nid
+    publicName: nid
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  vid:
+    disabled: false
+    fieldName: vid
+    publicName: vid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: true
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  type:
+    disabled: false
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  revision_timestamp:
+    disabled: false
+    fieldName: revision_timestamp
+    publicName: revision_timestamp
+    enhancer:
+      id: ''
+  revision_uid:
+    disabled: false
+    fieldName: revision_uid
+    publicName: revision_uid
+    enhancer:
+      id: ''
+  revision_log:
+    disabled: false
+    fieldName: revision_log
+    publicName: revision_log
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  uid:
+    disabled: false
+    fieldName: uid
+    publicName: uid
+    enhancer:
+      id: ''
+  title:
+    disabled: false
+    fieldName: title
+    publicName: title
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  promote:
+    disabled: true
+    fieldName: promote
+    publicName: promote
+    enhancer:
+      id: ''
+  sticky:
+    disabled: true
+    fieldName: sticky
+    publicName: sticky
+    enhancer:
+      id: ''
+  default_langcode:
+    disabled: true
+    fieldName: default_langcode
+    publicName: default_langcode
+    enhancer:
+      id: ''
+  revision_default:
+    disabled: true
+    fieldName: revision_default
+    publicName: revision_default
+    enhancer:
+      id: ''
+  revision_translation_affected:
+    disabled: true
+    fieldName: revision_translation_affected
+    publicName: revision_translation_affected
+    enhancer:
+      id: ''
+  metatag:
+    disabled: true
+    fieldName: metatag
+    publicName: metatag
+    enhancer:
+      id: ''
+  path:
+    disabled: false
+    fieldName: path
+    publicName: path
+    enhancer:
+      id: ''
+  menu_link:
+    disabled: false
+    fieldName: menu_link
+    publicName: menu_link
+    enhancer:
+      id: ''
+  published_at:
+    disabled: false
+    fieldName: published_at
+    publicName: published_at
+    enhancer:
+      id: ''
+  field_how_to_submit_advert:
+    disabled: true
+    fieldName: field_how_to_submit_advert
+    publicName: field_how_to_submit_advert
+    enhancer:
+      id: ''
+  field_pr_area_city_interest:
+    disabled: false
+    fieldName: field_pr_area_city_interest
+    publicName: field_pr_area_city_interest
+    enhancer:
+      id: ''
+  field_pr_currency:
+    disabled: false
+    fieldName: field_pr_currency
+    publicName: field_pr_currency
+    enhancer:
+      id: ''
+  field_pr_email:
+    disabled: false
+    fieldName: field_pr_email
+    publicName: field_pr_email
+    enhancer:
+      id: ''
+  field_pr_equipment:
+    disabled: false
+    fieldName: field_pr_equipment
+    publicName: field_pr_equipment
+    enhancer:
+      id: ''
+  field_pr_expiry_date:
+    disabled: false
+    fieldName: field_pr_expiry_date
+    publicName: field_pr_expiry_date
+    enhancer:
+      id: ''
+  field_pr_first_name:
+    disabled: false
+    fieldName: field_pr_first_name
+    publicName: field_pr_first_name
+    enhancer:
+      id: ''
+  field_pr_last_name:
+    disabled: false
+    fieldName: field_pr_last_name
+    publicName: field_pr_last_name
+    enhancer:
+      id: ''
+  field_pr_maximum:
+    disabled: false
+    fieldName: field_pr_maximum
+    publicName: field_pr_maximum
+    enhancer:
+      id: ''
+  field_pr_minimum:
+    disabled: false
+    fieldName: field_pr_minimum
+    publicName: field_pr_minimum
+    enhancer:
+      id: ''
+  field_pr_minimum_bathrooms:
+    disabled: false
+    fieldName: field_pr_minimum_bathrooms
+    publicName: field_pr_minimum_bathrooms
+    enhancer:
+      id: ''
+  field_pr_minimum_bedrooms:
+    disabled: false
+    fieldName: field_pr_minimum_bedrooms
+    publicName: field_pr_minimum_bedrooms
+    enhancer:
+      id: ''
+  field_pr_more_details:
+    disabled: false
+    fieldName: field_pr_more_details
+    publicName: field_pr_more_details
+    enhancer:
+      id: ''
+  field_pr_neighborhood_descr:
+    disabled: false
+    fieldName: field_pr_neighborhood_descr
+    publicName: field_pr_neighborhood_descr
+    enhancer:
+      id: ''
+  field_pr_payable:
+    disabled: false
+    fieldName: field_pr_payable
+    publicName: field_pr_payable
+    enhancer:
+      id: ''
+  field_pr_phone_number:
+    disabled: false
+    fieldName: field_pr_phone_number
+    publicName: field_pr_phone_number
+    enhancer:
+      id: ''
+  field_pr_property_type:
+    disabled: false
+    fieldName: field_pr_property_type
+    publicName: field_pr_property_type
+    enhancer:
+      id: ''
+  field_pr_proposed_properties:
+    disabled: false
+    fieldName: field_pr_proposed_properties
+    publicName: field_pr_proposed_properties
+    enhancer:
+      id: ''
+  field_pr_reference:
+    disabled: false
+    fieldName: field_pr_reference
+    publicName: field_pr_reference
+    enhancer:
+      id: ''
+  field_pr_request_type:
+    disabled: false
+    fieldName: field_pr_request_type
+    publicName: field_pr_request_type
+    enhancer:
+      id: ''
+  field_pr_required_service:
+    disabled: false
+    fieldName: field_pr_required_service
+    publicName: field_pr_required_service
+    enhancer:
+      id: ''
+  field_pr_urgency:
+    disabled: false
+    fieldName: field_pr_urgency
+    publicName: field_pr_urgency
+    enhancer:
+      id: ''

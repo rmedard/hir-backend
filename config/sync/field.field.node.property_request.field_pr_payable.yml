@@ -1,0 +1,21 @@
+uuid: d3084ff0-f79a-4515-a416-e4fcba018670
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_payable
+    - node.type.property_request
+  module:
+    - options
+id: node.property_request.field_pr_payable
+field_name: field_pr_payable
+entity_type: node
+bundle: property_request
+label: Payable
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

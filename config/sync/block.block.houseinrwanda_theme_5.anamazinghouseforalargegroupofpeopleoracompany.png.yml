@@ -1,0 +1,31 @@
+uuid: 60f21e3e-6c94-4ee2-b2d7-c3cec1e3f32b
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:7d683a3e-0743-4877-837a-4be615fbb6d0'
+  module:
+    - block_content
+    - system
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_5.anamazinghouseforalargegroupofpeopleoracompany.png
+theme: houseinrwanda_theme
+region: sidebar_first
+weight: -19
+provider: null
+plugin: 'block_content:7d683a3e-0743-4877-837a-4be615fbb6d0'
+settings:
+  id: 'block_content:7d683a3e-0743-4877-837a-4be615fbb6d0'
+  label: '5. An amazing house for a large group of people or a company.png'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    context_mapping: {  }
+    pages: '<front>'

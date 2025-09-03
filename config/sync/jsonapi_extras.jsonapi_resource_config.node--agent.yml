@@ -1,0 +1,276 @@
+uuid: 270614df-2fa8-41f5-aa37-a21a34f13d72
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.agent
+  module:
+    - jsonapi_defaults
+third_party_settings:
+  jsonapi_defaults:
+    default_filter:
+      'filter:status': '1'
+    page_limit: 50
+id: node--agent
+disabled: false
+path: agents
+resourceType: agent
+resourceFields:
+  nid:
+    disabled: false
+    fieldName: nid
+    publicName: nid
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  vid:
+    disabled: true
+    fieldName: vid
+    publicName: vid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: true
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  type:
+    disabled: false
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  revision_timestamp:
+    disabled: true
+    fieldName: revision_timestamp
+    publicName: revision_timestamp
+    enhancer:
+      id: ''
+  revision_uid:
+    disabled: true
+    fieldName: revision_uid
+    publicName: revision_uid
+    enhancer:
+      id: ''
+  revision_log:
+    disabled: true
+    fieldName: revision_log
+    publicName: revision_log
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  uid:
+    disabled: false
+    fieldName: uid
+    publicName: uid
+    enhancer:
+      id: ''
+  title:
+    disabled: false
+    fieldName: title
+    publicName: title
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  promote:
+    disabled: true
+    fieldName: promote
+    publicName: promote
+    enhancer:
+      id: ''
+  sticky:
+    disabled: true
+    fieldName: sticky
+    publicName: sticky
+    enhancer:
+      id: ''
+  default_langcode:
+    disabled: true
+    fieldName: default_langcode
+    publicName: default_langcode
+    enhancer:
+      id: ''
+  revision_default:
+    disabled: true
+    fieldName: revision_default
+    publicName: revision_default
+    enhancer:
+      id: ''
+  revision_translation_affected:
+    disabled: true
+    fieldName: revision_translation_affected
+    publicName: revision_translation_affected
+    enhancer:
+      id: ''
+  metatag:
+    disabled: false
+    fieldName: metatag
+    publicName: metatag
+    enhancer:
+      id: ''
+  path:
+    disabled: false
+    fieldName: path
+    publicName: path
+    enhancer:
+      id: nested
+      settings:
+        path: alias
+  menu_link:
+    disabled: true
+    fieldName: menu_link
+    publicName: menu_link
+    enhancer:
+      id: ''
+  published_at:
+    disabled: false
+    fieldName: published_at
+    publicName: published_at
+    enhancer:
+      id: ''
+  field_advertiser_featured:
+    disabled: false
+    fieldName: field_advertiser_featured
+    publicName: field_advertiser_featured
+    enhancer:
+      id: ''
+  field_advertiser_type:
+    disabled: false
+    fieldName: field_advertiser_type
+    publicName: field_advertiser_type
+    enhancer:
+      id: ''
+  field_agent_cell:
+    disabled: false
+    fieldName: field_agent_cell
+    publicName: field_agent_cell
+    enhancer:
+      id: ''
+  field_agent_district:
+    disabled: false
+    fieldName: field_agent_district
+    publicName: field_agent_district
+    enhancer:
+      id: ''
+  field_agent_email:
+    disabled: false
+    fieldName: field_agent_email
+    publicName: field_agent_email
+    enhancer:
+      id: ''
+  field_agent_facebook:
+    disabled: false
+    fieldName: field_agent_facebook
+    publicName: field_agent_facebook
+    enhancer:
+      id: nested
+      settings:
+        path: uri
+  field_agent_linkedin:
+    disabled: false
+    fieldName: field_agent_linkedin
+    publicName: field_agent_linkedin
+    enhancer:
+      id: nested
+      settings:
+        path: uri
+  field_agent_logo:
+    disabled: false
+    fieldName: field_agent_logo
+    publicName: field_agent_logo
+    enhancer:
+      id: ''
+  field_agent_operations_area:
+    disabled: false
+    fieldName: field_agent_operations_area
+    publicName: field_agent_operations_area
+    enhancer:
+      id: ''
+  field_agent_phone:
+    disabled: false
+    fieldName: field_agent_phone
+    publicName: field_agent_phone
+    enhancer:
+      id: ''
+  field_agent_rating:
+    disabled: false
+    fieldName: field_agent_rating
+    publicName: field_agent_rating
+    enhancer:
+      id: ''
+  field_agent_sector:
+    disabled: false
+    fieldName: field_agent_sector
+    publicName: field_agent_sector
+    enhancer:
+      id: ''
+  field_agent_street:
+    disabled: false
+    fieldName: field_agent_street
+    publicName: field_agent_street
+    enhancer:
+      id: ''
+  field_agent_summary:
+    disabled: false
+    fieldName: field_agent_summary
+    publicName: field_agent_summary
+    enhancer:
+      id: nested
+      settings:
+        path: value
+  field_agent_tin_nbr:
+    disabled: false
+    fieldName: field_agent_tin_nbr
+    publicName: field_agent_tin_nbr
+    enhancer:
+      id: ''
+  field_agent_twitter:
+    disabled: false
+    fieldName: field_agent_twitter
+    publicName: field_agent_twitter
+    enhancer:
+      id: nested
+      settings:
+        path: uri
+  field_agent_village:
+    disabled: false
+    fieldName: field_agent_village
+    publicName: field_agent_village
+    enhancer:
+      id: ''
+  field_agent_website:
+    disabled: false
+    fieldName: field_agent_website
+    publicName: field_agent_website
+    enhancer:
+      id: nested
+      settings:
+        path: uri
+  field_introductory_images:
+    disabled: false
+    fieldName: field_introductory_images
+    publicName: field_introductory_images
+    enhancer:
+      id: ''

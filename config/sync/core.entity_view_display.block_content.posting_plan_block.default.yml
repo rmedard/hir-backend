@@ -1,0 +1,32 @@
+uuid: 8d1c5b17-046e-47b4-a509-6386da0294e8
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.posting_plan_block
+    - field.field.block_content.posting_plan_block.field_plan_details
+    - field.field.block_content.posting_plan_block.field_plan_weight
+  module:
+    - text
+id: block_content.posting_plan_block.default
+targetEntityType: block_content
+bundle: posting_plan_block
+mode: default
+content:
+  field_plan_details:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_plan_weight:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

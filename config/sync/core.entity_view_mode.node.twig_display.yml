@@ -1,0 +1,11 @@
+uuid: 060765ed-2447-42ae-8ff9-89c6172853a8
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.twig_display
+label: 'Twig Display'
+description: ''
+targetEntityType: node
+cache: true

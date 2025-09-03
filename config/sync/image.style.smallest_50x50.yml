@@ -1,0 +1,15 @@
+uuid: 131c2f90-9471-44b0-af60-122ec68017ff
+langcode: en
+status: true
+dependencies: {  }
+name: smallest_50x50
+label: Smallest(50x50)
+effects:
+  9b2aa18e-796a-4b7f-bf19-996204252776:
+    uuid: 9b2aa18e-796a-4b7f-bf19-996204252776
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 50
+      height: 50
+      anchor: center-center

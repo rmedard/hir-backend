@@ -87,6 +87,10 @@ nav#navbar-main {
   }
 }
 
+.shs-widget-container + .shs-widget-container {
+  margin-left: 10px;
+}
+
 @include media-breakpoint-up(md) {
   nav#navbar-main {
     div.hir-header-navbar {

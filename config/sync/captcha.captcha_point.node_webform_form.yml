@@ -1,0 +1,7 @@
+uuid: eb3d48ab-f4fd-4c41-a12b-e53e2d5d4c70
+langcode: en
+status: false
+dependencies: {  }
+formId: node_webform_form
+captchaType: recaptcha/reCAPTCHA
+label: webform_submission_notification_subscription_add_form

@@ -1,0 +1,23 @@
+uuid: 5898b364-3b27-4a98-8de6-515c996d83ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_maximum
+    - node.type.property_request
+id: node.property_request.field_pr_maximum
+field_name: field_pr_maximum
+entity_type: node
+bundle: property_request
+label: Maximum
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

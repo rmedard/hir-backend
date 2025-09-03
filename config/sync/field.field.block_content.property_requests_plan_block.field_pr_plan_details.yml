@@ -1,0 +1,21 @@
+uuid: 1bb23898-2c19-41f0-b22e-f70ec3143f99
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.property_requests_plan_block
+    - field.storage.block_content.field_pr_plan_details
+  module:
+    - text
+id: block_content.property_requests_plan_block.field_pr_plan_details
+field_name: field_pr_plan_details
+entity_type: block_content
+bundle: property_requests_plan_block
+label: 'PR Plan Details'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

@@ -1,0 +1,24 @@
+uuid: 50936d74-7e9d-4da0-8498-174403cf03bc
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - field_permissions
+    - node
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: node.field_bid_expiration
+field_name: field_bid_expiration
+entity_type: node
+type: datetime
+settings:
+  datetime_type: datetime
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

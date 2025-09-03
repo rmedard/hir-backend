@@ -1,0 +1,33 @@
+uuid: 58f89792-f565-468f-9fc2-357408b60a8e
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.single_advert
+  module:
+    - ctools
+    - views
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_views_block__single_advert_block_single_bid_advert
+theme: bootstrap_barrio
+region: top_header
+weight: -19
+provider: null
+plugin: 'views_block:single_advert-block_single_bid_advert'
+settings:
+  id: 'views_block:single_advert-block_single_bid_advert'
+  label: ''
+  label_display: '0'
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: none
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      advert: advert

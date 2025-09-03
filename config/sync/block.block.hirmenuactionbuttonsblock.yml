@@ -1,0 +1,20 @@
+uuid: 3b86c425-8967-49a9-8d53-c25c4c4584b1
+langcode: en
+status: true
+dependencies:
+  module:
+    - rir_interface
+  theme:
+    - houseinrwanda_theme
+id: hirmenuactionbuttonsblock
+theme: houseinrwanda_theme
+region: header_form
+weight: 0
+provider: null
+plugin: hir_menu_action_buttons_block
+settings:
+  id: hir_menu_action_buttons_block
+  label: 'HiR Menu Action Buttons Block'
+  label_display: '0'
+  provider: rir_interface
+visibility: {  }

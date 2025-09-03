@@ -1,0 +1,30 @@
+uuid: e14c3421-5047-4f1b-b5bf-42e012dea0f3
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:7dc6436c-0e60-4905-8819-5810c632f788'
+  module:
+    - block_content
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_agentofthemonth
+theme: bootstrap_barrio
+region: sidebar_second
+weight: -17
+provider: null
+plugin: 'block_content:7dc6436c-0e60-4905-8819-5810c632f788'
+settings:
+  id: 'block_content:7dc6436c-0e60-4905-8819-5810c632f788'
+  label: 'Agent Of The Month'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

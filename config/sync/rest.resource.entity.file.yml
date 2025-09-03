@@ -1,0 +1,20 @@
+uuid: 0804de5d-c2a4-4a79-8678-46f72d641681
+langcode: en
+status: false
+dependencies:
+  module:
+    - basic_auth
+    - file
+    - serialization
+    - user
+id: entity.file
+plugin_id: 'entity:file'
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - basic_auth
+    - cookie

@@ -1,0 +1,21 @@
+uuid: fe882b67-fd91-4896-8967-e314e6237008
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_minimum_bathrooms
+    - node.type.property_request
+  module:
+    - options
+id: node.property_request.field_pr_minimum_bathrooms
+field_name: field_pr_minimum_bathrooms
+entity_type: node
+bundle: property_request
+label: 'Minimum bathrooms'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

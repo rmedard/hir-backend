@@ -1,0 +1,19 @@
+uuid: 71fd14f2-764e-47ed-b10c-55b6df0888ac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_locality_province
+    - node.type.advert
+id: node.advert.field_advert_locality_province
+field_name: field_advert_locality_province
+entity_type: node
+bundle: advert
+label: 'Locality province'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

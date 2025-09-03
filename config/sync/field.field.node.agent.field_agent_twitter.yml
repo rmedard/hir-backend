@@ -1,0 +1,23 @@
+uuid: 5f30069f-1daf-40b3-a983-de93eb61cab4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_twitter
+    - node.type.agent
+  module:
+    - link
+id: node.agent.field_agent_twitter
+field_name: field_agent_twitter
+entity_type: node
+bundle: agent
+label: Twitter
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 16
+field_type: link

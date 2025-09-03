@@ -1,0 +1,28 @@
+uuid: feab91a8-98d3-43f2-b66a-bbedbfdd3550
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - rir_interface
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_rirsimilaradverts
+theme: bootstrap_barrio
+region: top_header
+weight: -16
+provider: null
+plugin: rir_similar_adverts
+settings:
+  id: rir_similar_adverts
+  label: 'RiR Similar Adverts'
+  label_display: '0'
+  provider: rir_interface
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      advert: advert

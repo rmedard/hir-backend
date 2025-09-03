@@ -1,0 +1,24 @@
+uuid: 187ee88f-45c2-41ce-a1a6-393a4b4ef912
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+third_party_settings:
+  field_permissions:
+    permission_type: custom
+id: node.field_price_in_rwf
+field_name: field_price_in_rwf
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

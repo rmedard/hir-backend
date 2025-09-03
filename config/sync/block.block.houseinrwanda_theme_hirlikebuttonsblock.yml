@@ -1,0 +1,20 @@
+uuid: c1e9e692-fc19-4e4c-a2bc-3bd5d2bfe6bf
+langcode: en
+status: true
+dependencies:
+  module:
+    - rir_interface
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_hirlikebuttonsblock
+theme: houseinrwanda_theme
+region: footer_fifth
+weight: -23
+provider: null
+plugin: hir_like_buttons_block
+settings:
+  id: hir_like_buttons_block
+  label: 'HiR Like Buttons Block'
+  label_display: '0'
+  provider: rir_interface
+visibility: {  }

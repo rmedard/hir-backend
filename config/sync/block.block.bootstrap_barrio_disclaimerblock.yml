@@ -1,0 +1,33 @@
+uuid: 21e384d6-9d8f-4257-a693-a50b697aec18
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:e757d126-4fb5-4f78-92ea-7bbd88d260a1'
+  module:
+    - block_content
+    - webform
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_disclaimerblock
+theme: bootstrap_barrio
+region: content
+weight: -5
+provider: null
+plugin: 'block_content:e757d126-4fb5-4f78-92ea-7bbd88d260a1'
+settings:
+  id: 'block_content:e757d126-4fb5-4f78-92ea-7bbd88d260a1'
+  label: 'Disclaimer Block'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  webform:
+    id: webform
+    negate: false
+    context_mapping:
+      webform: '@webform.webform_route_context:webform'
+    webforms:
+      property_request_form: property_request_form

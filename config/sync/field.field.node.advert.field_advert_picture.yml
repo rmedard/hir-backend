@@ -1,0 +1,38 @@
+uuid: f1983712-67ac-433d-9cde-76d29fb3e8ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_picture
+    - node.type.advert
+  module:
+    - image
+id: node.advert.field_advert_picture
+field_name: field_advert_picture
+entity_type: node
+bundle: advert
+label: 'Upload pictures of your property'
+description: 'Please use the "Choose Files" button below to upload the images of your property. They will be uploaded together but they will appear one by one. They might take time to appear depending on the speed of your internet connection.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: 'advert_photos/[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: '2 MB'
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: false
+  alt_field_required: true
+  title_field: true
+  title_field_required: false
+  default_image:
+    uuid: f02c9817-c24c-4681-b4e1-9d8184eb63e3
+    alt: ''
+    title: ''
+    width: 800
+    height: 533
+field_type: image

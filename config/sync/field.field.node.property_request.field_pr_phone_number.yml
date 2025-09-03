@@ -1,0 +1,21 @@
+uuid: 51dd7d6b-101d-48d1-a5ed-347bb7dfcf6d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_phone_number
+    - node.type.property_request
+  module:
+    - telephone
+id: node.property_request.field_pr_phone_number
+field_name: field_pr_phone_number
+entity_type: node
+bundle: property_request
+label: 'Phone number'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

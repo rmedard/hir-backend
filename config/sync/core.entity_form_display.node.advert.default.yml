@@ -1,0 +1,1132 @@
+uuid: 900c1159-e30b-4be3-9af2-1b9257cdff59
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.advert.field_advert_advertiser
+    - field.field.node.advert.field_advert_bathrooms
+    - field.field.node.advert.field_advert_bedrooms
+    - field.field.node.advert.field_advert_bid_security_amount
+    - field.field.node.advert.field_advert_bid_start_value
+    - field.field.node.advert.field_advert_bid_starting_value
+    - field.field.node.advert.field_advert_business_comment
+    - field.field.node.advert.field_advert_cell
+    - field.field.node.advert.field_advert_contact_email
+    - field.field.node.advert.field_advert_contact_name
+    - field.field.node.advert.field_advert_contact_tel
+    - field.field.node.advert.field_advert_creator_geolocation
+    - field.field.node.advert.field_advert_creator_location
+    - field.field.node.advert.field_advert_currency
+    - field.field.node.advert.field_advert_expirydate
+    - field.field.node.advert.field_advert_furnished
+    - field.field.node.advert.field_advert_is_agent
+    - field.field.node.advert.field_advert_is_first_published
+    - field.field.node.advert.field_advert_is_synchronised
+    - field.field.node.advert.field_advert_living_area
+    - field.field.node.advert.field_advert_locality
+    - field.field.node.advert.field_advert_locality_district
+    - field.field.node.advert.field_advert_locality_province
+    - field.field.node.advert.field_advert_locality_sector
+    - field.field.node.advert.field_advert_location
+    - field.field.node.advert.field_advert_payment
+    - field.field.node.advert.field_advert_picture
+    - field.field.node.advert.field_advert_posting_plan
+    - field.field.node.advert.field_advert_price
+    - field.field.node.advert.field_advert_price_in_rwf
+    - field.field.node.advert.field_advert_price_negociable
+    - field.field.node.advert.field_advert_property_type
+    - field.field.node.advert.field_advert_reference
+    - field.field.node.advert.field_advert_relative_path
+    - field.field.node.advert.field_advert_rented_sold
+    - field.field.node.advert.field_advert_signature
+    - field.field.node.advert.field_advert_size
+    - field.field.node.advert.field_advert_street
+    - field.field.node.advert.field_advert_total_floors
+    - field.field.node.advert.field_advert_type
+    - field.field.node.advert.field_advert_video_presentation
+    - field.field.node.advert.field_advert_village
+    - field.field.node.advert.field_agent_side_reference
+    - field.field.node.advert.field_bid_expiration
+    - field.field.node.advert.field_bid_is_online
+    - field.field.node.advert.field_bid_reference
+    - field.field.node.advert.field_bid_security_amount
+    - field.field.node.advert.field_bid_starting_value
+    - field.field.node.advert.field_price_in_rwf
+    - field.field.node.advert.field_property_description
+    - field.field.node.advert.field_target_pr_id
+    - field.field.node.advert.field_visit_cellphone
+    - field.field.node.advert.field_visit_cellphone_2
+    - field.field.node.advert.field_visit_contact_name
+    - field.field.node.advert.field_visit_email_address1
+    - field.field.node.advert.field_visit_email_address2
+    - image.style.agentlogow150
+    - node.type.advert
+  module:
+    - conditional_fields
+    - datetime
+    - field_group
+    - geolocation
+    - image
+    - publication_date
+    - shs
+    - telephone
+    - text
+    - youtube
+third_party_settings:
+  field_group:
+    group_details_to_book_visit:
+      children:
+        - field_visit_contact_name
+        - field_visit_cellphone
+        - field_visit_cellphone_2
+        - field_visit_email_address1
+        - field_visit_email_address2
+      label: 'Contact details to book a visit'
+      region: content
+      parent_name: group_the_advert
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        id: visitcontactdetails
+        description: ''
+        required_fields: false
+    group_property_location:
+      children:
+        - field_advert_locality
+        - field_advert_cell
+        - field_advert_village
+        - field_advert_street
+      label: 'Property location'
+      region: content
+      parent_name: group_the_advert
+      weight: 16
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        id: propertylocation
+        description: ''
+        required_fields: false
+    group_the_advertiser_details:
+      children:
+        - field_advert_is_agent
+        - field_advert_advertiser
+        - field_advert_contact_name
+        - field_advert_contact_email
+        - field_advert_contact_tel
+      label: 'The advertiser details'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: ''
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: false
+    group_the_advert:
+      children:
+        - field_agent_side_reference
+        - field_advert_type
+        - field_advert_posting_plan
+        - title
+        - group_bid_details
+        - group_pricing
+        - group_property_characteristics
+        - group_property_location
+        - field_advert_picture
+        - field_advert_expirydate
+        - field_advert_rented_sold
+        - group_details_to_book_visit
+      label: 'The advert'
+      region: content
+      parent_name: ''
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: ''
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: false
+    group_property_characteristics:
+      children:
+        - field_advert_property_type
+        - field_advert_bedrooms
+        - field_advert_bathrooms
+        - field_advert_living_area
+        - field_advert_total_floors
+        - field_advert_size
+        - field_property_description
+        - field_advert_video_presentation
+      label: 'Property characteristics'
+      region: content
+      parent_name: group_the_advert
+      weight: 15
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        id: ''
+        description: ''
+        required_fields: false
+    group_pricing:
+      children:
+        - field_advert_price_negociable
+        - field_advert_price
+        - field_advert_currency
+        - field_advert_payment
+      label: Pricing
+      region: content
+      parent_name: group_the_advert
+      weight: 14
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        id: advert-form-pricing-group
+        description: ''
+        required_fields: false
+    group_bid_details:
+      children:
+        - field_bid_is_online
+        - field_bid_expiration
+        - field_bid_reference
+        - field_advert_bid_starting_value
+        - field_advert_bid_security_amount
+      label: 'Bid details'
+      region: content
+      parent_name: group_the_advert
+      weight: 13
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        id: ''
+        description: ''
+        required_fields: false
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_business_comment:
+      children:
+        - field_advert_business_comment
+      label: 'Business Comment'
+      region: content
+      parent_name: ''
+      weight: 14
+      format_type: html_element
+      format_settings:
+        classes: 'bg-warning text-white px-3'
+        show_empty_fields: false
+        id: business_comment_grp
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+id: node.advert.default
+targetEntityType: node
+bundle: advert
+mode: default
+content:
+  field_advert_advertiser:
+    type: entity_reference_autocomplete
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        2077d7f5-b65a-4359-8ed2-210da85d20e3:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_is_agent
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: '1'
+            effect: show
+            effect_options: {  }
+            selector: ''
+        8c6943fc-a7e3-44c5-bd1f-89976497bbe2:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_is_agent
+          settings:
+            state: required
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: '1'
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_advert_bathrooms:
+    type: number
+    weight: 18
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        41b6c496-c164-4284-bcf0-7a9cdd15b4cd:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_property_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 3
+            value: ''
+            values: "house\r\napartment\r\noffice"
+            value_form:
+              -
+                value: house
+            effect: show
+            effect_options: {  }
+            selector: ''
+        da943245-759b-4b4b-8026-9d6d8765ac2c:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: '!visible'
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: auction
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_advert_bedrooms:
+    type: number
+    weight: 17
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        bc0ffa91-3848-41a5-8c78-c60a284a756e:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: '!visible'
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: "auction\r\noffice\r\nland"
+            value_form:
+              -
+                value: auction
+            effect: show
+            effect_options: {  }
+            selector: ''
+        1f814cbe-ae24-492f-a52e-37a16baec49a:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_property_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 3
+            value: ''
+            values: "house\r\napartment"
+            value_form:
+              -
+                value: house
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_advert_bid_security_amount:
+    type: number
+    weight: 21
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        522df400-8623-4fe3-8d7f-95c51895f066:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: auction
+            effect: show
+            effect_options: {  }
+            selector: ''
+        b687b40a-aba9-4fc4-aa51-18fa0e52b737:
+          entity_type: node
+          bundle: advert
+          dependee: field_bid_is_online
+          settings:
+            state: required
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: '1'
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_advert_bid_start_value:
+    type: number
+    weight: 13
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_advert_bid_starting_value:
+    type: number
+    weight: 20
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        0e83dd5f-f5c0-469a-b981-4dc6bad40330:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: auction
+            effect: show
+            effect_options: {  }
+            selector: ''
+        ca37e8cd-2e0a-46c4-ae29-ec57557cac96:
+          entity_type: node
+          bundle: advert
+          dependee: field_bid_is_online
+          settings:
+            state: required
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: '1'
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_advert_business_comment:
+    type: string_textarea
+    weight: 14
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_advert_cell:
+    type: string_textfield
+    weight: 31
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_advert_contact_email:
+    type: email_default
+    weight: 4
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
+  field_advert_contact_name:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_advert_contact_tel:
+    type: telephone_default
+    weight: 5
+    region: content
+    settings:
+      placeholder: 'E.g.: +250712345678'
+    third_party_settings: {  }
+  field_advert_creator_geolocation:
+    type: string_textfield
+    weight: 11
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_advert_creator_location:
+    type: string_textfield
+    weight: 10
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_advert_currency:
+    type: options_select
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings:
+      conditional_fields:
+        67ae75a2-666a-41a9-bc0f-46d89f7de1d3:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: visible
+            condition: value
+            grouping: OR
+            values_set: 3
+            value: ''
+            values: "rent\r\nbuy\r\nshort_rent"
+            value_form:
+              -
+                value: rent
+            effect: show
+            effect_options: {  }
+            selector: ''
+        5ad8cf1d-4d28-4eef-9567-a7a4aefbfb23:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_price_negociable
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: '0'
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_advert_expirydate:
+    type: datetime_default
+    weight: 18
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_advert_furnished:
+    type: boolean_checkbox
+    weight: 12
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_advert_is_agent:
+    type: options_buttons
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_advert_is_first_published:
+    type: options_buttons
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_advert_is_synchronised:
+    type: options_buttons
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_advert_living_area:
+    type: number
+    weight: 19
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        04355134-0872-43cf-bc7a-d4be6d6dc75b:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_property_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 3
+            value: ''
+            values: "room\r\nshared_room\r\napartment"
+            value_form: {  }
+            effect: fade
+            effect_options:
+              fade:
+                speed: '400'
+              slide:
+                speed: '400'
+            selector: ''
+            field_advert_property_type:
+              -
+                value: house
+  field_advert_locality:
+    type: options_shs
+    weight: 29
+    region: content
+    settings:
+      display_node_count: false
+      create_new_items: false
+      create_new_levels: false
+      force_deepest: false
+    third_party_settings: {  }
+  field_advert_location:
+    type: geolocation_latlng
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_advert_payment:
+    type: options_select
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings:
+      conditional_fields:
+        66709e7d-2cc6-4826-994a-21a6b99f8639:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 3
+            value: ''
+            values: "rent\r\nshort_rent"
+            value_form:
+              -
+                value: rent
+            effect: show
+            effect_options: {  }
+            selector: ''
+        a70febfe-1749-4d9b-a19f-0a4f1d9f78eb:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_price_negociable
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: '0'
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_advert_picture:
+    type: image_image
+    weight: 17
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: agentlogow150
+    third_party_settings: {  }
+  field_advert_posting_plan:
+    type: options_select
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_advert_price:
+    type: number
+    weight: 13
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        cfdebdc2-d6aa-434b-ab8f-30b60e43c62e:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: visible
+            condition: value
+            grouping: OR
+            values_set: 3
+            value: ''
+            values: "rent\r\nbuy\r\nshort_rent"
+            value_form:
+              -
+                value: rent
+            effect: show
+            effect_options: {  }
+            selector: ''
+        a05293c5-9a15-467b-b927-f411a50fda2a:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_price_negociable
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: '0'
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_advert_price_in_rwf:
+    type: number
+    weight: 5
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_advert_price_negociable:
+    type: options_buttons
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings:
+      conditional_fields:
+        5695a3a1-28c7-42b7-aec1-d54be7fff974:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 3
+            value: ''
+            values: "rent\r\nbuy"
+            value_form: {  }
+            effect: show
+            effect_options: {  }
+            selector: ''
+            field_advert_type:
+              -
+                value: rent
+  field_advert_property_type:
+    type: options_select
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_advert_reference:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_advert_relative_path:
+    type: string_textfield
+    weight: 16
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_advert_rented_sold:
+    type: boolean_checkbox
+    weight: 19
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_advert_signature:
+    type: string_textfield
+    weight: 6
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_advert_size:
+    type: number
+    weight: 21
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        4cac6d00-4439-4ca2-906c-c9d7b7f20dba:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_property_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 3
+            value: ''
+            values: "house\r\ncommerce\r\noffice\r\nland"
+            value_form: {  }
+            effect: show
+            effect_options: {  }
+            selector: ''
+            field_advert_property_type:
+              -
+                value: house
+  field_advert_street:
+    type: string_textfield
+    weight: 33
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_advert_total_floors:
+    type: number
+    weight: 20
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        13882d0c-1761-4cb5-b391-d472cb62aca4:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_property_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 3
+            value: ''
+            values: "house\r\nbuilding"
+            value_form: {  }
+            effect: fade
+            effect_options:
+              fade:
+                speed: '400'
+              slide:
+                speed: '400'
+            selector: ''
+            field_advert_property_type:
+              -
+                value: house
+        3daa4498-3575-4290-adfa-2f190184f610:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: '!visible'
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: auction
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_advert_type:
+    type: options_select
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings:
+      conditional_fields: {  }
+  field_advert_video_presentation:
+    type: youtube
+    weight: 24
+    region: content
+    settings:
+      placeholder_url: ''
+    third_party_settings: {  }
+  field_advert_village:
+    type: string_textfield
+    weight: 32
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_agent_side_reference:
+    type: string_textfield
+    weight: 8
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        31352e4d-5a98-415e-ae73-fca0e9575f9f:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_is_agent
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: '1'
+            effect: fade
+            effect_options:
+              fade:
+                speed: '400'
+              slide:
+                speed: '400'
+            selector: ''
+  field_bid_expiration:
+    type: datetime_default
+    weight: 17
+    region: content
+    settings: {  }
+    third_party_settings:
+      conditional_fields:
+        39966f8e-2bbe-4de0-9e8b-b303024366df:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: auction
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_bid_is_online:
+    type: options_buttons
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings:
+      conditional_fields:
+        64d5dadb-c528-4c41-b346-de7080796bff:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: auction
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_bid_reference:
+    type: string_textfield
+    weight: 19
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        989350e3-0294-4ba4-b244-b201af4b3ac2:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: auction
+            effect: show
+            effect_options: {  }
+            selector: ''
+        c4fbc9e9-db8c-42e5-a699-a49317a05623:
+          entity_type: node
+          bundle: advert
+          dependee: field_bid_is_online
+          settings:
+            state: required
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: '1'
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_price_in_rwf:
+    type: number
+    weight: 4
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_property_description:
+    type: text_textarea
+    weight: 23
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_target_pr_id:
+    type: number
+    weight: 9
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_visit_cellphone:
+    type: telephone_default
+    weight: 25
+    region: content
+    settings:
+      placeholder: 'E.g.: +250712345678'
+    third_party_settings: {  }
+  field_visit_cellphone_2:
+    type: telephone_default
+    weight: 26
+    region: content
+    settings:
+      placeholder: 'E.g.: +250712345678'
+    third_party_settings: {  }
+  field_visit_contact_name:
+    type: string_textfield
+    weight: 24
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_visit_email_address1:
+    type: email_default
+    weight: 27
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings:
+      conditional_fields:
+        56562b63-df65-4965-86b7-cc63fb38a085:
+          entity_type: node
+          bundle: advert
+          dependee: field_advert_is_agent
+          settings:
+            state: required
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: '1'
+            effect: show
+            effect_options: {  }
+            selector: ''
+  field_visit_email_address2:
+    type: email_default
+    weight: 29
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
+  published_at:
+    type: publication_date_timestamp
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 12
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_advert_locality_district: true
+  field_advert_locality_province: true
+  field_advert_locality_sector: true
+  field_bid_security_amount: true
+  field_bid_starting_value: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

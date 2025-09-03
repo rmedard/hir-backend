@@ -1,0 +1,20 @@
+uuid: c49bfb3d-21d6-4b0c-bf35-c56c0437bc17
+langcode: en
+status: true
+dependencies:
+  module:
+    - rir_interface
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_rirrealtimefiguresblock
+theme: bootstrap_barrio
+region: top_header
+weight: 0
+provider: null
+plugin: rir_realtime_block
+settings:
+  id: rir_realtime_block
+  label: 'RiR Realtime Figures Block'
+  label_display: '0'
+  provider: rir_interface
+visibility: {  }

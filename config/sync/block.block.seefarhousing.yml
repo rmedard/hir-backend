@@ -1,0 +1,30 @@
+uuid: e644e6fe-bfce-41fd-8e5b-576d3e5d33c7
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:banner_block:dd48f7fc-3b9a-4510-a1f5-4139221e68fa'
+  module:
+    - block_content
+    - system
+  theme:
+    - houseinrwanda_theme
+id: seefarhousing
+theme: houseinrwanda_theme
+region: sidebar_horizontal
+weight: -17
+provider: null
+plugin: 'block_content:dd48f7fc-3b9a-4510-a1f5-4139221e68fa'
+settings:
+  id: 'block_content:dd48f7fc-3b9a-4510-a1f5-4139221e68fa'
+  label: 'See Far Housing'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "<front>\r\n/properties/*\r\n/auctions\r\n/for-*\r\n"

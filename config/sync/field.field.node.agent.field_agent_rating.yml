@@ -1,0 +1,30 @@
+uuid: 1e0d9d81-af00-4749-9b55-54384515d1a5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_rating
+    - node.type.agent
+  module:
+    - fivestar
+id: node.agent.field_agent_rating
+field_name: field_agent_rating
+entity_type: node
+bundle: agent
+label: 'Rate this agent'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    rating: 60
+    target: null
+default_value_callback: ''
+settings:
+  stars: 5
+  allow_clear: false
+  allow_revote: true
+  allow_ownvote: false
+  rated_while: viewing
+  target: ''
+field_type: fivestar

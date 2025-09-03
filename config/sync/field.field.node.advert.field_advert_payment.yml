@@ -1,0 +1,23 @@
+uuid: 5ab92c40-947c-4b0d-bd1b-cf1ac49fe292
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_payment
+    - node.type.advert
+  module:
+    - options
+id: node.advert.field_advert_payment
+field_name: field_advert_payment
+entity_type: node
+bundle: advert
+label: Payable
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: monthly
+default_value_callback: ''
+settings: {  }
+field_type: list_string

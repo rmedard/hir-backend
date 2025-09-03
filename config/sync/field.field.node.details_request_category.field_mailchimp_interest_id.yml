@@ -1,0 +1,19 @@
+uuid: 7defaacd-780d-4540-8e98-053ab2a1a575
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mailchimp_interest_id
+    - node.type.details_request_category
+id: node.details_request_category.field_mailchimp_interest_id
+field_name: field_mailchimp_interest_id
+entity_type: node
+bundle: details_request_category
+label: 'Mailchimp Interest ID'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

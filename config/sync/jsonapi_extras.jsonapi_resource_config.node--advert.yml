@@ -1,0 +1,466 @@
+uuid: 5ca22313-84dd-45ff-ace3-33d845226ab2
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.advert
+  module:
+    - jsonapi_defaults
+third_party_settings:
+  jsonapi_defaults:
+    default_filter:
+      'filter:status': '1'
+    page_limit: 50
+id: node--advert
+disabled: false
+path: adverts
+resourceType: advert
+resourceFields:
+  nid:
+    disabled: false
+    fieldName: nid
+    publicName: nid
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  vid:
+    disabled: true
+    fieldName: vid
+    publicName: vid
+    enhancer:
+      id: ''
+  langcode:
+    disabled: true
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  type:
+    disabled: false
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  revision_timestamp:
+    disabled: true
+    fieldName: revision_timestamp
+    publicName: revision_timestamp
+    enhancer:
+      id: ''
+  revision_uid:
+    disabled: true
+    fieldName: revision_uid
+    publicName: revision_uid
+    enhancer:
+      id: ''
+  revision_log:
+    disabled: true
+    fieldName: revision_log
+    publicName: revision_log
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  uid:
+    disabled: false
+    fieldName: uid
+    publicName: uid
+    enhancer:
+      id: ''
+  title:
+    disabled: false
+    fieldName: title
+    publicName: title
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: false
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  promote:
+    disabled: true
+    fieldName: promote
+    publicName: promote
+    enhancer:
+      id: ''
+  sticky:
+    disabled: true
+    fieldName: sticky
+    publicName: sticky
+    enhancer:
+      id: ''
+  default_langcode:
+    disabled: true
+    fieldName: default_langcode
+    publicName: default_langcode
+    enhancer:
+      id: ''
+  revision_default:
+    disabled: true
+    fieldName: revision_default
+    publicName: revision_default
+    enhancer:
+      id: ''
+  revision_translation_affected:
+    disabled: true
+    fieldName: revision_translation_affected
+    publicName: revision_translation_affected
+    enhancer:
+      id: ''
+  metatag:
+    disabled: true
+    fieldName: metatag
+    publicName: metatag
+    enhancer:
+      id: ''
+  path:
+    disabled: false
+    fieldName: path
+    publicName: path
+    enhancer:
+      id: nested
+      settings:
+        path: alias
+  menu_link:
+    disabled: true
+    fieldName: menu_link
+    publicName: menu_link
+    enhancer:
+      id: ''
+  published_at:
+    disabled: false
+    fieldName: published_at
+    publicName: published_at
+    enhancer:
+      id: ''
+  field_advert_advertiser:
+    disabled: false
+    fieldName: field_advert_advertiser
+    publicName: field_advert_advertiser
+    enhancer:
+      id: ''
+  field_advert_bathrooms:
+    disabled: false
+    fieldName: field_advert_bathrooms
+    publicName: field_advert_bathrooms
+    enhancer:
+      id: ''
+  field_advert_bedrooms:
+    disabled: false
+    fieldName: field_advert_bedrooms
+    publicName: field_advert_bedrooms
+    enhancer:
+      id: ''
+  field_advert_bid_security_amount:
+    disabled: false
+    fieldName: field_advert_bid_security_amount
+    publicName: field_advert_bid_security_amount
+    enhancer:
+      id: ''
+  field_advert_bid_starting_value:
+    disabled: false
+    fieldName: field_advert_bid_starting_value
+    publicName: field_advert_bid_starting_value
+    enhancer:
+      id: ''
+  field_advert_bid_start_value:
+    disabled: false
+    fieldName: field_advert_bid_start_value
+    publicName: field_advert_bid_start_value
+    enhancer:
+      id: ''
+  field_advert_cell:
+    disabled: false
+    fieldName: field_advert_cell
+    publicName: field_advert_cell
+    enhancer:
+      id: ''
+  field_advert_contact_email:
+    disabled: false
+    fieldName: field_advert_contact_email
+    publicName: field_advert_contact_email
+    enhancer:
+      id: ''
+  field_advert_contact_name:
+    disabled: false
+    fieldName: field_advert_contact_name
+    publicName: field_advert_contact_name
+    enhancer:
+      id: ''
+  field_advert_contact_tel:
+    disabled: false
+    fieldName: field_advert_contact_tel
+    publicName: field_advert_contact_tel
+    enhancer:
+      id: ''
+  field_advert_creator_geolocation:
+    disabled: false
+    fieldName: field_advert_creator_geolocation
+    publicName: field_advert_creator_geolocation
+    enhancer:
+      id: ''
+  field_advert_creator_location:
+    disabled: false
+    fieldName: field_advert_creator_location
+    publicName: field_advert_creator_location
+    enhancer:
+      id: ''
+  field_advert_currency:
+    disabled: false
+    fieldName: field_advert_currency
+    publicName: field_advert_currency
+    enhancer:
+      id: ''
+  field_advert_expirydate:
+    disabled: false
+    fieldName: field_advert_expirydate
+    publicName: field_advert_expirydate
+    enhancer:
+      id: ''
+  field_advert_furnished:
+    disabled: false
+    fieldName: field_advert_furnished
+    publicName: field_advert_furnished
+    enhancer:
+      id: ''
+  field_advert_is_agent:
+    disabled: false
+    fieldName: field_advert_is_agent
+    publicName: field_advert_is_agent
+    enhancer:
+      id: ''
+  field_advert_is_first_published:
+    disabled: false
+    fieldName: field_advert_is_first_published
+    publicName: field_advert_is_first_published
+    enhancer:
+      id: ''
+  field_advert_living_area:
+    disabled: false
+    fieldName: field_advert_living_area
+    publicName: field_advert_living_area
+    enhancer:
+      id: ''
+  field_advert_locality:
+    disabled: false
+    fieldName: field_advert_locality
+    publicName: field_advert_locality
+    enhancer:
+      id: ''
+  field_advert_locality_district:
+    disabled: false
+    fieldName: field_advert_locality_district
+    publicName: field_advert_locality_district
+    enhancer:
+      id: ''
+  field_advert_locality_province:
+    disabled: false
+    fieldName: field_advert_locality_province
+    publicName: field_advert_locality_province
+    enhancer:
+      id: ''
+  field_advert_locality_sector:
+    disabled: false
+    fieldName: field_advert_locality_sector
+    publicName: field_advert_locality_sector
+    enhancer:
+      id: ''
+  field_advert_location:
+    disabled: false
+    fieldName: field_advert_location
+    publicName: field_advert_location
+    enhancer:
+      id: ''
+  field_advert_payment:
+    disabled: false
+    fieldName: field_advert_payment
+    publicName: field_advert_payment
+    enhancer:
+      id: ''
+  field_advert_picture:
+    disabled: false
+    fieldName: field_advert_picture
+    publicName: field_advert_picture
+    enhancer:
+      id: ''
+  field_advert_posting_plan:
+    disabled: false
+    fieldName: field_advert_posting_plan
+    publicName: field_advert_posting_plan
+    enhancer:
+      id: ''
+  field_advert_price:
+    disabled: false
+    fieldName: field_advert_price
+    publicName: field_advert_price
+    enhancer:
+      id: ''
+  field_advert_price_negociable:
+    disabled: false
+    fieldName: field_advert_price_negociable
+    publicName: field_advert_price_negociable
+    enhancer:
+      id: ''
+  field_advert_property_type:
+    disabled: false
+    fieldName: field_advert_property_type
+    publicName: field_advert_property_type
+    enhancer:
+      id: ''
+  field_advert_reference:
+    disabled: false
+    fieldName: field_advert_reference
+    publicName: field_advert_reference
+    enhancer:
+      id: ''
+  field_advert_rented_sold:
+    disabled: false
+    fieldName: field_advert_rented_sold
+    publicName: field_advert_rented_sold
+    enhancer:
+      id: ''
+  field_advert_signature:
+    disabled: false
+    fieldName: field_advert_signature
+    publicName: field_advert_signature
+    enhancer:
+      id: ''
+  field_advert_size:
+    disabled: false
+    fieldName: field_advert_size
+    publicName: field_advert_size
+    enhancer:
+      id: ''
+  field_advert_street:
+    disabled: false
+    fieldName: field_advert_street
+    publicName: field_advert_street
+    enhancer:
+      id: ''
+  field_advert_total_floors:
+    disabled: false
+    fieldName: field_advert_total_floors
+    publicName: field_advert_total_floors
+    enhancer:
+      id: ''
+  field_advert_type:
+    disabled: false
+    fieldName: field_advert_type
+    publicName: field_advert_type
+    enhancer:
+      id: ''
+  field_advert_video_presentation:
+    disabled: false
+    fieldName: field_advert_video_presentation
+    publicName: field_advert_video_presentation
+    enhancer:
+      id: ''
+  field_advert_village:
+    disabled: false
+    fieldName: field_advert_village
+    publicName: field_advert_village
+    enhancer:
+      id: ''
+  field_agent_side_reference:
+    disabled: false
+    fieldName: field_agent_side_reference
+    publicName: field_agent_side_reference
+    enhancer:
+      id: ''
+  field_bid_expiration:
+    disabled: false
+    fieldName: field_bid_expiration
+    publicName: field_bid_expiration
+    enhancer:
+      id: ''
+  field_bid_is_online:
+    disabled: false
+    fieldName: field_bid_is_online
+    publicName: field_bid_is_online
+    enhancer:
+      id: ''
+  field_bid_reference:
+    disabled: false
+    fieldName: field_bid_reference
+    publicName: field_bid_reference
+    enhancer:
+      id: ''
+  field_bid_security_amount:
+    disabled: false
+    fieldName: field_bid_security_amount
+    publicName: field_bid_security_amount
+    enhancer:
+      id: ''
+  field_bid_starting_value:
+    disabled: false
+    fieldName: field_bid_starting_value
+    publicName: field_bid_starting_value
+    enhancer:
+      id: ''
+  field_price_in_rwf:
+    disabled: false
+    fieldName: field_price_in_rwf
+    publicName: field_price_in_rwf
+    enhancer:
+      id: ''
+  field_property_description:
+    disabled: false
+    fieldName: field_property_description
+    publicName: field_property_description
+    enhancer:
+      id: nested
+      settings:
+        path: value
+  field_target_pr_id:
+    disabled: false
+    fieldName: field_target_pr_id
+    publicName: field_target_pr_id
+    enhancer:
+      id: ''
+  field_visit_cellphone:
+    disabled: false
+    fieldName: field_visit_cellphone
+    publicName: field_visit_cellphone
+    enhancer:
+      id: ''
+  field_visit_cellphone_2:
+    disabled: false
+    fieldName: field_visit_cellphone_2
+    publicName: field_visit_cellphone_2
+    enhancer:
+      id: ''
+  field_visit_contact_name:
+    disabled: false
+    fieldName: field_visit_contact_name
+    publicName: field_visit_contact_name
+    enhancer:
+      id: ''
+  field_visit_email_address1:
+    disabled: false
+    fieldName: field_visit_email_address1
+    publicName: field_visit_email_address1
+    enhancer:
+      id: ''
+  field_visit_email_address2:
+    disabled: false
+    fieldName: field_visit_email_address2
+    publicName: field_visit_email_address2
+    enhancer:
+      id: ''

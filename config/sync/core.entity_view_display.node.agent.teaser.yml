@@ -1,0 +1,111 @@
+uuid: 42152dfc-2822-4650-bea9-fdfc758dbcdf
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.agent.field_advertiser_featured
+    - field.field.node.agent.field_advertiser_is_synchronised
+    - field.field.node.agent.field_advertiser_type
+    - field.field.node.agent.field_agent_category
+    - field.field.node.agent.field_agent_cell
+    - field.field.node.agent.field_agent_district
+    - field.field.node.agent.field_agent_email
+    - field.field.node.agent.field_agent_facebook
+    - field.field.node.agent.field_agent_linkedin
+    - field.field.node.agent.field_agent_logo
+    - field.field.node.agent.field_agent_operations_area
+    - field.field.node.agent.field_agent_phone
+    - field.field.node.agent.field_agent_rating
+    - field.field.node.agent.field_agent_relative_path
+    - field.field.node.agent.field_agent_sector
+    - field.field.node.agent.field_agent_street
+    - field.field.node.agent.field_agent_summary
+    - field.field.node.agent.field_agent_tin_nbr
+    - field.field.node.agent.field_agent_twitter
+    - field.field.node.agent.field_agent_village
+    - field.field.node.agent.field_agent_website
+    - field.field.node.agent.field_introductory_images
+    - node.type.agent
+  module:
+    - image
+    - user
+id: node.agent.teaser
+targetEntityType: node
+bundle: agent
+mode: teaser
+content:
+  field_agent_district:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_agent_email:
+    type: basic_string
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_agent_logo:
+    type: image_url
+    label: hidden
+    settings:
+      image_style: agent_thumbnail
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_agent_operations_area:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_agent_phone:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_agent_sector:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_agent_street:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  addtoany: true
+  field_advertiser_featured: true
+  field_advertiser_is_synchronised: true
+  field_advertiser_type: true
+  field_agent_category: true
+  field_agent_cell: true
+  field_agent_facebook: true
+  field_agent_linkedin: true
+  field_agent_rating: true
+  field_agent_relative_path: true
+  field_agent_summary: true
+  field_agent_tin_nbr: true
+  field_agent_twitter: true
+  field_agent_village: true
+  field_agent_website: true
+  field_introductory_images: true
+  links: true
+  published_at: true

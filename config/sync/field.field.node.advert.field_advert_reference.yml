@@ -1,0 +1,19 @@
+uuid: 1a954041-f5a2-4cf6-9fbd-6dfb5e05d8e2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_reference
+    - node.type.advert
+id: node.advert.field_advert_reference
+field_name: field_advert_reference
+entity_type: node
+bundle: advert
+label: Reference
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

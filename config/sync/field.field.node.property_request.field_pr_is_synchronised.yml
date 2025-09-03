@@ -1,0 +1,23 @@
+uuid: a98a42a1-ef7f-4fe3-a79d-ec8a7d4a05bb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_is_synchronised
+    - node.type.property_request
+id: node.property_request.field_pr_is_synchronised
+field_name: field_pr_is_synchronised
+entity_type: node
+bundle: property_request
+label: Synchronised
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

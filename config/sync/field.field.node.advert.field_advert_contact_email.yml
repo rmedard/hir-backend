@@ -1,0 +1,19 @@
+uuid: 6c0b664f-1e2f-4cd5-b8b5-bd9f498ccd95
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_contact_email
+    - node.type.advert
+id: node.advert.field_advert_contact_email
+field_name: field_advert_contact_email
+entity_type: node
+bundle: advert
+label: 'Your email'
+description: 'This email will be used only by us to contact you'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

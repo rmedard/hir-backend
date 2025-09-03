@@ -1,0 +1,23 @@
+uuid: 8a56d711-de7a-4b5b-a025-20a64cac3cb2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price_in_rwf
+    - node.type.advert
+id: node.advert.field_price_in_rwf
+field_name: field_price_in_rwf
+entity_type: node
+bundle: advert
+label: 'Price in RWF (deprecated)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

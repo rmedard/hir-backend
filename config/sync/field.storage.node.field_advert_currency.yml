@@ -1,0 +1,31 @@
+uuid: 1f9e4dd8-b988-432f-a458-9814e124a1fb
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+    - options
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: node.field_advert_currency
+field_name: field_advert_currency
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: rwf
+      label: RWF
+    -
+      value: usd
+      label: USD
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

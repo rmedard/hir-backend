@@ -1,0 +1,23 @@
+uuid: 77021cf4-a03d-4a86-a80e-606085da3db7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_living_area
+    - node.type.advert
+id: node.advert.field_advert_living_area
+field_name: field_advert_living_area
+entity_type: node
+bundle: advert
+label: 'Living area'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.0
+  max: null
+  prefix: ''
+  suffix: m²
+field_type: decimal

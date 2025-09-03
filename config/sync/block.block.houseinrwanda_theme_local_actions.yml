@@ -1,0 +1,20 @@
+uuid: 33b6f3c0-d8a9-490d-8994-5116a9804a38
+langcode: en
+status: true
+dependencies:
+  theme:
+    - houseinrwanda_theme
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: houseinrwanda_theme_local_actions
+theme: houseinrwanda_theme
+region: content
+weight: -18
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

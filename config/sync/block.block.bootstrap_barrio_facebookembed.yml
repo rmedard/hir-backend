@@ -1,0 +1,30 @@
+uuid: 6da9cc67-9785-4ea9-a82f-c04b2610de18
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:fe3c22cb-4274-43f6-87c9-ea002fde14ae'
+  module:
+    - block_content
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_facebookembed
+theme: bootstrap_barrio
+region: sidebar_first
+weight: -17
+provider: null
+plugin: 'block_content:fe3c22cb-4274-43f6-87c9-ea002fde14ae'
+settings:
+  id: 'block_content:fe3c22cb-4274-43f6-87c9-ea002fde14ae'
+  label: 'Facebook Embed'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

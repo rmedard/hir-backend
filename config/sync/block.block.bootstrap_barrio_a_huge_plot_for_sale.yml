@@ -1,0 +1,30 @@
+uuid: 0832e477-217b-41f6-8b7f-a85c8fe1a018
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:banner_block:29dd08c3-91df-4ae0-a35c-5e09e7095983'
+  module:
+    - block_content
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_a_huge_plot_for_sale
+theme: bootstrap_barrio
+region: sidebar_first
+weight: -19
+provider: null
+plugin: 'block_content:29dd08c3-91df-4ae0-a35c-5e09e7095983'
+settings:
+  id: 'block_content:29dd08c3-91df-4ae0-a35c-5e09e7095983'
+  label: '11 A huge plot of land for sale (7 hectares) suitable for multipurpose use on the Kigali-Bugesera road, just 20 minutes from sonatubes'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

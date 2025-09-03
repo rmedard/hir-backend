@@ -1,0 +1,23 @@
+uuid: 1bd0e8d1-febe-4a60-bc76-33bca876d709
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_currency
+    - node.type.advert
+  module:
+    - options
+id: node.advert.field_advert_currency
+field_name: field_advert_currency
+entity_type: node
+bundle: advert
+label: Currency
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: rwf
+default_value_callback: ''
+settings: {  }
+field_type: list_string

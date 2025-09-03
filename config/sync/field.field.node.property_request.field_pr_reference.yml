@@ -1,0 +1,23 @@
+uuid: 5175158c-e652-416e-ada5-fbb7dd005102
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_reference
+    - node.type.property_request
+id: node.property_request.field_pr_reference
+field_name: field_pr_reference
+entity_type: node
+bundle: property_request
+label: Reference
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

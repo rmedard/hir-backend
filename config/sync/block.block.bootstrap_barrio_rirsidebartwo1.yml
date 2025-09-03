@@ -1,0 +1,25 @@
+uuid: 266a0f7d-1f0d-46a2-8ada-4fe024222c31
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:banner_block:71a68452-bae5-4d37-a7c9-92d9b0af1818'
+  module:
+    - block_content
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_rirsidebartwo1
+theme: bootstrap_barrio
+region: sidebar_first
+weight: -18
+provider: null
+plugin: 'block_content:71a68452-bae5-4d37-a7c9-92d9b0af1818'
+settings:
+  id: 'block_content:71a68452-bae5-4d37-a7c9-92d9b0af1818'
+  label: 'RIR Sidebar Two 1'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

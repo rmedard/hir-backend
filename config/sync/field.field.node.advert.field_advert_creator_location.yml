@@ -1,0 +1,19 @@
+uuid: cb95f5ba-7406-4a7d-8ec5-ddc2f7f4aed6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_creator_location
+    - node.type.advert
+id: node.advert.field_advert_creator_location
+field_name: field_advert_creator_location
+entity_type: node
+bundle: advert
+label: 'Creator location'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

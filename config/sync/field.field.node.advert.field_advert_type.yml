@@ -1,0 +1,23 @@
+uuid: 2c9cfdd9-0f98-4999-9bdf-3a550fbb5481
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_type
+    - node.type.advert
+  module:
+    - options
+id: node.advert.field_advert_type
+field_name: field_advert_type
+entity_type: node
+bundle: advert
+label: 'Advert type'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: rent
+default_value_callback: ''
+settings: {  }
+field_type: list_string

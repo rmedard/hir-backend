@@ -1,0 +1,23 @@
+uuid: e26007a4-5d79-4d31-81fa-5e7b2e336790
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_required_service
+    - node.type.property_request
+  module:
+    - options
+id: node.property_request.field_pr_required_service
+field_name: field_pr_required_service
+entity_type: node
+bundle: property_request
+label: 'Required service'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: standard
+default_value_callback: ''
+settings: {  }
+field_type: list_string

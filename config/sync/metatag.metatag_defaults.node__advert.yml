@@ -1,0 +1,14 @@
+uuid: 8794925d-9824-4817-8262-cbedcb67c78a
+langcode: en
+status: true
+dependencies: {  }
+id: node__advert
+label: 'Content: Advert'
+tags:
+  title: '[node:title] | [site:name]'
+  og_url: '[node:source:url:path]'
+  og_image: '[node:field_advert_picture:0]'
+  og_type: advert
+  og_title: '[node:title]'
+  og_description: '[node:field_property_description]'
+  og_site_name: '[site:name]'

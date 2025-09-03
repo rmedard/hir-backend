@@ -1,0 +1,30 @@
+uuid: 0decdf12-2814-48b2-b00c-90adbd88a8b2
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:banner_block:ef0dae35-54d0-4380-92c7-7bed0c9bb815'
+  module:
+    - block_content
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_auction
+theme: bootstrap_barrio
+region: sidebar_first
+weight: -24
+provider: null
+plugin: 'block_content:ef0dae35-54d0-4380-92c7-7bed0c9bb815'
+settings:
+  id: 'block_content:ef0dae35-54d0-4380-92c7-7bed0c9bb815'
+  label: Auction
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: ''

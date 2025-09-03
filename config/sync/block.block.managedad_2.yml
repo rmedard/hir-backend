@@ -1,0 +1,28 @@
+uuid: 5b7cdf59-ce12-42d2-8040-d331ead8cf55
+langcode: en
+status: true
+dependencies:
+  module:
+    - adsense
+  theme:
+    - houseinrwanda_theme
+id: managedad_2
+theme: houseinrwanda_theme
+region: sidebar_horizontal
+weight: -16
+provider: null
+plugin: adsense_managed_ad_block
+settings:
+  id: adsense_managed_ad_block
+  label: 'Managed ad'
+  label_display: '0'
+  provider: adsense
+  ad_slot: '5254503023'
+  ad_format: responsive
+  ad_width: null
+  ad_height: null
+  ad_shape:
+    rectangle: rectangle
+  ad_align: center
+  ad_layout_key: ''
+visibility: {  }

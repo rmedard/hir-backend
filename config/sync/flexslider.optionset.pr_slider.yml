@@ -1,0 +1,47 @@
+uuid: 82da9950-76e6-4ab4-9923-f87934f9e6a7
+langcode: en
+status: true
+dependencies: {  }
+id: pr_slider
+label: 'PR Slider'
+options:
+  animation: slide
+  animationSpeed: 600
+  direction: horizontal
+  slideshow: true
+  easing: swing
+  smoothHeight: false
+  reverse: false
+  slideshowSpeed: 3000
+  animationLoop: true
+  randomize: false
+  startAt: 0
+  itemWidth: 350
+  itemMargin: 10
+  minItems: 1
+  maxItems: 2
+  move: 0
+  directionNav: true
+  controlNav: '1'
+  thumbCaptions: false
+  thumbCaptionsBoth: false
+  keyboard: true
+  multipleKeyboard: false
+  mousewheel: false
+  touch: true
+  prevText: Previous
+  nextText: Next
+  namespace: flex-
+  selector: '.slides > li'
+  sync: ''
+  asNavFor: ''
+  initDelay: 0
+  useCSS: true
+  video: false
+  pausePlay: false
+  pauseText: Pause
+  playText: Play
+  pauseOnAction: true
+  pauseOnHover: false
+  controlsContainer: ''
+  manualControls: ''

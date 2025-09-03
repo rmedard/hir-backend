@@ -1,0 +1,11 @@
+uuid: eae487d8-60f6-4c31-8ef0-4395294597ae
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.request_details_view
+label: 'Request Details View'
+description: ''
+targetEntityType: node
+cache: true

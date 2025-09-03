@@ -1,0 +1,19 @@
+uuid: 87e46182-552d-4cbc-bb14-ac0fe43c0c3c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_operations_area
+    - node.type.agent
+id: node.agent.field_agent_operations_area
+field_name: field_agent_operations_area
+entity_type: node
+bundle: agent
+label: 'Location of interest'
+description: 'Where do you operate most of the time? (District, sector, etc ...)'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

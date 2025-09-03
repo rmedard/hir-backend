@@ -1,0 +1,19 @@
+uuid: 4400c7c2-dc76-4733-8a8b-7088e9dd0d25
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_signature
+    - node.type.advert
+id: node.advert.field_advert_signature
+field_name: field_advert_signature
+entity_type: node
+bundle: advert
+label: 'Address Signature'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

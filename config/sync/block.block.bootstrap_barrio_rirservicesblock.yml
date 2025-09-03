@@ -1,0 +1,20 @@
+uuid: bd54552c-2233-49df-a25e-fde02b9f6731
+langcode: en
+status: true
+dependencies:
+  module:
+    - rir_interface
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_rirservicesblock
+theme: bootstrap_barrio
+region: top_header
+weight: 0
+provider: null
+plugin: rir_services_block
+settings:
+  id: rir_services_block
+  label: 'RiR Services Block'
+  label_display: '0'
+  provider: rir_interface
+visibility: {  }

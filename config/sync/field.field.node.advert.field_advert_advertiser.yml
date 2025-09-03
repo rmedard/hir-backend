@@ -1,0 +1,25 @@
+uuid: 1a37edf8-c228-4b79-bd0b-3f408fe055ed
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_advertiser
+    - node.type.advert
+id: node.advert.field_advert_advertiser
+field_name: field_advert_advertiser
+entity_type: node
+bundle: advert
+label: 'The advertiser'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: agents
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

@@ -1,0 +1,23 @@
+uuid: 90afb707-ff84-4623-925e-8e4b18b28fed
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_price_negociable
+    - node.type.advert
+id: node.advert.field_advert_price_negociable
+field_name: field_advert_price_negociable
+entity_type: node
+bundle: advert
+label: Negotiable
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

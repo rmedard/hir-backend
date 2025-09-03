@@ -1,0 +1,15 @@
+uuid: bb2acbd8-7815-4c9a-85c8-28ea98612f93
+langcode: en
+status: true
+dependencies: {  }
+name: scaled_90x90
+label: 'Logo 80x80'
+effects:
+  020eeafd-7452-4c30-8156-d08aa7f21f38:
+    uuid: 020eeafd-7452-4c30-8156-d08aa7f21f38
+    id: image_scale_and_crop
+    weight: 2
+    data:
+      width: 80
+      height: 80
+      anchor: center-center

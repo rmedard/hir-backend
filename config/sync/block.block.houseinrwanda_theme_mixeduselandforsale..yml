@@ -1,0 +1,25 @@
+uuid: 7512eaf6-79e4-4093-9719-740744e58b22
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:e062bd92-212b-4b00-8d90-dcdebc2a274b'
+  module:
+    - block_content
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_mixeduselandforsale.
+theme: houseinrwanda_theme
+region: sidebar_first
+weight: -22
+provider: null
+plugin: 'block_content:e062bd92-212b-4b00-8d90-dcdebc2a274b'
+settings:
+  id: 'block_content:e062bd92-212b-4b00-8d90-dcdebc2a274b'
+  label: 'Mixed-Use Land For Sale.'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

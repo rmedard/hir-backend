@@ -1,0 +1,30 @@
+uuid: fc54ef1c-6a66-4d64-9bae-8b10f72ad575
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.adverts-secondary-menu
+  module:
+    - system
+  theme:
+    - houseinrwanda_theme
+id: houseinrwanda_theme_advertssecondarymenu
+theme: houseinrwanda_theme
+region: content
+weight: -21
+provider: null
+plugin: 'system_menu_block:adverts-secondary-menu'
+settings:
+  id: 'system_menu_block:adverts-secondary-menu'
+  label: 'Rent Adverts Secondary Menu'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    context_mapping: {  }
+    pages: '/properties/*'

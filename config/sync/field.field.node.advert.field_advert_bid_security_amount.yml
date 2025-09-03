@@ -1,0 +1,23 @@
+uuid: 0d5f0f33-ef76-422f-92e5-5bca33671a72
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_bid_security_amount
+    - node.type.advert
+id: node.advert.field_advert_bid_security_amount
+field_name: field_advert_bid_security_amount
+entity_type: node
+bundle: advert
+label: 'Bid security amount'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: 'RWF '
+  suffix: ''
+field_type: integer

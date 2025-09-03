@@ -1,0 +1,18 @@
+uuid: d149e82d-22a9-4236-8f99-b5704d884689
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.advert
+id: node.advert.title
+field_name: title
+entity_type: node
+bundle: advert
+label: 'Title of the advert'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

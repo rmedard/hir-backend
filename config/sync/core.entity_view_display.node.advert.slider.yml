@@ -1,0 +1,239 @@
+uuid: 394c1642-8936-4106-8b9b-bd067ea2bfce
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.slider
+    - field.field.node.advert.field_advert_advertiser
+    - field.field.node.advert.field_advert_bathrooms
+    - field.field.node.advert.field_advert_bedrooms
+    - field.field.node.advert.field_advert_bid_security_amount
+    - field.field.node.advert.field_advert_bid_start_value
+    - field.field.node.advert.field_advert_bid_starting_value
+    - field.field.node.advert.field_advert_business_comment
+    - field.field.node.advert.field_advert_cell
+    - field.field.node.advert.field_advert_contact_email
+    - field.field.node.advert.field_advert_contact_name
+    - field.field.node.advert.field_advert_contact_tel
+    - field.field.node.advert.field_advert_creator_geolocation
+    - field.field.node.advert.field_advert_creator_location
+    - field.field.node.advert.field_advert_currency
+    - field.field.node.advert.field_advert_expirydate
+    - field.field.node.advert.field_advert_furnished
+    - field.field.node.advert.field_advert_is_agent
+    - field.field.node.advert.field_advert_is_first_published
+    - field.field.node.advert.field_advert_is_synchronised
+    - field.field.node.advert.field_advert_living_area
+    - field.field.node.advert.field_advert_locality
+    - field.field.node.advert.field_advert_locality_district
+    - field.field.node.advert.field_advert_locality_province
+    - field.field.node.advert.field_advert_locality_sector
+    - field.field.node.advert.field_advert_location
+    - field.field.node.advert.field_advert_payment
+    - field.field.node.advert.field_advert_picture
+    - field.field.node.advert.field_advert_posting_plan
+    - field.field.node.advert.field_advert_price
+    - field.field.node.advert.field_advert_price_in_rwf
+    - field.field.node.advert.field_advert_price_negociable
+    - field.field.node.advert.field_advert_property_type
+    - field.field.node.advert.field_advert_reference
+    - field.field.node.advert.field_advert_relative_path
+    - field.field.node.advert.field_advert_rented_sold
+    - field.field.node.advert.field_advert_signature
+    - field.field.node.advert.field_advert_size
+    - field.field.node.advert.field_advert_street
+    - field.field.node.advert.field_advert_total_floors
+    - field.field.node.advert.field_advert_type
+    - field.field.node.advert.field_advert_video_presentation
+    - field.field.node.advert.field_advert_village
+    - field.field.node.advert.field_agent_side_reference
+    - field.field.node.advert.field_bid_expiration
+    - field.field.node.advert.field_bid_is_online
+    - field.field.node.advert.field_bid_reference
+    - field.field.node.advert.field_bid_security_amount
+    - field.field.node.advert.field_bid_starting_value
+    - field.field.node.advert.field_price_in_rwf
+    - field.field.node.advert.field_property_description
+    - field.field.node.advert.field_target_pr_id
+    - field.field.node.advert.field_visit_cellphone
+    - field.field.node.advert.field_visit_cellphone_2
+    - field.field.node.advert.field_visit_contact_name
+    - field.field.node.advert.field_visit_email_address1
+    - field.field.node.advert.field_visit_email_address2
+    - node.type.advert
+  module:
+    - geolocation
+    - options
+    - user
+id: node.advert.slider
+targetEntityType: node
+bundle: advert
+mode: slider
+content:
+  field_advert_bid_starting_value:
+    type: number_integer
+    label: hidden
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_advert_cell:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 20
+    region: content
+  field_advert_currency:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 24
+    region: content
+  field_advert_locality:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 33
+    region: content
+  field_advert_locality_district:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 35
+    region: content
+  field_advert_locality_province:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 36
+    region: content
+  field_advert_locality_sector:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 34
+    region: content
+  field_advert_location:
+    type: geolocation_latlng
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 32
+    region: content
+  field_advert_payment:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 25
+    region: content
+  field_advert_price:
+    type: number_decimal
+    label: hidden
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 26
+    region: content
+  field_advert_price_negociable:
+    type: boolean
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 27
+    region: content
+  field_advert_property_type:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 28
+    region: content
+  field_advert_reference:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 29
+    region: content
+  field_advert_street:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_advert_type:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+hidden:
+  addtoany: true
+  field_advert_advertiser: true
+  field_advert_bathrooms: true
+  field_advert_bedrooms: true
+  field_advert_bid_security_amount: true
+  field_advert_bid_start_value: true
+  field_advert_business_comment: true
+  field_advert_contact_email: true
+  field_advert_contact_name: true
+  field_advert_contact_tel: true
+  field_advert_creator_geolocation: true
+  field_advert_creator_location: true
+  field_advert_expirydate: true
+  field_advert_furnished: true
+  field_advert_is_agent: true
+  field_advert_is_first_published: true
+  field_advert_is_synchronised: true
+  field_advert_living_area: true
+  field_advert_picture: true
+  field_advert_posting_plan: true
+  field_advert_price_in_rwf: true
+  field_advert_relative_path: true
+  field_advert_rented_sold: true
+  field_advert_signature: true
+  field_advert_size: true
+  field_advert_total_floors: true
+  field_advert_video_presentation: true
+  field_advert_village: true
+  field_agent_side_reference: true
+  field_bid_expiration: true
+  field_bid_is_online: true
+  field_bid_reference: true
+  field_bid_security_amount: true
+  field_bid_starting_value: true
+  field_price_in_rwf: true
+  field_property_description: true
+  field_target_pr_id: true
+  field_visit_cellphone: true
+  field_visit_cellphone_2: true
+  field_visit_contact_name: true
+  field_visit_email_address1: true
+  field_visit_email_address2: true
+  links: true
+  location_province: true
+  published_at: true

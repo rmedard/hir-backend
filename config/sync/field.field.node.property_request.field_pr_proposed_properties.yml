@@ -1,0 +1,25 @@
+uuid: 048c7b33-8f37-49b1-af0a-5b5653807709
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_proposed_properties
+    - node.type.property_request
+id: node.property_request.field_pr_proposed_properties
+field_name: field_pr_proposed_properties
+entity_type: node
+bundle: property_request
+label: 'Proposed properties'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: adverts
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

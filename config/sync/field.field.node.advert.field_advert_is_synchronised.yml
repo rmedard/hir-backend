@@ -1,0 +1,23 @@
+uuid: 8cd11bf5-86b1-4551-bcf0-9fe0447e38bc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_is_synchronised
+    - node.type.advert
+id: node.advert.field_advert_is_synchronised
+field_name: field_advert_is_synchronised
+entity_type: node
+bundle: advert
+label: Synchronised
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

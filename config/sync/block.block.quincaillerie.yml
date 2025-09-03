@@ -1,0 +1,30 @@
+uuid: c156991e-c16d-4cd4-98b6-939b0efcd886
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:banner_block:2efe6ee0-48de-4368-8224-2ffb087dd05b'
+  module:
+    - block_content
+    - system
+  theme:
+    - houseinrwanda_theme
+id: quincaillerie
+theme: houseinrwanda_theme
+region: sidebar_horizontal
+weight: -14
+provider: null
+plugin: 'block_content:2efe6ee0-48de-4368-8224-2ffb087dd05b'
+settings:
+  id: 'block_content:2efe6ee0-48de-4368-8224-2ffb087dd05b'
+  label: Quincaillerie
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: "<front>\r\n/news/home-sweet-home-modern-house-stunning-garden-and-equipment-included\r\n"

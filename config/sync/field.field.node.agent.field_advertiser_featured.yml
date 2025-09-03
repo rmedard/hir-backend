@@ -1,0 +1,23 @@
+uuid: 6f844523-e5ef-490a-a971-37c74cf2c15f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advertiser_featured
+    - node.type.agent
+id: node.agent.field_advertiser_featured
+field_name: field_advertiser_featured
+entity_type: node
+bundle: agent
+label: Featured
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

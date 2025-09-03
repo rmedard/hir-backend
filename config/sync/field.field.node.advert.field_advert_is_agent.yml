@@ -1,0 +1,23 @@
+uuid: 32d90170-96c5-4372-8a7c-8d94c29253b4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_is_agent
+    - node.type.advert
+id: node.advert.field_advert_is_agent
+field_name: field_advert_is_agent
+entity_type: node
+bundle: advert
+label: 'Are you a company/agency?'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes - I am a company/agency'
+  off_label: 'No - I am an individual'
+field_type: boolean

@@ -1,0 +1,36 @@
+uuid: d22dd43e-9676-4415-b8b1-a727683c7d48
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_advert_posting_plan
+field_name: field_advert_posting_plan
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: standard
+      label: Standard
+    -
+      value: featured
+      label: Featured
+    -
+      value: full_service
+      label: 'Brokers Subscription'
+    -
+      value: super_featured
+      label: 'Super Featured'
+    -
+      value: super_subscription
+      label: 'Entreprise Pack'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

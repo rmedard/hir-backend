@@ -1,0 +1,39 @@
+uuid: b59e8189-9c63-464a-a508-8f06be3e8a5b
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.property_requests_plan_block
+    - field.field.block_content.property_requests_plan_block.field_pr_plan_details
+    - field.field.block_content.property_requests_plan_block.field_pr_plan_weight
+  module:
+    - text
+id: block_content.property_requests_plan_block.default
+targetEntityType: block_content
+bundle: property_requests_plan_block
+mode: default
+content:
+  field_pr_plan_details:
+    type: text_textarea
+    weight: 26
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_plan_weight:
+    type: number
+    weight: 27
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  info:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

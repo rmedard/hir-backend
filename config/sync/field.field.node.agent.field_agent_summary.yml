@@ -1,0 +1,21 @@
+uuid: 81a54ea3-ca92-4b04-b0ac-dbb820e968c9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_summary
+    - node.type.agent
+  module:
+    - text
+id: node.agent.field_agent_summary
+field_name: field_agent_summary
+entity_type: node
+bundle: agent
+label: Summary
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

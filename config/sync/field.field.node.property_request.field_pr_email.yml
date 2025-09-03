@@ -1,0 +1,19 @@
+uuid: 2182f200-1db6-484f-bc77-6d8cf2ba9f0f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pr_email
+    - node.type.property_request
+id: node.property_request.field_pr_email
+field_name: field_pr_email
+entity_type: node
+bundle: property_request
+label: Email
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

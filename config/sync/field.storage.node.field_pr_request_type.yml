@@ -1,0 +1,31 @@
+uuid: a846fd0d-7c64-4154-8c79-8dda4af7f137
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+    - options
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: node.field_pr_request_type
+field_name: field_pr_request_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: rent
+      label: Rent
+    -
+      value: sale
+      label: Buy
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

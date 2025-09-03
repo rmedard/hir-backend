@@ -1,0 +1,23 @@
+uuid: 7f89cfa2-6fee-4e22-babe-508b80b40e00
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.adverts_view
+  module:
+    - views
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_exposedformadverts_viewpage_search_adverts
+theme: bootstrap_barrio
+region: top_header
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:adverts_view-page_search_adverts'
+settings:
+  id: 'views_exposed_filter_block:adverts_view-page_search_adverts'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+visibility: {  }

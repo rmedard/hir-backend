@@ -1,0 +1,23 @@
+uuid: 1412e5b8-6067-4948-a1d2-426e0596afbf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_rented_sold
+    - node.type.advert
+id: node.advert.field_advert_rented_sold
+field_name: field_advert_rented_sold
+entity_type: node
+bundle: advert
+label: Rented/Sold
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

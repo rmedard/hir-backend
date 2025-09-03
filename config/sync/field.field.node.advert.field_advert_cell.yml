@@ -1,0 +1,19 @@
+uuid: 9f406320-c88a-4aa4-9a73-2c1287e54c76
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_cell
+    - node.type.advert
+id: node.advert.field_advert_cell
+field_name: field_advert_cell
+entity_type: node
+bundle: advert
+label: Cell/Akagari
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

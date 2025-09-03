@@ -1,0 +1,23 @@
+uuid: 4fd0625d-c4a2-4aef-8134-f380c7bf7328
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_is_first_published
+    - node.type.advert
+id: node.advert.field_advert_is_first_published
+field_name: field_advert_is_first_published
+entity_type: node
+bundle: advert
+label: 'First published'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

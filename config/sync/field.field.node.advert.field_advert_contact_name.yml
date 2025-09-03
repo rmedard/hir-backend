@@ -1,0 +1,19 @@
+uuid: c0f0b5fa-01aa-4382-8286-c342f79786d8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_contact_name
+    - node.type.advert
+id: node.advert.field_advert_contact_name
+field_name: field_advert_contact_name
+entity_type: node
+bundle: advert
+label: 'Your name'
+description: 'This name will be used only by us to contact you'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

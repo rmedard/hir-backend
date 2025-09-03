@@ -1,0 +1,26 @@
+uuid: 756acbee-14ae-46a3-99d6-f89361b28054
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advert_contact_tel
+    - node.type.advert
+  module:
+    - telephone
+    - telephone_validation
+third_party_settings:
+  telephone_validation:
+    format: 0
+    country: {  }
+id: node.advert.field_advert_contact_tel
+field_name: field_advert_contact_tel
+entity_type: node
+bundle: advert
+label: 'Your phone number'
+description: "A valid Rwandan mobile number starts with '+2507'"
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

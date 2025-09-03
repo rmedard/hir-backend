@@ -1,0 +1,24 @@
+uuid: eadd961f-cee2-4365-9acf-a37ed13d1007
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_content
+    - field_permissions
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: block_content.field_pr_plan_weight
+field_name: field_pr_plan_weight
+entity_type: block_content
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

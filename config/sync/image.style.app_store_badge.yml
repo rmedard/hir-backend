@@ -1,0 +1,15 @@
+uuid: 1f176eff-6300-44d8-b20d-330d20b0469f
+langcode: en
+status: true
+dependencies: {  }
+name: app_store_badge
+label: 'App Store Badge'
+effects:
+  74ffc8b8-42bf-49ab-8a50-6a4f531f02de:
+    uuid: 74ffc8b8-42bf-49ab-8a50-6a4f531f02de
+    id: image_scale
+    weight: 1
+    data:
+      width: null
+      height: 40
+      upscale: false

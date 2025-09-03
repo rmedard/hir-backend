@@ -1,0 +1,19 @@
+uuid: ef1e0ba2-3363-4d38-8f8c-6a214cf5a105
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_relative_path
+    - node.type.agent
+id: node.agent.field_agent_relative_path
+field_name: field_agent_relative_path
+entity_type: node
+bundle: agent
+label: 'Relative path'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

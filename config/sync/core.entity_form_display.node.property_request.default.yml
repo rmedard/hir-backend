@@ -1,0 +1,267 @@
+uuid: 16d02429-d88f-48a4-bc1a-f540e597da15
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.property_request.field_how_to_submit_advert
+    - field.field.node.property_request.field_pr_area_city_interest
+    - field.field.node.property_request.field_pr_currency
+    - field.field.node.property_request.field_pr_email
+    - field.field.node.property_request.field_pr_equipment
+    - field.field.node.property_request.field_pr_expiry_date
+    - field.field.node.property_request.field_pr_first_name
+    - field.field.node.property_request.field_pr_is_synchronised
+    - field.field.node.property_request.field_pr_last_name
+    - field.field.node.property_request.field_pr_maximum
+    - field.field.node.property_request.field_pr_minimum
+    - field.field.node.property_request.field_pr_minimum_bathrooms
+    - field.field.node.property_request.field_pr_minimum_bedrooms
+    - field.field.node.property_request.field_pr_more_details
+    - field.field.node.property_request.field_pr_neighborhood_descr
+    - field.field.node.property_request.field_pr_payable
+    - field.field.node.property_request.field_pr_phone_number
+    - field.field.node.property_request.field_pr_property_type
+    - field.field.node.property_request.field_pr_proposed_properties
+    - field.field.node.property_request.field_pr_reference
+    - field.field.node.property_request.field_pr_relative_path
+    - field.field.node.property_request.field_pr_request_type
+    - field.field.node.property_request.field_pr_required_service
+    - field.field.node.property_request.field_pr_urgency
+    - node.type.property_request
+  module:
+    - datetime
+    - path
+    - publication_date
+    - telephone
+    - text
+id: node.property_request.default
+targetEntityType: node
+bundle: property_request
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_how_to_submit_advert:
+    type: text_textarea
+    weight: 26
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_area_city_interest:
+    type: string_textfield
+    weight: 25
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_currency:
+    type: options_select
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pr_email:
+    type: email_default
+    weight: 20
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
+  field_pr_equipment:
+    type: options_select
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pr_expiry_date:
+    type: datetime_default
+    weight: 22
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pr_first_name:
+    type: string_textfield
+    weight: 23
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_is_synchronised:
+    type: options_buttons
+    weight: 29
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pr_last_name:
+    type: string_textfield
+    weight: 24
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_maximum:
+    type: number
+    weight: 16
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_minimum:
+    type: number
+    weight: 15
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_minimum_bathrooms:
+    type: options_select
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pr_minimum_bedrooms:
+    type: options_select
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pr_more_details:
+    type: text_textarea
+    weight: 12
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_neighborhood_descr:
+    type: text_textarea
+    weight: 13
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_payable:
+    type: options_select
+    weight: 17
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pr_phone_number:
+    type: telephone_default
+    weight: 19
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_property_type:
+    type: options_select
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pr_proposed_properties:
+    type: entity_reference_autocomplete
+    weight: 27
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_reference:
+    type: number
+    weight: 28
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_relative_path:
+    type: string_textfield
+    weight: 30
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_pr_request_type:
+    type: options_select
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pr_required_service:
+    type: options_select
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pr_urgency:
+    type: options_select
+    weight: 18
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  published_at:
+    type: publication_date_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 6
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 4
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

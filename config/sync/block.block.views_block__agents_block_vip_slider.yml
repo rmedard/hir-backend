@@ -1,0 +1,30 @@
+uuid: 34efc2ca-a6ac-40c9-90c5-afde5429a222
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.agents
+  module:
+    - system
+    - views
+  theme:
+    - houseinrwanda_theme
+id: views_block__agents_block_vip_slider
+theme: houseinrwanda_theme
+region: content
+weight: -23
+provider: null
+plugin: 'views_block:agents-block_vip_slider'
+settings:
+  id: 'views_block:agents-block_vip_slider'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+  items_per_page: none
+  exposed: {  }
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

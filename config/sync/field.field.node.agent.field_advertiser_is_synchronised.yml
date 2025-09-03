@@ -1,0 +1,23 @@
+uuid: f343dc68-c4fc-4b75-b557-b1ee2881a66d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advertiser_is_synchronised
+    - node.type.agent
+id: node.agent.field_advertiser_is_synchronised
+field_name: field_advertiser_is_synchronised
+entity_type: node
+bundle: agent
+label: Synchronised
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

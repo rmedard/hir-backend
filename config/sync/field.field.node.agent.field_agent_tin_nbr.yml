@@ -1,0 +1,19 @@
+uuid: f3d770dc-2b3f-4b76-9bb4-7b7ed0ad5c6a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_tin_nbr
+    - node.type.agent
+id: node.agent.field_agent_tin_nbr
+field_name: field_agent_tin_nbr
+entity_type: node
+bundle: agent
+label: 'Tax Identification Number (TIN)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

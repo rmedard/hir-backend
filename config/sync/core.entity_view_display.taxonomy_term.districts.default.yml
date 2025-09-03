@@ -1,0 +1,13 @@
+uuid: 9d7522bc-8355-4ce8-97d2-7027d770765d
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.districts
+id: taxonomy_term.districts.default
+targetEntityType: taxonomy_term
+bundle: districts
+mode: default
+content: {  }
+hidden:
+  description: true
