@@ -1,0 +1,15 @@
+name: RiR Notifier
+description: 'This module handles alerts and notifications.'
+package: RIR Custom Modules
+configure: rir_notifier.admin_settings
+
+type: module
+core_version_requirement: ^10 || ^11
+
+dependencies:
+  - webform:webform
+  - twig_tweak:twig_tweak
+  - publication_date:publication_date
+  - rir_interface:rir_interface
+version: '10.x-1.0'
+project: 'rir_notifier'

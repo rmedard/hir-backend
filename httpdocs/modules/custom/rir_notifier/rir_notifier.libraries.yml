@@ -1,0 +1,4 @@
+rir_scripts:
+  version: VERSION
+  js:
+    js/scripts.js: {}

@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+      xmlns:o="urn:schemas-microsoft-com:office:office">
+{% include '@houseinrwanda_theme/includes/header.html.twig' %}
+<body>
+<div>
+  <h3>Request for more details about a property</h3>
+
+  <p><strong>Dear {{ contact_name }}!</strong></p>
+
+  {% set info = purposes['ask_for_info'] == 1 %}
+  {% set visit = purposes['schedule_visit'] == 1 %}
+  {% set availability = purposes['check_availability'] == 1 %}
+
+  {% if info or visit or availability %}
+    <p>I would like to:</p>
+    <ul>
+      {% if info %}
+        <li><strong>Ask for more info</strong></li>
+      {% endif %}
+      {% if visit %}
+        <li><strong>Schedule a visit</strong></li>
+      {% endif %}
+      {% if availability %}
+        <li><strong>Check availability</strong>. Period: {{ timeframe }}</li>
+      {% endif %}
+    </ul>
+  {% endif %}
+
+  <p>{{ message }}</p>
+
+  <strong>My details:</strong>
+  <ul>
+    <li><strong>My names</strong>: {{ names }}</li>
+    <li><strong>My mobile number</strong>: {{ phone }}</li>
+    <li><strong>My email</strong>: {{ email }}</li>
+  </ul>
+  <strong>The property I am interested in:</strong>
+  <ul>
+    <li><strong>Reference</strong>: <a href="{{ drupal_url('node/' ~ advert.id, {absolute: true}) }}"
+                                       target="_blank">{{ advert.field_advert_reference.value }}</a></li>
+    <li><strong>Title</strong>: {{ advert.title.value }}</li>
+  </ul>
+  <br>
+  {% include '@houseinrwanda_theme/includes/footer.html.twig' %}
+</div>
+</body>
+</html>

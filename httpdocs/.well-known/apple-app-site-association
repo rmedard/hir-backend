@@ -1,0 +1,67 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "2S5MXX6D7F.com.houseinrwanda.houseinrwanda",
+          "TCCVYAAYU2.com.houseinrwanda.houseinrwanda"
+        ],
+        "components": [
+          {
+            "/": "/advertiser/*",
+            "comment": "Matches any URL beginning with /advertiser/"
+          },
+          {
+            "/": "/property/*",
+            "comment": "Matches any URL beginning with /property/"
+          },
+          {
+            "/": "/for-rent",
+            "comment": "Matches any URL beginning with /for-rent"
+          },
+          {
+            "/": "/short-rents",
+            "comment": "Matches any URL beginning with /short-rents"
+          },
+          {
+            "/": "/for-sale",
+            "comment": "Matches any URL beginning with /for-sale"
+          },
+          {
+            "/": "/auctions",
+            "comment": "Matches any URL beginning with /auctions"
+          },
+          {
+            "/": "/advertisers",
+            "comment": "Matches any URL beginning with /advertisers"
+          },
+          {
+            "/": "/property_requests",
+            "comment": "Matches any URL beginning with /property_requests"
+          },
+          {
+            "/": "/contact",
+            "comment": "Matches any URL beginning with /contact"
+          },
+          {
+            "exclude": true,
+            "comment": "Exclude all other URLs"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "2S5MXX6D7F.com.houseinrwanda.houseinrwanda",
+      "TCCVYAAYU2.com.houseinrwanda.houseinrwanda"
+    ]
+  },
+  "appclips": {
+    "apps": [
+      "2S5MXX6D7F.com.houseinrwanda.houseinrwanda",
+      "TCCVYAAYU2.com.houseinrwanda.houseinrwanda"
+    ]
+  }
+}

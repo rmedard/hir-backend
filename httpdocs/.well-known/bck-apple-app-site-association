@@ -1,0 +1,25 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "TCCVYAAYU2.com.houseinrwanda.houseinrwanda"
+        ],
+        "appID": "TCCVYAAYU2.com.houseinrwanda.houseinrwanda",
+        "paths": [
+          "/advertiser/*",
+          "/property/*",
+          "/for-rent",
+          "/short-rents",
+          "/for-sale",
+          "/auctions",
+          "/advertisers",
+          "/property_requests",
+          "/contact",
+          "NOT *"
+        ]
+      }
+    ]
+  }
+}

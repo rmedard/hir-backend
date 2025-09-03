@@ -1,0 +1,51 @@
+{#
+/**
+ * @file
+ * Theme override for a views exposed form.
+ *
+ * Available variables:
+ * - form: A render element representing the form.
+ *
+ * @see template_preprocess_views_exposed_form()
+ */
+#}
+{% if q is not empty %}
+  {#
+  This ensures that, if clean URLs are off, the 'q' is added first,
+  as a hidden form element, so that it shows up first in the POST URL.
+  #}
+  {{ q }}
+{% endif %}
+<div class="form-row z">
+  {% if form['#id'] == 'views-exposed-form-adverts-view-page-search-adverts' %}
+    <div class="row gx-1 p-0">
+      <div class="col-12 col-md-6 m-0">{{ form.combine }}</div>
+      <div class="col-6 col-md-3 m-0">{{ form.field_advert_type_value }}</div>
+      <div class="col-6 col-md-3 m-0">{{ form.field_advert_property_type_value }}</div>
+    </div>
+    <div class="row gx-1 p-0">
+      <div class="col-6 col-md-3 m-0">{{ form.field_advert_bedrooms_value }}</div>
+      <div class="col-6 col-md-3 m-0">{{ form.field_advert_furnished_value }}</div>
+      <div class="col-6 col-md-3 m-0">{{ form.field_price_in_rwf_value }}</div>
+      <div class="col-6 col-md-3 m-0">{{ form.actions }}</div>
+    </div>
+  {% elseif form['#id'] == 'views-exposed-form-manage-property-requests-page-pr-public-list' %}
+    <div class="row gx-1 p-0">
+      <div class="col-12 col-md-9 m-0">{{ form.field_pr_property_type_value }}</div>
+      <div class="col-12 col-md-3 m-0">{{ form.field_pr_request_type_value }}</div>
+    </div>
+    <div class="row gx-1 p-0">
+      <div class="col-12 col-md-9 m-0">{{ form.location }}</div>
+      <div class="col-12 col-md-3 m-0">{{ form.actions }}</div>
+    </div>
+  {% elseif form['#id'] == 'views-exposed-form-agents-page-agents' %}
+    <div class="row gx-1 p-0">
+      <div class="col-12 col-md-4 m-0">{{ form.title }}</div>
+      <div class="col-12 col-md-4 m-0">{{ form.field_agent_operations_area_value }}</div>
+      <div class="col-12 col-md-3 m-0">{{ form.field_advertiser_type_value }}</div>
+      <div class="col-12 col-md-1 m-0">{{ form.actions }}</div>
+    </div>
+  {% else %}
+    {{ form }}
+  {% endif %}
+</div>

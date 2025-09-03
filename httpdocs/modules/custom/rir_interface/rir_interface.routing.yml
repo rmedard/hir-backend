@@ -1,0 +1,23 @@
+rir_interface.manage_page:
+  path: '/manage'
+  defaults:
+    _title: 'HiR Management'
+    _controller: '\Drupal\rir_interface\Controller\PagesController::hirManagementPage'
+  requirements:
+    _permission: 'access content'
+
+rir_interface.social_media.settings:
+  path: '/admin/manage/settings/social-media'
+  defaults:
+    _form: '\Drupal\rir_interface\Form\SocialMediaSettingsForm'
+    _title: 'Social Media Settings'
+  requirements:
+    _permission: 'administer site configuration'
+
+rir_interface.currency_converter.settings:
+  path: '/admin/manage/settings/currency-converter'
+  defaults:
+    _form: '\Drupal\rir_interface\Form\CurrencyConverterSettingsForm'
+    _title: 'Currency converter settings'
+  requirements:
+    _permission: 'administer site configuration'

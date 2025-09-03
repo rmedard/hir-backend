@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row">
+        <div class="col-8 text-white d-flex flex-column align-items-start">
+            <span>Copyright <i class="far fa-copyright"></i> {{ year }} {{ drupal_token('site:name') }} - HiR Ltd. All Rights Reserved.</span>
+            <div class="site-details">
+                <a href="/page/about-us">About us</a> | <a href="/news">News</a> | <a href="/page/terms-use">{{ terms }}</a> | <a href="/page/privacy-policy">{{ privacy }}</a> | <a href="/user">{{ admin }}</a>
+            </div>
+        </div>
+        <div class="col-4 d-flex justify-content-end">
+            <a href="{{ drupal_token('site:android') }}" class="me-1" target="_blank">
+{#                {{ drupal_image('public://apps_assets/google_play_badge.png', 'app_store_badge', {alt: 'Download our app on android play'}) }}#}
+                <img src="{{ drupal_token('site:url') ~ module_path }}/images/google-play-badge.png" alt="Download our app on google play">
+            </a>
+            <a href="{{ drupal_token('site:ios') }}" target="_blank">
+                <img src="{{ drupal_token('site:url') ~ module_path }}/images/app-store-badge.png" alt="Download our app on apple store">
+            </a>
+        </div>
+    </div>
+</div>

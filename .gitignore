@@ -1,0 +1,98 @@
+# Drupal Files and Directories
+/httpdocs/sites/*/settings*.php
+!/httpdocs/sites/*/settings.php
+/httpdocs/sites/*/services*.yml
+!/httpdocs/sites/*/services.yml
+/httpdocs/sites/*/files
+/httpdocs/sites/*/private
+/httpdocs/sites/default/default.settings.php
+/httpdocs/sites/default/default.services.yml
+/httpdocs/libraries
+
+# Ignore sensitive configuration
+/httpdocs/sites/*/settings.local.php
+/httpdocs/sites/*/settings.ddev.php
+
+# Files directory
+/httpdocs/sites/default/files/
+/httpdocs/sites/*/files/
+
+# Private files
+/private/
+
+# Temporary files
+/tmp/
+/httpdocs/sites/*/tmp/
+
+# Drupal Core
+/httpdocs/core/
+/httpdocs/vendor/
+/httpdocs/autoload.php
+
+# Dependencies
+/vendor/
+/node_modules/
+
+# Composer
+/httpdocs/composer.json
+/httpdocs/composer.lock
+
+# DDEV
+/.ddev/
+!/.ddev/config.yaml
+
+# Database dumps
+*.sql
+*.sql.gz
+database-backup.sql.gz
+
+# Environment-specific files
+.env
+.env.local
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+/logs/
+/httpdocs/sites/*/logs/
+
+# Cache directories
+/httpdocs/sites/default/files/css/
+/httpdocs/sites/default/files/js/
+/httpdocs/sites/default/files/styles/
+/httpdocs/sites/default/files/config_*/
+
+# Configuration management (keep in separate directory)
+# Only ignore if config is in sites/default/files/sync
+/httpdocs/sites/default/files/sync/
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# OS generated files
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# Node.js (if using for front-end build)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Drupal console
+/.console/

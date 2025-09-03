@@ -1,0 +1,72 @@
+{% include '@houseinrwanda_theme/includes/header.html.twig' %}
+<body>
+{% set protocol = cdn_enabled == 1 ? 'http:' : drupal_token('site:url') %}
+<div class="tg-wrap">
+  <table class="tg">
+    {% set image_url = drupal_config('rir_interface.social_media', 'email_banner_image') %}
+    {% if image_url %}
+      <tr>
+        <td class="tg-0pky" colspan="2">
+          <a href="http://hircampaign.s3-website.eu-central-1.amazonaws.com" target="_blank">
+            <img src="{{ image_url }}"
+                 class="templateImage" alt="email_banner" style="max-width: 640px;">
+          </a>
+        </td>
+      </tr>
+    {% endif %}
+    <tr>
+      <td class="tg-0lax" colspan="2">
+        {% set manyAdverts = adverts|length > 1 ? true : false %}
+        <h3>Interesting propert{% if manyAdverts %}ies{% else %}y{% endif %} from {{ drupal_token('site:name') }}</h3>
+
+        <h4>Dear {{ recipient }}, </h4>
+
+        <p>You receive this email because you have been looking for similar properties from {{ drupal_token('site:url') }}.
+          <br>Please find below the latest properties matching your selection:</p>
+      </td>
+    </tr>
+    {% for advert in adverts %}
+      <tr>
+        <td class="tg-0pky">
+          {% if advert.field_advert_picture is not empty %}
+            <img src="{{ protocol ~ advert.field_advert_picture.0.entity.uri.value|image_style('scaled_90x90') }}"
+                 class="templateImage" alt="advertImage"/>
+          {% else %}
+            <img src="{{ protocol ~ 'public://default_images/no_img.png'|image_style('scaled_90x90') }}"
+                 class="templateImage" alt="noImage"/>
+          {% endif %}
+        </td>
+        <td class="tg-0pky">
+          <p id="titleId">
+            <a href="{{ drupal_url('node/' ~ advert.id, {absolute: true}) }}">{{ advert.title.value|capitalize }}</a>
+            - Ref: <span>{{ advert.field_advert_reference.value }}</span>
+            {% if advert.field_advert_type.value != 'auction' %}
+              {% if advert.field_advert_price_negociable.value == '1' %}
+                <span> - Price on request</span>
+              {% else %}
+                <span> - {{ advert.field_advert_price.value|number_format }} {{ advert.field_advert_currency.value|upper }}</span>
+              {% endif %}
+            {% endif %}
+            <br/>
+            {{ advert.field_advert_locality_district.value }}, {{ advert.field_advert_locality_sector.value }}
+            <br/>
+            {{ advert.field_advert_property_type.value|capitalize }}
+            for {% if advert.field_advert_type.value == 'buy' %} Sale {% else %} {{ advert.field_advert_type.value|capitalize }} {% endif %}
+          </p>
+        </td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td class="tg-0pky" colspan="2">
+        {% include '@houseinrwanda_theme/includes/footer.html.twig' %}
+      </td>
+    </tr>
+    <tr>
+      <td class="tg-0pky" colspan="2">
+        <small><i>Not looking for properties anymore?</i> <a href="{{ drupal_token('site:url') }}/unsubscribe/{{ sid }}">Unsubscribe here</a></small>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

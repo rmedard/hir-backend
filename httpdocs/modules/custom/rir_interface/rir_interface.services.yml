@@ -1,0 +1,34 @@
+services:
+  rir_interface.agent_service:
+    class: Drupal\rir_interface\Service\AgentService
+    arguments: ["@entity_type.manager"]
+  rir_interface.adverts_service:
+    class: Drupal\rir_interface\Service\AdvertsService
+    arguments: ["@entity_type.manager"]
+  rir_interface.currency_converter_service:
+    class: Drupal\rir_interface\Service\CurrencyConverterService
+  rir_interface.email_service:
+    class: Drupal\rir_interface\Service\EmailService
+  rir_interface.path_alias_service:
+    class: Drupal\rir_interface\Service\PathAliasService
+    arguments:
+      - '@logger.factory'
+  rir_interface.theming_service:
+    class: Drupal\rir_interface\Service\ThemingService
+  rir_interface.locality_service:
+    class: Drupal\rir_interface\Service\LocalityService
+  rir_interface.property_requests_service:
+    class: Drupal\rir_interface\Service\PropertyRequestsService
+    arguments: ["@entity_type.manager"]
+  rir_interface.route_subscriber:
+    class: Drupal\rir_interface\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  rir_interface.invalid_url_events:
+    class: Drupal\rir_interface\EventSubscriber\InvalidUrlEventsSubscriber
+    tags:
+      - { name: event_subscriber }
+  rir_interface.redirect_403_events:
+    class: Drupal\rir_interface\EventSubscriber\RedirectOn403InvalidUrl
+    tags:
+      - { name: event_subscriber }

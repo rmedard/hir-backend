@@ -1,0 +1,417 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the SASS Starterkit subtheme.
+ */
+
+use Drupal\Component\Render\PlainTextOutput;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Template\AttributeString;
+use Drupal\node\NodeInterface;
+use Drupal\views\ResultRow;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_form_system_theme_settings_alter() for settings form.
+ *
+ * Replace Barrio setting options with subtheme ones.
+ */
+function houseinrwanda_theme_form_system_theme_settings_alter(&$form, FormStateInterface $form_state): void
+{
+  $form['components']['navbar']['bootstrap_barrio_navbar_top_background']['#options'] = array(
+    'bg-primary' => t('Primary'),
+    'bg-secondary' => t('Secondary'),
+    'bg-light' => t('Light'),
+    'bg-dark' => t('Dark'),
+    'bg-white' => t('White'),
+    'bg-transparent' => t('Transparent'),
+  );
+  $form['components']['navbar']['bootstrap_barrio_navbar_background']['#options'] = array(
+    'bg-primary' => t('Primary'),
+    'bg-secondary' => t('Secondary'),
+    'bg-light' => t('Light'),
+    'bg-dark' => t('Dark'),
+    'bg-white' => t('White'),
+    'bg-transparent' => t('Transparent'),
+  );
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_node(&$variables): void
+{
+  $node = $variables['node'];
+  if ($node instanceof NodeInterface) {
+      if (in_array($node->bundle(), ['advert', 'agent'])) {
+          $host = Drupal::request()->getSchemeAndHttpHost();
+          $location = $host . '/' . Drupal::theme()->getActiveTheme()->getPath();
+          $blueCheck = $location . '/images/icons/check-blue.svg';
+          $goldCheck = $location . '/images/icons/twitter-gold.svg';
+          $blueBadgeHtml = "<img src='" . $blueCheck . "' alt='featured advertiser' style='height: 1.1em; width: auto' />";
+          $goldBadgeHtml = "<img src='" . $goldCheck . "' alt='vip advertiser' style='height: 1.1em; width: auto' />";
+
+          if ($node->bundle() === 'advert') {
+              $themingService = Drupal::service('rir_interface.theming_service');
+              $isRent = in_array($node->get('field_advert_type')->value, ['rent', 'short_rent']);
+              $variables['content']['property_type_pill'] = ['#markup' => $themingService->getPropertyTypePill($node)];
+              if ($isRent) {
+                  $payable = match ($node->get('field_advert_payment')->value) {
+                      'monthly' => '/month',
+                      'weekly' => '/week',
+                      'daily' => '/day',
+                      'nightly' => '/night',
+                      'yearly' => '/year',
+                      default => '',
+                  };
+                  $variables['content']['payable'] = ['#markup' => '<small>' . $payable . '</small>'];
+              }
+
+              if (boolval($variables['teaser']) === true) {
+                  $variables['content']['price_pill'] = ['#markup' => $themingService->getPropertyPricePill($node)];
+                  $variables['content']['is_super_sub'] = $node->get('field_advert_posting_plan')->value === 'super_subscription';
+                  $variables['content']['is_featured'] = $node->get('field_advert_posting_plan')->value !== 'standard';
+              } else {
+                  if ($variables['view_mode'] === 'tiny') {
+                      $variables['content']['price_pill'] = ['#markup' => $themingService->getPropertyPricePill($node)];
+                  }
+              }
+
+              if ($node->field_advert_is_agent->value) {
+                  $advertiser = $node->field_advert_advertiser->entity;
+                  if (is_null($advertiser)) {
+                      Drupal::logger('HiR Theme')->error('Advertiser is null. NID: ' . $node->id());
+                  }
+                  $agentCategory = $advertiser->field_agent_category->value;
+                  $agentName = $advertiser->getTitle();
+                  $isFeatured = $agentCategory === 'featured';
+                  $isVip = $agentCategory === 'vip';
+                  if ($isFeatured or $isVip) {
+                      $badge = $isFeatured ? $blueBadgeHtml : $goldBadgeHtml;
+                      $variables['content']['agent_label'] = Markup::create('<span class="d-flex align-items-center justify-content-center"><span style="white-space: nowrap">' . $agentName . '</span>' . $badge . '</span>');
+                  } else {
+                      $variables['content']['agent_label'] = Markup::create('<span class="d-flex align-items-center justify-content-center">' . $agentName . '</span>');
+                  }
+                  $variables['content']['agent_id'] = $node->field_advert_advertiser->entity->id();
+              }
+          }
+
+          if ($node->bundle() === 'agent') {
+              $isFeatured = $node->get('field_agent_category')->value === 'featured';
+              $isVip = $node->get('field_agent_category')->value === 'vip';
+              if ($isFeatured or $isVip) {
+                  $badge = $isFeatured ? $blueBadgeHtml : $goldBadgeHtml;
+                  $variables['label'] = Markup::create('<span class="d-flex align-items-center justify-content-center"><span style="white-space: nowrap">' . $node->getTitle() . '</span>' . $badge . '</span>');
+                  $node->setTitle($variables['label']);
+              }
+          }
+      }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_menu(&$variables): void
+{
+  if (isset($variables['menu_name']) and $variables['menu_name'] === 'adverts-secondary-menu') {
+    $featured = Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
+      ->condition('type', 'advert')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->condition('field_advert_posting_plan', 'standard', '<>')
+      ->count();
+    $featured_count = $featured->execute();
+
+    $house = Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
+      ->condition('type', 'advert')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->condition('field_advert_property_type', ['house', 'building'], 'IN')
+      ->count();
+    $house_count = $house->execute();
+
+    $apart = Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
+      ->condition('type', 'advert')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->condition('field_advert_property_type', 'apartment')
+      ->count();
+    $apart_count = $apart->execute();
+
+    $commerce = Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
+      ->condition('type', 'advert')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->condition('field_advert_property_type', ['commerce', 'warehouse'], 'IN')
+      ->count();
+    $commerce_count = $commerce->execute();
+
+    $room = Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
+      ->condition('type', 'advert')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->condition('field_advert_property_type', ['room', 'shared_room'], 'IN')
+      ->count();
+    $room_count = $room->execute();
+
+    $office = Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
+      ->condition('type', 'advert')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->condition('field_advert_property_type', 'office')
+      ->count();
+    $office_count = $office->execute();
+
+    $land = Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
+      ->condition('type', 'advert')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->condition('field_advert_property_type', 'land')
+      ->count();
+    $land_count = $land->execute();
+
+    $menu_adverts_tabs_values = [
+      1 => $featured_count,
+      2 => $house_count,
+      3 => $apart_count,
+      4 => $commerce_count,
+      5 => $room_count,
+      6 => $office_count,
+      7 => $land_count,
+    ];
+    $variables['menu_adverts_tabs_values'] = $menu_adverts_tabs_values;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_page(&$variables): void
+{
+  $page_path = Drupal::request()->getPathInfo();
+  $variables['show_sidebars'] = TRUE;
+  $variables['show_searchbar'] = FALSE;
+
+  if (str_contains($page_path, '/pricing-plans') or str_contains($page_path, '/services')
+    or str_contains($page_path, '/pr-posting-plans')) {
+    $variables['show_sidebars'] = FALSE;
+  }
+
+  if (preg_match('(\/properties\/)', $page_path)
+    or preg_match('(\/property\/)', $page_path)
+    or str_contains($page_path, '/search-adverts')
+    or str_contains($page_path, '/for-rent')
+    or str_contains($page_path, '/short-rents')
+    or str_contains($page_path, '/for-sale')
+    or str_contains($page_path, '/auctions')
+    or Drupal::service('path.matcher')->isFrontPage()) {
+    $variables['show_searchbar'] = TRUE;
+  }
+}
+
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_page_title(&$variables): void
+{
+  $queryString = Drupal::request()->getQueryString();
+  if (isset($queryString) && str_contains($queryString, 'advert_target_pr')) {
+    $variables['title'] = t('Submit a property');
+  }
+
+  $variables['show_page_title'] = FALSE;
+
+  $node = Drupal::routeMatch()->getParameter('node');
+  if ($node instanceof NodeInterface) {
+    if ($node->bundle() == 'property_request') {
+      if (!$node->get('field_pr_reference')->isEmpty()) {
+        $variables['title'] = ($node->getTitle() . ' (N° ' . $node->get('field_pr_reference')->value . ')');
+      }
+    }
+
+    if (in_array($node->bundle(), array('property_request', 'advert', 'news'))) {
+      $variables['show_page_title'] = TRUE;
+    }
+
+    if ($node->bundle() == 'advert' and $node->get('field_advert_rented_sold')->value) {
+      if ($node->get('field_advert_type')->value == 'rent') {
+        $variables['rented_sold'] = 'Rented';
+      } else {
+        $variables['rented_sold'] = 'Closed';
+      }
+    }
+  }
+
+  $exception = Drupal::request()->attributes->get('exception');
+  if ($exception and ($exception->getStatusCode() == '404' or $exception->getStatusCode() == '403')) {
+    $variables['show_page_title'] = FALSE;
+  }
+
+  $currentPath = Drupal::request()->getPathInfo();
+  if (str_contains($currentPath, '/form/') or str_contains($currentPath, '/unsubscribe/')) {
+    $variables['show_page_title'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_block(&$variables): void
+{
+  if ($variables['derivative_plugin_id'] == 'rir_realtime_block') {
+    $variables['#cache']['max-age'] = 0;
+  }
+
+  $blocks_with_background = [
+    'webform_block',
+    'direct_access_block'
+  ];
+  $content_blocks_with_background = [
+    'block-houseinrwanda-theme-registertoourfreepropertyalert'
+  ];
+  if (in_array($variables['plugin_id'], $blocks_with_background)
+    or in_array($variables['attributes']['id'], $content_blocks_with_background)) {
+    $variables['attributes']['class'][] = 'p-2';
+    $variables['attributes']['class'][] = 'bg-light';
+  }
+  if ($variables['plugin_id'] === 'copyright_block') {
+    $variables['attributes']['class'][] = 'm-0';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_flexslider(&$variables): void
+{
+  $variables['attributes']['class'][] = 'mb-4';
+  $variables['attributes']['class'][] = 'border-0';
+  $variables['attributes']['class'][] = 'bg-transparent';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_views_view_unformatted(&$variables): void
+{
+  $view = $variables['view'];
+  if ($view instanceof ViewExecutable) {
+    if ($view->current_display === 'page_search_adverts' || $view->current_display === 'page_pr_public_list') {
+      $reformatted_rows = [];
+      foreach ($variables['rows'] as $row) {
+        $result_row = $row['content']['#row'];
+        if ($result_row instanceof ResultRow) {
+          $view_builder = Drupal::entityTypeManager()->getViewBuilder('node');
+          $pre_render = $view_builder->view($result_row->_entity, 'teaser');
+          $reformatted_rows[] = ['content' => $pre_render, 'attributes' => $row['attributes']];
+        }
+      }
+      $variables['rows'] = $reformatted_rows;
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_container(&$variables): void
+{
+  if (isset($variables['attributes']['data-drupal-selector'])) {
+    $selector = $variables['attributes']['data-drupal-selector'];
+    if ($selector === 'edit-actions') {
+      if (in_array($variables['element']['#type'], ['actions', 'webform_actions'])) {
+        $variables['attributes']['class'][] = 'd-block';
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_input(&$variables): void
+{
+  if (isset($variables['attributes']['id'])) {
+    $id = $variables['attributes']['id'];
+    if ($id instanceof AttributeString) {
+      $len = strlen('edit-submit-adverts-view');
+      $is_search_button = (substr($id->value(), 0, $len) === 'edit-submit-adverts-view');
+      if ($is_search_button) {
+        $variables['attributes']['class'][] = 'w-100';
+        $variables['attributes']['class'][] = 'text-white';
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_image(&$variables): void
+{
+  $variables['attributes']['class'][] = 'mb-0';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_form(&$variables): void
+{
+  $form_id = $variables['attributes']['id'];
+  if ($form_id === 'direct-access-form') {
+    $variables['attributes']['class'][] = 'd-flex';
+    $variables['attributes']['class'][] = 'gap-1';
+    $variables['attributes']['class'][] = 'm-0';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_form_element(&$variables): void
+{
+  $no_margin_types = ['checkbox', 'radio'];
+  if (!in_array($variables['type'], $no_margin_types) && isset($variables['name']) && $variables['name'] !== 'reference_number') {
+    $variables['attributes']['class'][] = 'mb-3';
+  }
+
+  if (array_key_exists('#attributes', $variables['element'])) {
+    $attributes = $variables['element']['#attributes'];
+    if (array_key_exists('data-drupal-selector', $attributes)) {
+      if ($attributes['data-drupal-selector'] === 'edit-vote') {
+        $variables['attributes']['class'] = [];
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function houseinrwanda_theme_preprocess_pager(&$variables): void
+{
+  $variables['attributes']['class'][] = 'mt-3';
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function houseinrwanda_theme_form_alter(&$form, FormStateInterface $form_state, $form_id): void
+{
+  if ($form_id === 'views_exposed_form') {
+    if ($form['#id'] === 'views-exposed-form-adverts-view-page-search-adverts') {
+      $form['combine']['#attributes']['placeholder'] = t('Search address: district, sector, cell or village');
+      $form['field_advert_type_value']['#options']['All'] = t('- Offer type -');
+      $form['field_advert_property_type_value']['#options']['All'] = t('- Property type -');
+      $form['field_advert_bedrooms_value']['#options']['All'] = t('- Rooms -');
+      $form['field_price_in_rwf_value']['#options']['All'] = t('- Price -');
+      $form['field_advert_furnished_value']['#options']['All'] = t('- Furnished -');
+      $form['field_advert_furnished_value']['#options']['1'] = t('Yes');
+      $form['field_advert_furnished_value']['#options']['0'] = t('No');
+    }
+  }
+}

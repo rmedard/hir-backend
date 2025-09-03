@@ -1,0 +1,4 @@
+services:
+  hir_publisher.publisher_service:
+    class: Drupal\hir_publisher\Service\PublisherService
+    arguments: ["@entity_type.manager"]

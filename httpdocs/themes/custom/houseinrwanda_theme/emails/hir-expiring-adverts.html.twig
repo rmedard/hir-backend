@@ -1,0 +1,31 @@
+{% include '@houseinrwanda_theme/includes/header.html.twig' %}
+<body>
+    <h3>Adverts expiring today: {{ date }}</h3>
+    <table align="center" border="1" cellpadding="5" cellspacing="0" width="100%" style="height:100%;">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Number of views</th>
+            <th>Contact person</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key, advert in counted_adverts %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <a href="{{ drupal_url('node/' ~ advert.id, {absolute: true}) }}">{{ advert.title.value }}</a>
+                </td>
+                {# Split key into 2 and take the second part #}
+                {% set index = key|split('_', 2) %}
+                <td>{{ index[1] }}</td>
+                <td>{{ advert.field_visit_contact_name.value }} <br>
+                    Tel: {{ advert.field_visit_cellphone.value }} <br>
+                    Email: {{ advert.field_visit_email_address1.value }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

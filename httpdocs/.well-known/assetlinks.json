@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.houseinrwanda.houseinrwanda",
+      "sha256_cert_fingerprints": [
+        "D3:8C:DE:95:29:14:A4:51:21:98:04:0B:58:0C:1D:6D:F7:FF:71:E5:56:F1:FE:8E:E1:30:31:32:04:00:F1:96"
+      ]
+    }
+  }
+]

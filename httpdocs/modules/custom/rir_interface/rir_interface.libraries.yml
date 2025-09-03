@@ -1,0 +1,21 @@
+jquery-number:
+  remote: https://github.com/customd/jquery-number
+  license:
+    name: GNU-GPL-2.0-or-later
+    url: https://github.com/customd/jquery-number#readme
+    gpl-compatible: true
+  js:
+    /libraries/jquery-number/jquery.number.min.js: { minified: true }
+
+custom:
+  js:
+    js/custom_interface.js: { }
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+auction-countdown:
+  js:
+    js/auction_countdown.js: { }
+  dependencies:
+    - core/drupal

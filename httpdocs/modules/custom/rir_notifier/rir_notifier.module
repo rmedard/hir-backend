@@ -1,0 +1,167 @@
+<?php
+/**
+ * @file
+ * A description of what your module does.
+ */
+
+use Drupal\Core\Render\Markup;
+
+/**
+ * Implements hook_page_attachments().
+ * @param array $attachments
+ */
+function rir_notifier_page_attachments(array &$attachments)
+{
+    if (Drupal::currentUser()->isAnonymous()) {
+        $attachments['#attached']['library'][] = 'rir_notifier/rir_scripts';
+        $attachments['#attached']['library'][] = 'core/drupal.dialog.ajax';
+    }
+}
+
+/**
+ * Implements hook_theme().
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ * @return array
+ */
+function rir_notifier_theme($existing, $type, $theme, $path): array
+{
+    return [
+        'rir_subscribe_search' => [
+            'variables' => [
+                'button' => t('Subscribe'),
+            ],
+        ],
+    ];
+}
+
+function getRequestCategoryReference($location, $advertType, $propertyType): string
+{
+    if (empty($location)) {
+        $location = 'loc';
+    }
+    if (empty($advertType) or $advertType == 'All') {
+        $advertType = 'ad';
+    }
+    if (empty($propertyType) or $propertyType == 'All') {
+        $propertyType = 'pro';
+    }
+    return $location . '-' . $advertType . '-' . $propertyType;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function rir_notifier_cron()
+{
+    $request_time = Drupal::time()->getRequestTime();
+    $todayDate = date('dmY', $request_time);
+    $dayOfWeek = date('N', $request_time);
+    $hour = date('H', $request_time);
+    $last_notifications_sent = Drupal::state()->get('notifications.last.sent');
+
+    /**
+     * Send campaign emails
+     */
+//    if (intval($dayOfWeek) == 7) {
+        if (
+            (isset($last_notifications_sent) && date('dmY', $last_notifications_sent) !== $todayDate) || !isset($last_notifications_sent)
+        ) {
+            $dataAccessor = Drupal::service('rir_notifier.data_accessor');
+            $campaigns = $dataAccessor->getComputeCampaigns();
+            $campaign_processor = Drupal::queue('campaigns_processor');
+            foreach ($campaigns as $sid => $advertIds) {
+                $item = new StdClass();
+                $item->sid = $sid;
+                $item->advertIds = $advertIds;
+                $campaign_processor->createItem($item);
+            }
+            Drupal::state()->set('notifications.last.sent', $request_time);
+            Drupal::logger('rir_notifier')->notice(t('Sending notifications scheduled for @date', ['@date' => $todayDate]));
+        }
+//    }
+
+
+    /**
+     * Send adverts expiration alert
+     */
+    $last_expirations_sent = Drupal::state()->get('expirations.last.sent');
+    if (!isset($last_expirations_sent)) {
+        Drupal::state()->set('expirations.last.sent', $request_time);
+        $last_expirations_sent = Drupal::state()->get('expirations.last.sent');
+    }
+    if (date('dmY', $last_expirations_sent) != $todayDate and intval($hour) >= 7) {
+        $dataAccessor = Drupal::service('rir_notifier.data_accessor');
+        $today = strtotime('now');
+        $expiring_adverts = $dataAccessor->getExpiringAdvertsByDate(date('Y-m-d', $today));
+        if (!empty($expiring_adverts)) {
+            try {
+                $mailManager = Drupal::service('plugin.manager.mail');
+                $module = 'rir_interface';
+                $key = 'expiring_adverts_alert';
+                $to = Drupal::config('system.site')->get('mail');
+                $reply = Drupal::config('system.site')->get('mail');
+                $params['message'] = Markup::create(getExpiringAdvertsEmailContent($expiring_adverts, date('D d F, Y', $today)));
+                $langcode = Drupal::currentUser()->getPreferredLangcode();
+                $send = TRUE;
+                $result = $mailManager->mail($module, $key, $to, $langcode, $params, $reply, $send);
+
+                if (intval($result['result']) !== 1) {
+                    $message = t('There was a problem sending expired adverts email.');
+                    Drupal::logger('rir_notifier')
+                        ->error($message . ' Whole Error: ' . json_encode($result, TRUE));
+                }
+                $message = t('An email of expiring adverts has been sent.');
+                Drupal::logger('rir_notifier')->notice($message);
+            } catch (Exception $ex) {
+                Drupal::logger('rir_notifier')->error('Error sending expired adverts: ' . $ex);
+            }
+        }
+        Drupal::state()->set('expirations.last.sent', $request_time);
+        Drupal::logger('rir_notifier')->notice('Sending expired adverts scheduled!');
+    }
+}
+
+function getCampaignHtmlContent($sid, $name, $adverts)
+{
+    $twig_service = Drupal::service('twig');
+    $module_handler = Drupal::service('module_handler');
+    $cdn_enabled = 0;
+    if ($module_handler->moduleExists('cdn')) {
+        $cdn_enabled = intval(Drupal::config('cdn.settings')->get('status'));
+    }
+
+    $variables = [
+        'sid' => $sid,
+        'recipient' => $name,
+        'adverts' => $adverts,
+        'cdn_enabled' => $cdn_enabled
+    ];
+    $themePath = Drupal::service('extension.list.theme')->getPath('houseinrwanda_theme');
+    return $twig_service->load($themePath . '/emails/hir-campaign-adverts.html.twig')->render($variables);
+}
+
+function getExpiringAdvertsEmailContent($expiring_adverts, $date)
+{
+    $counted_adverts = array();
+    foreach ($expiring_adverts as $key => $expiring_advert) {
+        $node_view_stats = Drupal::service('statistics.storage.node')->fetchView($expiring_advert->id());
+        if ($node_view_stats !== FALSE) {
+            $counted_adverts[$key . '_' . $node_view_stats->getTotalCount()] = $expiring_advert;
+        } else {
+            $counted_adverts[$key . '_' . 0] = $expiring_advert;
+            Drupal::logger('rir_notifier')->error('Expiring advert id:' . $expiring_advert->id() . ' not found. (Maybe views count is 0)!!');
+        }
+    }
+
+    $variables = [
+        'counted_adverts' => $counted_adverts,
+        'date' => $date
+    ];
+    $themePath = Drupal::service('extension.list.theme')->getPath('houseinrwanda_theme');
+    $twig_service = Drupal::service('twig');
+    return $twig_service->load($themePath . '/emails/hir-expiring-adverts.html.twig')
+        ->render($variables);
+}

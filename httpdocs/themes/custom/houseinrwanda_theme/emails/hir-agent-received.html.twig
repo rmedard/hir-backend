@@ -1,0 +1,71 @@
+{% include '@houseinrwanda_theme/includes/header.html.twig' %}
+<body>
+<center>
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" id="bodyTable" style="height:100%;">
+    <tr>
+      <td align="center" valign="top" id="bodyCell">
+        <!-- BEGIN TEMPLATE // -->
+        <!--[if gte mso 9]>
+        <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+          <tr>
+            <td align="center" valign="top" width="600" style="width:600px;">
+        <![endif]-->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer">
+
+
+          <!-- BEGIN BODY // -->
+          <tr>
+            <td valign="top" id="templateBody">
+              <!-- BEGIN MODULE: BODY CONTENT // -->
+              <div>
+                <h3>Your web space at {{ drupal_token('site:name') }} is ready!</h3>
+
+                <p><strong>Dear {{ agent.title.value }}!</strong></p>
+
+                <p>Your advertising web space has been created and it is online:
+                  <a href="{{ drupal_url('node/' ~ agent.id, {absolute: true}) }}">Here</a><br>
+                  Would you please double check that your details below are correct? </p>
+
+                <strong>Your public details:</strong>
+                <ul>
+                  <li><strong>Full name</strong>: {{ agent.title.value }}</li>
+                  <li><strong>Location of interest</strong>: {{ agent.field_agent_operations_area.value }}</li>
+                  <li><strong>Website</strong>: {{ agent.field_agent_website.value }}</li>
+                  <li><strong>Email</strong>: {{ agent.field_agent_email.value }}</li>
+                </ul>
+                <br>
+                <strong>Your private details:</strong>
+                <ul>
+                  <li><strong>Phone number</strong>: {{ agent.field_agent_phone.value }}</li>
+                  <li><strong>TIN</strong>: {{ agent.field_agent_tin_nbr.value }}</li>
+                </ul>
+                <br>
+                <strong>Our Property Advertisement Services:</strong>
+                <ul>
+                  <li><strong>Featured:</strong> This is a self-service. You describe and post your adverts and they are approved and pushed online within a few hours. We share them on our social networks with your contact details for customer inquiries and they stay on our homepage for one month.</li>
+                  <li><strong>Super Featured:</strong> This service is suitable for a quick sale. We take professional photos, videos, and a website banner of your property that also stays on top of our homepage to attract maximum visibility. The advert stays on our homepage till it is stored/rented.</li>
+                  <li><strong>Brokers subscription:</strong> Reserved only for professional real estate brokers, we create your own private space on our platform. It is a self-service and you can reach us anytime (24/7) for technical support.</li>
+                  <li><strong>Enterprise Pack:</strong> Reserved for all real estate professionals: auctioneers, real estate developers, financial institutions, etc... We create a web banner, news, videos and surveys for your adverts/projects and regularly share them through our newsletters.</li>
+                </ul>
+                <br>
+                <p>Did you find our services helpful? Please share with you friends and family.</p>
+                <br>
+                {% include '@houseinrwanda_theme/includes/footer.html.twig' %}
+              </div>
+              <!-- // END MODULE: BODY CONTENT -->
+            </td>
+          </tr>
+          <!-- // END BODY -->
+        </table>
+        <!--[if gte mso 9]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+        <!-- // END TEMPLATE -->
+      </td>
+    </tr>
+  </table>
+</center>
+</body>
+</html>

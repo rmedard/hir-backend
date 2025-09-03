@@ -1,0 +1,135 @@
+<?php
+/**
+ * @file
+ * A description of what your module does.
+ */
+
+use Drupal\Core\Database\Query\SelectInterface;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Entity\EntityStorageException;
+use Drupal\hir_publisher\Service\PublisherService;
+use Drupal\node\Entity\Node;
+use Drupal\webform\WebformSubmissionInterface;
+
+/**
+ * Implements hook_cron().
+ */
+function hir_publisher_cron()
+{
+    $day_format = 'dmY';
+    $request_time = Drupal::time()->getRequestTime();
+    $last_unPublish_run = Drupal::state()->get('unpublish.last.run');
+    if (isset($last_unPublish_run) and !empty($last_unPublish_run)) {
+        if (date($day_format, $last_unPublish_run) !== date($day_format, $request_time)) {
+          $end_of_yesterday = new DrupalDateTime('-1 days 23:59:59');
+          $publisher_service = Drupal::service('hir_publisher.publisher_service');
+          $expired_adverts = $publisher_service->loadExpiredAdverts($end_of_yesterday);
+          if (!empty($expired_adverts)){
+            Drupal::state()->set('unpublish.last.run', $request_time);
+            Drupal::logger('hir_publisher')->notice('UnPublisher started! Fetch expired before: ' . $end_of_yesterday);
+            $unPublisher_processor = Drupal::queue('unpublisher_processor');
+            foreach ($expired_adverts as $expired_advert){
+              $unPublisher_processor->createItem($expired_advert);
+            }
+          }
+        }
+    } else {
+        Drupal::state()->set('unpublish.last.run', $request_time);
+        Drupal::logger('hir_publisher')->notice('Last unPublish set for the first time');
+    }
+
+    /**
+     * UnPublish expired Property Requests
+     */
+    $publisher_service = Drupal::service('hir_publisher.publisher_service');
+    $publisher_service->unPublishExpiredPropertyRequests();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function hir_publisher_webform_submission_insert(WebformSubmissionInterface $entity)
+{
+    if ($entity->getWebform()->id() == 'property_request_form') {
+        createdMappedPropertyRequest(array($entity));
+    }
+}
+
+/**
+ * Implements hook_install().
+ */
+function hir_publisher_install()
+{
+    /* @var PublisherService */
+    $publisherService = Drupal::service('hir_publisher.publisher_service');
+    $submissions = $publisherService->loadNonMappedPropertyRequests();
+    if (!empty($submissions)) {
+        Drupal::logger('hir_publisher')
+            ->info('Started mapping submissions: ' . count($submissions) . ' found!!');
+        createdMappedPropertyRequest($submissions);
+    }
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ */
+function hir_publisher_query_is_pr_mapped_alter(SelectInterface $query)
+{
+    $connection = \Drupal::database();
+    $subQuery = $connection->select('node_field_data', 'n');
+    $subQuery->innerJoin('node__field_pr_reference', 'pr', 'n.nid=pr.entity_id');
+    $subQuery->fields('n', array('nid'))
+        ->innerJoin('node__field_pr_reference', 'pr', 'n.nid=pr.entity_id');
+
+    $subQuery->where('n.type = \'property_request\' AND pr.field_pr_reference_value = ws.sid');
+    $query->notExists($subQuery);
+}
+
+/**
+ * @param $submissions array of Webform submissions of type Property Request
+ */
+function createdMappedPropertyRequest($submissions)
+{
+    foreach ($submissions as $entity) {
+        try {
+            if ($entity instanceof WebformSubmissionInterface) {
+                $pr = Node::create([
+                    'type' => 'property_request',
+                    'title' => 'Property request from '. $entity->getElementData('proreq_first_name'),
+                    'field_pr_request_type' => $entity->getElementData('proreq_advert_type'),
+                    'field_pr_property_type' => $entity->getElementData('property_type'),
+                    'field_pr_equipment' => $entity->getElementData('furnished'),
+                    'field_pr_minimum_bedrooms' => $entity->getElementData('minimum_bedrooms'),
+                    'field_pr_minimum_bathrooms' => $entity->getElementData('minimum_bathrooms'),
+                    'field_pr_more_details' => $entity->getElementData('proreq_description'),
+                    'field_pr_area_city_interest' => $entity->getElementData('proreq_area_city'),
+                    'field_pr_neighborhood_descr' => $entity->getElementData('describe_what_you_are_looking_for_tubwire_icyo_ushaka'),
+                    'field_pr_currency' => $entity->getElementData('proreq_currency'),
+                    'field_pr_minimum' => $entity->getElementData('proreq_minimum'),
+                    'field_pr_maximum' => $entity->getElementData('proreq_maximum'),
+                    'field_pr_payable' => $entity->getElementData('payable'),
+                    'field_pr_urgency' => $entity->getElementData('proreq_urgency'),
+                    'field_pr_required_service' => $entity->getElementData('we_visit_properties_for_you'),
+                    'field_pr_first_name' => $entity->getElementData('proreq_first_name'),
+                    'field_pr_last_name' => $entity->getElementData('proreq_last_name'),
+                    'field_pr_phone_number' => $entity->getElementData('proreq_phone_number'),
+                    'field_pr_email' => $entity->getElementData('proreq_email'),
+                    'field_pr_reference' => $entity->id(),
+                    'field_how_to_submit_advert' => ['value' =>
+                            '<p>If you own or manage a property matching the requirements displayed on this advert, please read below how to suggest it directly to our customer:</p>
+                            <p>Does this&nbsp;<strong>property</strong>&nbsp;<strong>already exist online</strong>&nbsp;and you have its URL/link ?</p>
+
+                            <ul>
+                                <li>If yes, send its URL/link by email to the following email address:&nbsp;'. $entity->getElementData('proreq_email') .'</li>
+                                <li>If not, click on “<strong>Submit your property”</strong>&nbsp;button to create it online and send it immediately to our customer.</li>
+                            </ul>', 'format' => 'full_html'],
+                ]);
+//                $pr->setOwnerId(1);
+                $pr->save();
+                Drupal::logger('hir_publisher')->info('Property Request node created for PR SID ' . $entity->id());
+            }
+        } catch (EntityStorageException $e) {
+            Drupal::logger('hir_publisher')->error($e->getMessage());
+        }
+    }
+}

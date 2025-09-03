@@ -1,0 +1,99 @@
+{% include '@houseinrwanda_theme/includes/header.html.twig' %}
+<body>
+<center>
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" id="bodyTable" style="height:100%;">
+    <tr>
+      <td align="center" valign="top" id="bodyCell">
+        <!-- BEGIN TEMPLATE // -->
+        <!--[if gte mso 9]>
+        <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+          <tr>
+            <td align="center" valign="top" width="600" style="width:600px;">
+        <![endif]-->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer">
+          <!-- BEGIN BODY // -->
+          <tr>
+            <td valign="top" id="templateBody">
+              <!-- BEGIN MODULE: BODY CONTENT // -->
+              <div>
+                <p><strong>Dear {{ advert.field_advert_contact_name.value }}!</strong></p>
+                <br>
+                <p>Your property has been created on our website: <a href="{{ drupal_token('site:url') }}">www.houseinrwanda.com</a>. It is waiting to be validated.</p>
+                <br>
+                <strong>Property details:</strong>
+                <ul>
+                  <li><strong>Reference</strong>: {{ advert.field_advert_reference.value }}</li>
+                  <li><strong>Property title</strong>: {{ advert.title.value }}</li>
+                  <li><strong>Property address:</strong> {{ advert.field_advert_locality_province.value }}, {{ advert.field_advert_locality_district.value }}, {{ advert.field_advert_locality_sector.value }}, {{ advert.field_advert_village.value }} {{ advert.field_advert_street.value }}</li>
+                  {% if advert.field_advert_posting_plan.value == 'standard' %}
+                    <li><strong>Posting type</strong>: Standard</li>
+                  {% elseif advert.field_advert_posting_plan.value == 'featured' %}
+                    <li><strong>Posting type</strong>: Featured 2W - 25,000 Rwf</li>
+                  {% elseif advert.field_advert_posting_plan.value == 'full_service' %}
+                    <li><strong>Posting type</strong>: Featured 1M - 40,000 Rwf</li>
+                  {% endif %}
+                </ul>
+                <br>
+                <strong>Advertiser's details:</strong>
+                <ul>
+                  <li><strong>Name</strong>: {{ advert.field_advert_contact_name.value }}</li>
+                  <li><strong>Phone number</strong>: {{ advert.field_advert_contact_tel.value }}</li>
+                  {% if advert.field_advert_is_agent.value == '1' %}
+                    <li><strong>Agent/commissioner</strong>: {{ advert.field_advert_advertiser.entity.title.value }}</li>
+                    <li><strong>Company TIN</strong>: {{ advert.field_advert_advertiser.entity.field_agent_tin_nbr.value }}</li>
+                  {% endif %}
+                </ul>
+                <br>
+                <strong>Contact details to book a visit:</strong>
+                <ul>
+                  <li><strong>Contact name</strong>: {{ advert.field_visit_contact_name.value }}</li>
+                  <li><strong>Contact phone number 1</strong>: {{ advert.field_visit_cellphone.value }}</li>
+                  <li><strong>Contact phone number 2</strong>: {{ advert.field_visit_cellphone_2.value }}</li>
+                  <li><strong>Contact email 1</strong>: {{ advert.field_visit_email_address1.value }}</li>
+                  <li><strong>Contact email 2</strong>: {{ advert.field_visit_email_address2.value }}</li>
+                </ul>
+                <br>
+                <p>The advert needs validation before it appears online.
+                  <br>You will receive a confirmation email when you advert will be published.</p>
+
+                <br>
+                <strong>Our Property Advertisement Services:</strong>
+                <ul>
+                  <li><strong>Featured:</strong> This is a self-service. You describe and post your adverts and they are approved and pushed online within a few hours. We share them on our social networks with your contact details for customer inquiries and they stay on our homepage for one month.</li>
+                  <li><strong>Super Featured:</strong> This service is suitable for a quick sale. We take professional photos, videos, and a website banner of your property that also stays on top of our homepage to attract maximum visibility. The advert stays on our homepage till it is stored/rented.</li>
+                  <li><strong>Brokers subscription:</strong> Reserved only for professional real estate brokers, we create your own private space on our platform. It is a self-service and you can reach us anytime (24/7) for technical support.</li>
+                  <li><strong>Enterprise Pack:</strong> Reserved for all real estate professionals: auctioneers, real estate developers, financial institutions, etc... We create a web banner, news, videos and surveys for your adverts/projects and regularly share them through our newsletters.</li>
+                </ul>
+
+                <br>
+                <strong>Payment options:</strong>
+                <p>To make your payment (if applicable), please choose an option:</p>
+                <ul>
+                  <li><strong>Mobile Money Pay</strong> *182*8*1*888811# or transfer to {{ phone }}</li>
+                  <li><strong>Cash/cheque</strong> to our offices at Kimihurura</li>
+                  <li><strong>Bank transfer</strong> to our bank account number: 211-208517-1-5100-0</li>
+                  <li><strong>Paypal</strong> to {{ drupal_token('site:mail') }}</li>
+                </ul>
+
+                <br>
+
+                {% include '@houseinrwanda_theme/includes/footer.html.twig' %}
+              </div>
+              <!-- // END MODULE: BODY CONTENT -->
+            </td>
+          </tr>
+          <!-- // END BODY -->
+
+        </table>
+        <!--[if gte mso 9]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+        <!-- // END TEMPLATE -->
+      </td>
+    </tr>
+  </table>
+</center>
+</body>
+</html>

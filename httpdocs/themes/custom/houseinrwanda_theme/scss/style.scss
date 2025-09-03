@@ -1,0 +1,155 @@
+/*
+Theme Name: Bootstrap 4 Sass
+Description: Bootstrap 4 with Sass
+*/
+
+// import files
+@import "import";
+
+/* GENERAL STYLES
+-------------------------------------------------*/
+
+/* COLORS
+--------------------------------------------------*/
+
+a {
+  color: $accent-shade;
+}
+
+a.navbar-brand > img {
+  max-height: 90px;
+}
+
+.bg-inverse {
+  background: $primary-shade !important;
+}
+
+.site-footer {
+  background: #202020 !important;
+}
+
+.menu--account li a {
+  color: $primary-shade;
+}
+
+.site-name-slogan a {
+  text-decoration: none;
+}
+
+.card-group img {
+  margin: 0;
+  width: 100%;
+  height: auto;
+}
+
+.card-group .field--type-image {
+  margin: 0
+}
+
+.slick {
+  width: 100%;
+}
+
+.slick > div {
+  margin: 0 15px;
+}
+
+.sidebar .block {
+  padding: 0;
+}
+
+figure.youtube-container {
+  margin: 0;
+}
+
+nav#navbar-main {
+  background-image: linear-gradient(90deg, $primary-shade, $accent-shade);
+  ul.nav > li.nav-item {
+    a.is-active {
+      border-bottom: solid 2px $white;
+      font-weight: 600;
+    }
+  }
+  div.hir-header-navbar {
+    height: 60px;
+    div.container {
+      height: inherit;
+      overflow: hidden;
+    }
+
+    div.logo-region {
+      flex: 0 0 5em;
+    }
+
+    div.header-right-region {
+      flex: 0 0 15em;
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  nav#navbar-main {
+    div.hir-header-navbar {
+      height: auto;
+      div.logo-region {
+        flex: 0 0 10em;
+      }
+
+      div.header-right-region {
+        flex: 0 0 18em;
+      }
+    }
+  }
+}
+
+article.node--type-agent.node--view-mode-teaser {
+  div.card-footer {
+    background-image: linear-gradient(90deg, $primary-shade, $accent-shade);
+  }
+}
+
+div.agent-contact-details {
+  background: linear-gradient(90deg, $primary-shade, $accent-shade);
+}
+
+.flex-direction-nav a:before {
+  line-height: 1;
+}
+
+form#direct-access-form {
+  fieldset {
+    flex: 1 1 auto;
+  }
+}
+
+div#combined-sidebars {
+  img {
+    width: 100%;
+  }
+
+  div.block {
+    margin-bottom: 1rem;
+  }
+}
+
+div.rir-pricing-price {
+  font-variant: small-caps;
+}
+
+div.agent-social-media {
+  font-size: 1.3rem;
+}
+
+nav[aria-label="pagination-heading"], nav.menu--adverts-secondary-menu {
+  margin-top: 1.3rem;
+}
+
+div.site-footer__bottom {
+  background-image: url("../images/city.svg");
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+div#toolbar-administration > nav#toolbar-bar {
+  z-index: 1032;
+}

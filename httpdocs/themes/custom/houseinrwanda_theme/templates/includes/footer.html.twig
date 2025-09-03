@@ -1,0 +1,49 @@
+<div>
+  <p>Best regards, <br>{{ drupal_token('site:name') }}<br>T: {{ drupal_token('site:phone') }}<br/>E: {{ drupal_token('site:mail') }}</p>
+</div>
+<div class="social-media">
+  {% if drupal_token('site:linkedin') is not empty %}
+    <a href="{{ drupal_token('site:linkedin') }}" target="_blank" style="text-decoration: none">
+      <i class="fa fa-linkedin fa-2x" aria-hidden="true" style="color: #0074B1; margin-right: 3px;"></i>
+    </a>
+  {% endif %}
+  {% if drupal_token('site:facebook') is not empty %}
+    <a href="{{ drupal_token('site:facebook') }}" target="_blank" style="text-decoration: none">
+      <i class="fa fa-square-facebook fa-2x" aria-hidden="true" style="color: #0B8AEF; margin-left: 3px; margin-right: 3px;"></i>
+    </a>
+  {% endif %}
+  {% if drupal_token('site:twitter') is not empty %}
+    <a href="{{ drupal_token('site:twitter') }}" target="_blank" style="text-decoration: none">
+      <i class="fa fa-square-x-twitter fa-2x" aria-hidden="true" style="color: white; margin-left: 3px; margin-right: 3px;"></i>
+    </a>
+  {% endif %}
+  {% if drupal_token('site:instagram') is not empty %}
+    <a href="{{ drupal_token('site:instagram') }}" target="_blank" style="text-decoration: none">
+      <i class="fa fa-instagram fa-2x" aria-hidden="true" style="color: #D62977; margin-left: 3px; margin-right: 3px;"></i>
+    </a>
+  {% endif %}
+  {% if drupal_token('site:youtube') is not empty %}
+    <a href="{{ drupal_token('site:youtube') }}" target="_blank" style="text-decoration: none">
+      <i class="fa fa-youtube fa-2x" aria-hidden="true" style="color: #FF0100; margin-left: 3px; margin-right: 3px;"></i>
+    </a>
+  {% endif %}
+  {% if drupal_token('site:whatsapp') is not empty %}
+    <a href="{{ drupal_token('site:whatsapp') }}" target="_blank" style="text-decoration: none">
+      <i class="fa fa-square-whatsapp fa-2x" aria-hidden="true" style="color: #25D366; margin-left: 3px; margin-right: 3px;"></i>
+    </a>
+  {% endif %}
+</div>
+{#<div class="mobile-apps">#}
+{#  {% if drupal_token('site:android') is not empty %}#}
+{#    <a href="{{ drupal_token('site:android') }}" target="_blank" style="text-decoration: none">#}
+{#        {{ drupal_image('public://apps-assets/google-play-badge.png', {alt: 'Our android app'}) }}#}
+{#    </a>#}
+{#  {% endif %}#}
+{#  {% if drupal_token('site:ios') is not empty %}#}
+{#    <a href="{{ drupal_token('site:ios') }}" target="_blank" style="text-decoration: none">#}
+{#        {{ drupal_image('public://apps-assets/app-store-badge.png', {alt: 'Our ios app'}) }}#}
+{#    </a>#}
+{#  {% endif %}#}
+{#</div>#}
+
+<img src="https://www.google-analytics.com/collect?v=1&tid=UA-107151364-1&t=event&ec=email&ea=open" alt="google_analytics"/>

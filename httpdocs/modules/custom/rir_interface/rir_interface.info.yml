@@ -1,0 +1,14 @@
+name: RIR Interface
+type: module
+description: 'This RIR module handles all GUI manipulations.'
+package: RIR Custom Modules
+core_version_requirement: ^10 || ^11
+
+dependencies:
+  - smart_ip:smart_ip
+  - twig_tweak:twig_tweak
+  - fivestar:fivestar
+  - votingapi
+  - block
+version: '10.x-1.0'
+project: 'rir_interface'

@@ -1,0 +1,18 @@
+global-styling:
+  version: '1.0.4'
+  js:
+    js/bootstrap.min.js: { weight: -48 }
+    js/barrio.js: { }
+    js/custom.js: { }
+  css:
+    component:
+      node_modules/select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css: { minified: true }
+      css/style.css: { }
+  dependencies:
+    - core/jquery
+    - webform/webform.element.telephone
+    - webform/webform.element.select2
+    - flexslider/flexslider
+    - jquery_ui_effects/core
+    - core/drupal
+    - core/popperjs
