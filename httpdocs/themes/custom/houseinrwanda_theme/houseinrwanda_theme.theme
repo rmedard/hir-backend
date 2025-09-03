@@ -200,8 +200,8 @@ function houseinrwanda_theme_preprocess_page(&$variables): void
     $variables['show_sidebars'] = FALSE;
   }
 
-  if (preg_match('(\/properties\/)', $page_path)
-    or preg_match('(\/property\/)', $page_path)
+  if (str_contains($page_path, '/properties/')
+    or str_contains($page_path, '/property/')
     or str_contains($page_path, '/search-adverts')
     or str_contains($page_path, '/for-rent')
     or str_contains($page_path, '/short-rents')
