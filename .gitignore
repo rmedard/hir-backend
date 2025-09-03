@@ -33,10 +33,6 @@
 /vendor/
 /node_modules/
 
-# Composer
-/httpdocs/composer.json
-/httpdocs/composer.lock
-
 # DDEV
 /.ddev/
 !/.ddev/config.yaml

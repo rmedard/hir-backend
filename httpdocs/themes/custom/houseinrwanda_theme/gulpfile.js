@@ -1,5 +1,5 @@
 let gulp = require('gulp'),
-  sass = require('gulp-sass'),
+  sass = require('gulp-sass')(require('sass')), // Correct syntax for Dart Sass
   sourcemaps = require('gulp-sourcemaps'),
   $ = require('gulp-load-plugins')(),
   cleanCss = require('gulp-clean-css'),
@@ -7,8 +7,8 @@ let gulp = require('gulp'),
   postcss = require('gulp-postcss'),
   autoprefixer = require('autoprefixer'),
   postcssInlineSvg = require('postcss-inline-svg'),
-  browserSync = require('browser-sync').create()
-pxtorem = require('postcss-pxtorem'),
+  browserSync = require('browser-sync').create(),
+  pxtorem = require('postcss-pxtorem'),
   postcssProcessors = [
     postcssInlineSvg({
       removeFill: true,
@@ -24,7 +24,8 @@ const paths = {
   scss: {
     src: './scss/style.scss',
     dest: './css',
-    watch: './scss/**/*.scss'
+    watch: './scss/**/*.scss',
+    bootstrap: './node_modules/bootstrap/scss/bootstrap.scss',
   },
   js: {
     bootstrap: './node_modules/bootstrap/dist/js/bootstrap.min.js',
@@ -43,11 +44,14 @@ function styles() {
       includePaths: [
         './node_modules/bootstrap/scss',
         '../../contrib/bootstrap_barrio/scss'
-      ]
+      ],
+      // Suppress deprecation warnings - optional but recommended for cleaner output
+      quietDeps: true, // Silence warnings from dependencies
+      silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'abs-percent', 'legacy-js-api']
     }).on('error', sass.logError))
     .pipe($.postcss(postcssProcessors))
     .pipe(postcss([autoprefixer({
-      browsers: [
+      overrideBrowserslist: [
         'Chrome >= 35',
         'Firefox >= 38',
         'Edge >= 12',
@@ -76,7 +80,7 @@ function js() {
 // Static Server + watching scss/html files
 function serve() {
   browserSync.init({
-    proxy: 'http://hir.docker.localhost',
+    proxy: 'http://hir-backend.ddev.site',
     open: false
   })
 
