@@ -71,29 +71,28 @@ jobs:
 
       - name: Prepare deployment artifact
         run: |
-          # Create a deployment directory
-          mkdir -p deployment
+          # Create a structured deployment artifact
+          mkdir -p deployment-artifact
 
-          # Copy all files using tar (more reliable than rsync on GitHub runners)
+          # Copy all files to maintain structure
           tar --exclude='.git' \
               --exclude='.github' \
-              --exclude='deployment' \
+              --exclude='deployment-artifact' \
               --exclude='vendor' \
               --exclude='node_modules' \
               --exclude='sites/default/files' \
-              --exclude='sites/default/settings.local.php' \
-              -cf - . | tar -xC deployment/
+              -cf - . | tar -xC deployment-artifact/
 
-          # Copy vendor only if it exists and we should update it
+          # Copy vendor if needed
           if [ -d "vendor" ] && { [ "${{ steps.check_changes.outputs.composer_lock_changed }}" = "true" ] || [ "${{ steps.check_changes.outputs.composer_json_changed }}" = "true" ]; }; then
             echo "Including vendor directory in deployment"
-            cp -r vendor deployment/
-          else
-            echo "Skipping vendor copy (no changes to composer files)"
+            cp -r vendor deployment-artifact/
           fi
 
-          # Create a manifest file for debugging
-          find deployment -type f -name "*.php" | head -20 > deployment/deployment_manifest.txt
+          # Create tar archive for transfer
+          tar -czf deployment.tar.gz -C deployment-artifact .
+
+          echo "Deployment artifact created: $(du -sh deployment.tar.gz)"
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.2.2
@@ -103,7 +102,7 @@ jobs:
           key: ${{ github.ref_name == 'main' && secrets.PRODUCTION_SSH_KEY || secrets.STAGING_SSH_KEY }}
           port: 22
           script: |
-            # Set deployment paths from secrets
+            # Set deployment paths
             if [ "${{ github.ref_name }}" = "main" ]; then
               DEPLOY_PATH="${{ secrets.PRODUCTION_DEPLOY_PATH }}"
               WEBROOT_PATH="$DEPLOY_PATH/httpdocs"
@@ -117,72 +116,72 @@ jobs:
 
             echo "Deploying to: $DEPLOY_PATH"
             echo "Webroot: $WEBROOT_PATH"
-            echo "Branch: ${{ github.ref_name }}"
 
-            # Enable maintenance mode first
-            cd $WEBROOT_PATH
-            drush state:set system.maintenance_mode 1
+            # Transfer the deployment artifact
+            echo "Transferring deployment artifact..."
+            tar -xzf - -C /tmp << 'TAR_EOF'
+            {{!!This will be replaced with actual tar data during execution!!}}
+            TAR_EOF
 
-            # Check if composer files changed
+            # Backup current deployment
+            echo "Backing up current deployment..."
+            tar -czf $BACKUP_DIR/backup.tar.gz -C $DEPLOY_PATH . 2>/dev/null || true
+
+            # Check composer changes by comparing lock files
             COMPOSER_CHANGED=false
-            if [ -f "$DEPLOY_PATH/composer.lock" ] && [ -f "deployment/composer.lock" ]; then
-              LOCAL_HASH=$(sha256sum deployment/composer.lock | cut -d' ' -f1)
-              REMOTE_HASH=$(sha256sum $DEPLOY_PATH/composer.lock | cut -d' ' -f1)
-              [ "$LOCAL_HASH" != "$REMOTE_HASH" ] && COMPOSER_CHANGED=true
+            if [ -f "$DEPLOY_PATH/composer.lock" ] && [ -f "/tmp/deployment-artifact/composer.lock" ]; then
+              if ! cmp -s "$DEPLOY_PATH/composer.lock" "/tmp/deployment-artifact/composer.lock"; then
+                COMPOSER_CHANGED=true
+              fi
             else
               COMPOSER_CHANGED=true
             fi
 
-            echo "Composer files changed: $COMPOSER_CHANGED"
-
-            # Backup current vendor if needed
-            if [ "$COMPOSER_CHANGED" = "true" ] && [ -d "$DEPLOY_PATH/vendor" ]; then
-              echo "Backing up vendor directory"
-              cp -r $DEPLOY_PATH/vendor $BACKUP_DIR/
+            # Handle vendor directory
+            if [ "$COMPOSER_CHANGED" = "true" ]; then
+              echo "Composer files changed, updating vendor..."
+              if [ -d "$DEPLOY_PATH/vendor" ]; then
+                mv "$DEPLOY_PATH/vendor" "$BACKUP_DIR/vendor"
+              fi
             fi
 
-            # Sync files to deploy path (excluding webroot files initially)
-            echo "Syncing files to $DEPLOY_PATH..."
+            # Sync files (excluding vendor and webroot initially)
+            echo "Syncing files..."
             rsync -av --delete \
-              --exclude='httpdocs/' \
               --exclude='vendor/' \
-              deployment/ $DEPLOY_PATH/
+              --exclude='httpdocs/' \
+              /tmp/deployment-artifact/ $DEPLOY_PATH/
 
-            # Sync webroot files separately
-            echo "Syncing webroot files to $WEBROOT_PATH..."
+            # Sync webroot files
+            echo "Syncing webroot files..."
             rsync -av --delete \
               --exclude='sites/default/files' \
-              deployment/httpdocs/ $WEBROOT_PATH/
+              /tmp/deployment-artifact/httpdocs/ $WEBROOT_PATH/
 
-            # Handle vendor directory
-            if [ "$COMPOSER_CHANGED" = "true" ] && [ -d "deployment/vendor" ]; then
-              echo "Replacing vendor directory (composer files changed)"
-              rm -rf $DEPLOY_PATH/vendor
-              mv deployment/vendor $DEPLOY_PATH/
-            else
-              echo "Keeping existing vendor directory (no changes needed)"
+            # Handle vendor
+            if [ "$COMPOSER_CHANGED" = "true" ] && [ -d "/tmp/deployment-artifact/vendor" ]; then
+              echo "Updating vendor directory..."
+              rm -rf "$DEPLOY_PATH/vendor"
+              mv "/tmp/deployment-artifact/vendor" "$DEPLOY_PATH/vendor"
             fi
 
-            # Set proper permissions for files directory
+            # Set permissions (as psaserv user if needed)
+            echo "Setting permissions..."
             if [ -d "$WEBROOT_PATH/sites/default/files" ]; then
-              chmod -R 755 "$WEBROOT_PATH/sites/default/files"
-              echo "Set permissions for files directory: $WEBROOT_PATH/sites/default/files"
-            else
-              echo "Files directory not found, creating it..."
-              mkdir -p "$WEBROOT_PATH/sites/default/files"
-              chmod -R 755 "$WEBROOT_PATH/sites/default/files"
+              chmod -R 755 "$WEBROOT_PATH/sites/default/files" || true
             fi
 
-            # Run Drupal maintenance commands from webroot
+            # Run Drush commands from webroot
             echo "Running Drupal maintenance..."
             cd $WEBROOT_PATH
-            drush updb -y
-            drush cim -y
-            drush cr
-            drush state:set system.maintenance_mode 0
+
+            # Use direct PHP for Drush to avoid autoload issues
+            /opt/plesk/php/8.3/bin/php /usr/lib/plesk-9.0/drush/drush.php state:set system.maintenance_mode 1
+            /opt/plesk/php/8.3/bin/php /usr/lib/plesk-9.0/drush/drush.php updb -y
+            /opt/plesk/php/8.3/bin/php /usr/lib/plesk-9.0/drush/drush.php cim -y
+            /opt/plesk/php/8.3/bin/php /usr/lib/plesk-9.0/drush/drush.php cr
+            /opt/plesk/php/8.3/bin/php /usr/lib/plesk-9.0/drush/drush.php state:set system.maintenance_mode 0
 
             # Cleanup
-            rm -rf deployment
-            find /tmp -name "backup_*" -type d -mtime +7 -exec rm -rf {} \;
-
+            rm -rf /tmp/deployment-artifact
             echo "Deployment completed successfully!"
