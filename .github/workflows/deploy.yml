@@ -94,6 +94,13 @@ jobs:
 
           echo "Deployment artifact created: $(du -sh deployment.tar.gz)"
 
+      - name: Debug - Check deployment artifact
+        run: |
+          echo "Deployment artifact structure:"
+          find deployment-artifact -type f -name "*.php" | head -10
+          echo "Vendor directory exists: $(if [ -d "deployment-artifact/vendor" ]; then echo 'YES'; else echo 'NO'; fi)"
+          ls -la deployment-artifact/ | head -10
+
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.2.2
         with:
@@ -110,6 +117,25 @@ jobs:
               DEPLOY_PATH="${{ secrets.STAGING_DEPLOY_PATH }}"
               WEBROOT_PATH="$DEPLOY_PATH/httpdocs"
             fi
+
+            echo "=== DEBUG: START ==="
+            echo "Deploying to: $STAGING_PATH"
+            echo "Webroot: $WEBROOT_PATH"
+
+            # Check current permissions
+            echo "Current ownership:"
+            ls -la $STAGING_PATH/ | head -5
+            echo "Webroot ownership:"
+            ls -la $WEBROOT_PATH/ 2>/dev/null | head -5 || echo "Webroot not accessible"
+
+            # Check what hirusr can access
+            echo "hirusr permissions test:"
+            touch $STAGING_PATH/test_hirusr.txt 2>/dev/null && echo "✓ Can write to deploy path" || echo "✗ Cannot write to deploy path"
+            touch $WEBROOT_PATH/test_hirusr.txt 2>/dev/null && echo "✓ Can write to webroot" || echo "✗ Cannot write to webroot"
+            rm -f $STAGING_PATH/test_hirusr.txt $WEBROOT_PATH/test_hirusr.txt 2>/dev/null
+
+            echo "=== DEBUG: END ==="
+
 
             BACKUP_DIR="/tmp/backup_$(date +%Y%m%d_%H%M%S)"
             mkdir -p $BACKUP_DIR
