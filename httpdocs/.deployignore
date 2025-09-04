@@ -1,0 +1,9 @@
+.git
+.github
+node_modules
+sites/default/settings.php
+sites/default/settings.local.php
+sites/default/files
+tmp
+private
+logs

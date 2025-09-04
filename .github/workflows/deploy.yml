@@ -45,15 +45,23 @@ jobs:
         run: |
           mkdir -p deployment-files
 
-          # Copy all files except excluded ones
-          rsync -av \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='deployment-files' \
-            --exclude='node_modules' \
-            --exclude='sites/default/files' \
-            --exclude='sites/default/settings.local.php' \
-            ./ deployment-files/
+          # Copy all files except excluded ones, using .deployignore if it exists
+          if [ -f ".deployignore" ]; then
+            rsync -av --exclude-from='.deployignore' ./ deployment-files/
+            echo "Using .deployignore file for exclusions"
+          else
+            # Fallback to manual exclusions if .deployignore doesn't exist
+            rsync -av \
+              --exclude='.git' \
+              --exclude='.github' \
+              --exclude='deployment-files' \
+              --exclude='node_modules' \
+              --exclude='sites/default/files' \
+              --exclude='sites/default/settings.local.php' \
+              --exclude='sites/default/settings.php' \
+              ./ deployment-files/
+            echo "Using manual exclusions (no .deployignore found)"
+          fi
 
           # Copy vendor
           cp -r vendor deployment-files/ 2>/dev/null || echo "Vendor directory not found"
@@ -91,27 +99,48 @@ jobs:
 
             echo "=== DEPLOYING TO: $DEPLOY_PATH ==="
 
-            # Create backup
+            # Create backup of critical files
             BACKUP_DIR="/tmp/backup_$(date +%Y%m%d_%H%M%S)"
             mkdir -p $BACKUP_DIR
             echo "Backup directory: $BACKUP_DIR"
+
+            # Backup critical files that should be preserved
+            if [ -f "$WEBROOT_PATH/sites/default/settings.php" ]; then
+              cp "$WEBROOT_PATH/sites/default/settings.php" "$BACKUP_DIR/"
+              echo "Backed up settings.php"
+            fi
+
+            if [ -f "$WEBROOT_PATH/sites/default/settings.local.php" ]; then
+              cp "$WEBROOT_PATH/sites/default/settings.local.php" "$BACKUP_DIR/"
+              echo "Backed up settings.local.php"
+            fi
 
             # Backup existing vendor if it exists
             if [ -d "$DEPLOY_PATH/vendor" ]; then
               cp -r "$DEPLOY_PATH/vendor" "$BACKUP_DIR/" 2>/dev/null || true
             fi
 
-            # Sync files (main deployment)
+            # Sync files (main deployment) - REMOVED --delete flag and added exclusions
             echo "Syncing files to deployment path..."
-            rsync -av --delete \
+            rsync -av \
               --exclude='httpdocs/' \
               --exclude='sites/default/files' \
+              --exclude='sites/default/settings.php' \
+              --exclude='sites/default/settings.local.php' \
+              --exclude='tmp' \
+              --exclude='private' \
+              --exclude='logs' \
               /tmp/deployment/ $DEPLOY_PATH/
 
-            # Sync webroot files
+            # Sync webroot files - REMOVED --delete flag and added exclusions
             echo "Syncing webroot files..."
-            rsync -av --delete \
+            rsync -av \
               --exclude='sites/default/files' \
+              --exclude='sites/default/settings.php' \
+              --exclude='sites/default/settings.local.php' \
+              --exclude='tmp' \
+              --exclude='private' \
+              --exclude='logs' \
               /tmp/deployment/httpdocs/ $WEBROOT_PATH/
 
             # Handle vendor directory
@@ -121,14 +150,43 @@ jobs:
               cp -r "/tmp/deployment/vendor" "$DEPLOY_PATH/"
             fi
 
+            # Restore critical files
+            if [ -f "$BACKUP_DIR/settings.php" ]; then
+              cp "$BACKUP_DIR/settings.php" "$WEBROOT_PATH/sites/default/"
+              echo "Restored settings.php"
+            fi
+
+            if [ -f "$BACKUP_DIR/settings.local.php" ]; then
+              cp "$BACKUP_DIR/settings.local.php" "$WEBROOT_PATH/sites/default/"
+              echo "Restored settings.local.php"
+            fi
+
+            # Ensure critical directories exist
+            mkdir -p "$WEBROOT_PATH/sites/default/files" 2>/dev/null || true
+            mkdir -p "$WEBROOT_PATH/tmp" 2>/dev/null || true
+            mkdir -p "$WEBROOT_PATH/private" 2>/dev/null || true
+
             # Set file permissions
             echo "Setting file permissions..."
             find $DEPLOY_PATH -type d -exec chmod 755 {} \; 2>/dev/null || true
             find $DEPLOY_PATH -type f -exec chmod 644 {} \; 2>/dev/null || true
 
-            # Special permissions for files directory
+            # Special permissions for files directory and other writable directories
             if [ -d "$WEBROOT_PATH/sites/default/files" ]; then
               chmod -R 775 "$WEBROOT_PATH/sites/default/files" 2>/dev/null || true
+            fi
+
+            if [ -d "$WEBROOT_PATH/tmp" ]; then
+              chmod -R 775 "$WEBROOT_PATH/tmp" 2>/dev/null || true
+            fi
+
+            if [ -d "$WEBROOT_PATH/private" ]; then
+              chmod -R 775 "$WEBROOT_PATH/private" 2>/dev/null || true
+            fi
+
+            # Protect settings files
+            if [ -f "$WEBROOT_PATH/sites/default/settings.php" ]; then
+              chmod 644 "$WEBROOT_PATH/sites/default/settings.php"
             fi
 
             # Run Drupal maintenance
