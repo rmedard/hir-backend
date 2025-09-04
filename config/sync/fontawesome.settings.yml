@@ -1,9 +1,9 @@
 _core:
   default_config_hash: v0jo81_ak-GtvWS3ttXIaoXI4J2KVoul4ds99sqhzSI
 tag: i
-method: webfonts
+method: svg
 load_assets: true
-use_cdn: false
+use_cdn: true
 external_svg_location: /libraries/fontawesome/js/all.js
 use_shim: false
 external_shim_location: /libraries/fontawesome/js/v4-shims.js
