@@ -99,6 +99,25 @@ jobs:
 
             echo "=== DEPLOYING TO: $DEPLOY_PATH ==="
 
+            # Safety checks for correct deployment paths
+            if [ "${{ github.ref_name }}" = "main" ]; then
+              # Verify we're deploying to the correct production path
+              if [[ "$DEPLOY_PATH" != *"houseinrwanda.com"* ]] || [[ "$DEPLOY_PATH" == *"dev.houseinrwanda.com"* ]]; then
+                echo "ERROR: Production deployment path seems incorrect: $DEPLOY_PATH"
+                echo "Expected path should contain 'houseinrwanda.com' but NOT 'dev.houseinrwanda.com'"
+                exit 1
+              fi
+              echo "✓ Production deployment path validated"
+            else
+              # Staging deployment safety check
+              if [[ "$DEPLOY_PATH" != *"dev.houseinrwanda.com"* ]]; then
+                echo "ERROR: Staging deployment path seems incorrect: $DEPLOY_PATH"
+                echo "Expected path should contain 'dev.houseinrwanda.com'"
+                exit 1
+              fi
+              echo "✓ Staging deployment path validated"
+            fi
+
             # Debug: Show server environment
             echo "=== DEBUG INFO ==="
             echo "Current user: $(whoami)"
@@ -142,6 +161,9 @@ jobs:
               --exclude='tmp' \
               --exclude='private' \
               --exclude='logs' \
+              --exclude='dev.houseinrwanda.com' \
+              --exclude='staging' \
+              --exclude='dev' \
               /tmp/deployment/ $DEPLOY_PATH/
 
             # Sync webroot files - REMOVED --delete flag and added exclusions
@@ -153,6 +175,9 @@ jobs:
               --exclude='tmp' \
               --exclude='private' \
               --exclude='logs' \
+              --exclude='dev.houseinrwanda.com' \
+              --exclude='staging' \
+              --exclude='dev' \
               /tmp/deployment/httpdocs/ $WEBROOT_PATH/
 
             # Handle vendor directory
@@ -178,10 +203,24 @@ jobs:
             mkdir -p "$WEBROOT_PATH/tmp" 2>/dev/null || true
             mkdir -p "$WEBROOT_PATH/private" 2>/dev/null || true
 
-            # Set file permissions
+            # Set file permissions - be very specific to avoid affecting staging
             echo "Setting file permissions..."
-            find $DEPLOY_PATH -type d -exec chmod 755 {} \; 2>/dev/null || true
-            find $DEPLOY_PATH -type f -exec chmod 644 {} \; 2>/dev/null || true
+            # Only set permissions on production httpdocs, never touch the entire vhosts directory
+            if [ -d "$WEBROOT_PATH" ]; then
+              find $WEBROOT_PATH -type d -exec chmod 755 {} \; 2>/dev/null || true
+              find $WEBROOT_PATH -type f -exec chmod 644 {} \; 2>/dev/null || true
+            fi
+
+            # Set permissions on vendor directory specifically (only production vendor)
+            if [ -d "$DEPLOY_PATH/vendor" ]; then
+              find $DEPLOY_PATH/vendor -type d -exec chmod 755 {} \; 2>/dev/null || true
+              find $DEPLOY_PATH/vendor -type f -exec chmod 644 {} \; 2>/dev/null || true
+            fi
+
+            # Ensure we never touch the staging directory
+            if [ -d "$DEPLOY_PATH/dev.houseinrwanda.com" ] && [ "${{ github.ref_name }}" = "main" ]; then
+              echo "✓ Staging directory preserved at $DEPLOY_PATH/dev.houseinrwanda.com"
+            fi
 
             # Special permissions for files directory and other writable directories
             if [ -d "$WEBROOT_PATH/sites/default/files" ]; then
@@ -200,10 +239,6 @@ jobs:
             if [ -f "$WEBROOT_PATH/sites/default/settings.php" ]; then
               chmod 644 "$WEBROOT_PATH/sites/default/settings.php"
             fi
-
-            # Run Drupal maintenance
-            echo "Running Drupal maintenance commands..."
-            cd $WEBROOT_PATH
 
             # Require PHP 8.3 from Plesk
             PHP_PATH="/opt/plesk/php/8.3/bin/php"
