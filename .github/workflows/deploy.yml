@@ -18,13 +18,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0  # Get full history for git diff
+          fetch-depth: 0
 
       - name: Detect precise changes
         id: check_changes
         run: |
           # Get changed files in the last commit
           CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} 2>/dev/null || echo "initial")
+          echo "Changed files: $CHANGED_FILES"
 
           # Check for composer.lock changes
           if echo "$CHANGED_FILES" | grep -q "composer.lock"; then
@@ -33,7 +34,7 @@ jobs:
             echo "composer_lock_changed=false" >> $GITHUB_OUTPUT
           fi
 
-          # Check for composer.json changes (which might affect vendor)
+          # Check for composer.json changes
           if echo "$CHANGED_FILES" | grep -q "composer.json"; then
             echo "composer_json_changed=true" >> $GITHUB_OUTPUT
           else
@@ -61,45 +62,33 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Only run composer install if vendor doesn't exist or lock changed
-          if [ ! -d "vendor" ] || [ "${{ steps.check_changes.outputs.composer_lock_changed }}" = "true" ] || [ "${{ steps.check_changes.outputs.composer_json_changed }}" = "true" ]; then
-            echo "Installing dependencies (vendor missing or composer files changed)"
-            composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
-          else
-            echo "Skipping composer install (vendor exists and composer files unchanged)"
+          # Always install dependencies for now to simplify
+          echo "Installing dependencies..."
+          composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
+          echo "Dependencies installed"
+
+      - name: Prepare deployment files
+        run: |
+          # Create basic structure
+          mkdir -p deployment-files
+
+          # Copy all files except excluded ones
+          rsync -av --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='deployment-files' \
+            --exclude='vendor' \
+            --exclude='node_modules' \
+            --exclude='sites/default/files' \
+            ./ deployment-files/
+
+          # Copy vendor
+          if [ -d "vendor" ]; then
+            cp -r vendor deployment-files/
           fi
 
-      - name: Prepare deployment artifact
-        run: |
-          # Create a structured deployment artifact
-          mkdir -p deployment-artifact
-
-          # Copy all files to maintain structure
-          tar --exclude='.git' \
-              --exclude='.github' \
-              --exclude='deployment-artifact' \
-              --exclude='vendor' \
-              --exclude='node_modules' \
-              --exclude='sites/default/files' \
-              -cf - . | tar -xC deployment-artifact/
-
-          # Copy vendor if needed
-          if [ -d "vendor" ] && { [ "${{ steps.check_changes.outputs.composer_lock_changed }}" = "true" ] || [ "${{ steps.check_changes.outputs.composer_json_changed }}" = "true" ]; }; then
-            echo "Including vendor directory in deployment"
-            cp -r vendor deployment-artifact/
-          fi
-
-          # Create tar archive for transfer
-          tar -czf deployment.tar.gz -C deployment-artifact .
-
-          echo "Deployment artifact created: $(du -sh deployment.tar.gz)"
-
-      - name: Debug - Check deployment artifact
-        run: |
-          echo "Deployment artifact structure:"
-          find deployment-artifact -type f -name "*.php" | head -10
-          echo "Vendor directory exists: $(if [ -d "deployment-artifact/vendor" ]; then echo 'YES'; else echo 'NO'; fi)"
-          ls -la deployment-artifact/ | head -10
+          echo "Deployment files prepared:"
+          ls -la deployment-files/ | head -10
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.2.2
@@ -118,96 +107,46 @@ jobs:
               WEBROOT_PATH="$DEPLOY_PATH/httpdocs"
             fi
 
-            echo "=== DEBUG: START ==="
-            echo "Deploying to: $STAGING_PATH"
-            echo "Webroot: $WEBROOT_PATH"
+            echo "=== STARTING DEPLOYMENT ==="
+            echo "Deploy path: $DEPLOY_PATH"
+            echo "Webroot path: $WEBROOT_PATH"
 
-            # Check current permissions
-            echo "Current ownership:"
-            ls -la $STAGING_PATH/ | head -5
-            echo "Webroot ownership:"
-            ls -la $WEBROOT_PATH/ 2>/dev/null | head -5 || echo "Webroot not accessible"
+            # Debug: Check current state
+            echo "=== CURRENT STATE ==="
+            ls -la $DEPLOY_PATH/ 2>/dev/null | head -5 || echo "Deploy path does not exist yet"
+            ls -la $WEBROOT_PATH/ 2>/dev/null | head -5 || echo "Webroot does not exist yet"
 
-            # Check what hirusr can access
-            echo "hirusr permissions test:"
-            touch $STAGING_PATH/test_hirusr.txt 2>/dev/null && echo "✓ Can write to deploy path" || echo "✗ Cannot write to deploy path"
-            touch $WEBROOT_PATH/test_hirusr.txt 2>/dev/null && echo "✓ Can write to webroot" || echo "✗ Cannot write to webroot"
-            rm -f $STAGING_PATH/test_hirusr.txt $WEBROOT_PATH/test_hirusr.txt 2>/dev/null
+            # Debug: Test permissions
+            echo "=== PERMISSION TEST ==="
+            touch $DEPLOY_PATH/test_write.txt 2>/dev/null && \
+              echo "✓ Can write to deploy path" && rm $DEPLOY_PATH/test_write.txt || \
+              echo "✗ Cannot write to deploy path"
 
-            echo "=== DEBUG: END ==="
+            touch $WEBROOT_PATH/test_write.txt 2>/dev/null && \
+              echo "✓ Can write to webroot" && rm $WEBROOT_PATH/test_write.txt || \
+              echo "✗ Cannot write to webroot"
 
+            # Create directories if they don't exist
+            echo "=== SETUP DIRECTORIES ==="
+            mkdir -p $DEPLOY_PATH $WEBROOT_PATH
+            ls -la $DEPLOY_PATH/ | head -3
 
-            BACKUP_DIR="/tmp/backup_$(date +%Y%m%d_%H%M%S)"
-            mkdir -p $BACKUP_DIR
-
-            echo "Deploying to: $DEPLOY_PATH"
-            echo "Webroot: $WEBROOT_PATH"
-
-            # Transfer the deployment artifact
-            echo "Transferring deployment artifact..."
-            tar -xzf - -C /tmp << 'TAR_EOF'
-            {{!!This will be replaced with actual tar data during execution!!}}
-            TAR_EOF
-
-            # Backup current deployment
-            echo "Backing up current deployment..."
-            tar -czf $BACKUP_DIR/backup.tar.gz -C $DEPLOY_PATH . 2>/dev/null || true
-
-            # Check composer changes by comparing lock files
-            COMPOSER_CHANGED=false
-            if [ -f "$DEPLOY_PATH/composer.lock" ] && [ -f "/tmp/deployment-artifact/composer.lock" ]; then
-              if ! cmp -s "$DEPLOY_PATH/composer.lock" "/tmp/deployment-artifact/composer.lock"; then
-                COMPOSER_CHANGED=true
-              fi
-            else
-              COMPOSER_CHANGED=true
-            fi
-
-            # Handle vendor directory
-            if [ "$COMPOSER_CHANGED" = "true" ]; then
-              echo "Composer files changed, updating vendor..."
-              if [ -d "$DEPLOY_PATH/vendor" ]; then
-                mv "$DEPLOY_PATH/vendor" "$BACKUP_DIR/vendor"
-              fi
-            fi
-
-            # Sync files (excluding vendor and webroot initially)
-            echo "Syncing files..."
-            rsync -av --delete \
-              --exclude='vendor/' \
-              --exclude='httpdocs/' \
-              /tmp/deployment-artifact/ $DEPLOY_PATH/
-
-            # Sync webroot files
-            echo "Syncing webroot files..."
+            # Simple file sync using rsync from current directory
+            echo "=== SYNCING FILES ==="
             rsync -av --delete \
               --exclude='sites/default/files' \
-              /tmp/deployment-artifact/httpdocs/ $WEBROOT_PATH/
+              /github/workspace/deployment-files/ $DEPLOY_PATH/
 
-            # Handle vendor
-            if [ "$COMPOSER_CHANGED" = "true" ] && [ -d "/tmp/deployment-artifact/vendor" ]; then
-              echo "Updating vendor directory..."
-              rm -rf "$DEPLOY_PATH/vendor"
-              mv "/tmp/deployment-artifact/vendor" "$DEPLOY_PATH/vendor"
+            echo "=== VERIFYING DEPLOYMENT ==="
+            ls -la $DEPLOY_PATH/ | head -10
+            ls -la $WEBROOT_PATH/ | head -5
+
+            # Simple test - no complex operations yet
+            echo "=== BASIC TEST ==="
+            if [ -f "$WEBROOT_PATH/index.php" ]; then
+              echo "✓ index.php found"
+            else
+              echo "✗ index.php not found"
             fi
 
-            # Set permissions (as psaserv user if needed)
-            echo "Setting permissions..."
-            if [ -d "$WEBROOT_PATH/sites/default/files" ]; then
-              chmod -R 755 "$WEBROOT_PATH/sites/default/files" || true
-            fi
-
-            # Run Drush commands from webroot
-            echo "Running Drupal maintenance..."
-            cd $WEBROOT_PATH
-
-            # Use direct PHP for Drush to avoid autoload issues
-            /opt/plesk/php/8.3/bin/php /usr/lib/plesk-9.0/drush/drush.php state:set system.maintenance_mode 1
-            /opt/plesk/php/8.3/bin/php /usr/lib/plesk-9.0/drush/drush.php updb -y
-            /opt/plesk/php/8.3/bin/php /usr/lib/plesk-9.0/drush/drush.php cim -y
-            /opt/plesk/php/8.3/bin/php /usr/lib/plesk-9.0/drush/drush.php cr
-            /opt/plesk/php/8.3/bin/php /usr/lib/plesk-9.0/drush/drush.php state:set system.maintenance_mode 0
-
-            # Cleanup
-            rm -rf /tmp/deployment-artifact
-            echo "Deployment completed successfully!"
+            echo "=== DEPLOYMENT COMPLETED ==="
