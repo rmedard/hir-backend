@@ -10,5 +10,4 @@ dependencies:
   - fivestar:fivestar
   - votingapi
   - block
-version: '10.x-1.0'
-project: 'rir_interface'
+version: '1.0.0'

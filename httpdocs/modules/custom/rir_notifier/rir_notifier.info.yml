@@ -11,5 +11,4 @@ dependencies:
   - twig_tweak:twig_tweak
   - publication_date:publication_date
   - rir_interface:rir_interface
-version: '10.x-1.0'
-project: 'rir_notifier'
+version: '1.0.0'
