@@ -99,6 +99,18 @@ jobs:
 
             echo "=== DEPLOYING TO: $DEPLOY_PATH ==="
 
+            # Debug: Show server environment
+            echo "=== DEBUG INFO ==="
+            echo "Current user: $(whoami)"
+            echo "Current directory: $(pwd)"
+            echo "Deploy path exists: $([ -d "$DEPLOY_PATH" ] && echo "YES" || echo "NO")"
+            echo "Webroot path exists: $([ -d "$WEBROOT_PATH" ] && echo "YES" || echo "NO")"
+            echo "PHP locations:"
+            which php 2>/dev/null || echo "  - php not in PATH"
+            [ -f "/opt/plesk/php/8.3/bin/php" ] && echo "  - /opt/plesk/php/8.3/bin/php exists" || echo "  - /opt/plesk/php/8.3/bin/php missing"
+            echo "Vendor directory: $([ -d "$DEPLOY_PATH/vendor" ] && echo "EXISTS" || echo "MISSING")"
+            echo "==================="
+
             # Create backup of critical files
             BACKUP_DIR="/tmp/backup_$(date +%Y%m%d_%H%M%S)"
             mkdir -p $BACKUP_DIR
@@ -193,16 +205,126 @@ jobs:
             echo "Running Drupal maintenance commands..."
             cd $WEBROOT_PATH
 
-            # Find available PHP and Drush
-            PHP_PATH=$(which php 2>/dev/null || echo "/opt/plesk/php/8.3/bin/php")
-            DRUSH_PATH=$(which drush 2>/dev/null || echo "/usr/lib/plesk-9.0/drush/drush.php")
+            # Require PHP 8.3 from Plesk
+            PHP_PATH="/opt/plesk/php/8.3/bin/php"
+            if [ ! -f "$PHP_PATH" ]; then
+              echo "ERROR: Required PHP 8.3 not found at $PHP_PATH"
+              echo "This deployment requires PHP 8.3 to match local development environment"
+              echo "Please ensure PHP 8.3 is installed on the server"
+              exit 1
+            fi
 
-            # Run maintenance commands with error handling
-            $PHP_PATH $DRUSH_PATH state:set system.maintenance_mode 1 2>/dev/null || echo "Maintenance mode set failed"
-            $PHP_PATH $DRUSH_PATH updb -y 2>/dev/null || echo "Database update failed"
-            $PHP_PATH $DRUSH_PATH cim -y 2>/dev/null || echo "Config import failed"
-            $PHP_PATH $DRUSH_PATH cr 2>/dev/null || echo "Cache rebuild failed"
-            $PHP_PATH $DRUSH_PATH state:set system.maintenance_mode 0 2>/dev/null || echo "Maintenance mode disable failed"
+            # Verify PHP version
+            PHP_VERSION=$($PHP_PATH -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
+            if [ "$PHP_VERSION" != "8.3" ]; then
+              echo "ERROR: PHP version mismatch. Expected 8.3, got $PHP_VERSION"
+              exit 1
+            fi
+
+            echo "Using PHP 8.3: $PHP_PATH (version: $PHP_VERSION)"
+
+            # Find Drush - check multiple possible locations
+            DRUSH_PATH=""
+            if [ -f "$DEPLOY_PATH/vendor/drush/drush/drush" ]; then
+              DRUSH_PATH="$DEPLOY_PATH/vendor/drush/drush/drush"
+              echo "Found Drush in vendor directory: $DRUSH_PATH"
+            elif [ -f "$WEBROOT_PATH/vendor/drush/drush/drush" ]; then
+              DRUSH_PATH="$WEBROOT_PATH/vendor/drush/drush/drush"
+              echo "Found Drush in webroot vendor: $DRUSH_PATH"
+            elif command -v drush > /dev/null 2>&1; then
+              DRUSH_PATH=$(which drush)
+              echo "Found global Drush: $DRUSH_PATH"
+            elif [ -f "/usr/lib/plesk-9.0/drush/drush.php" ]; then
+              DRUSH_PATH="/usr/lib/plesk-9.0/drush/drush.php"
+              echo "Found Plesk Drush: $DRUSH_PATH"
+            else
+              echo "ERROR: Drush not found in any expected locations"
+              echo "Checked:"
+              echo "  - $DEPLOY_PATH/vendor/drush/drush/drush"
+              echo "  - $WEBROOT_PATH/vendor/drush/drush/drush"
+              echo "  - Global drush command"
+              echo "  - /usr/lib/plesk-9.0/drush/drush.php"
+              echo "Skipping Drupal maintenance commands"
+              DRUSH_PATH=""
+            fi
+
+            # Run maintenance commands only if Drush is found
+            if [ -n "$DRUSH_PATH" ]; then
+              echo "Running Drupal maintenance commands with: $PHP_PATH $DRUSH_PATH"
+
+              # Test Drush first
+              if $PHP_PATH $DRUSH_PATH status > /dev/null 2>&1; then
+                echo "Drush test successful, proceeding with maintenance..."
+
+                echo "Setting maintenance mode..."
+                if $PHP_PATH $DRUSH_PATH state:set system.maintenance_mode 1; then
+                  echo "✓ Maintenance mode enabled"
+                else
+                  echo "⚠ Failed to enable maintenance mode"
+                fi
+
+                # Clear cache first to ensure clean state
+                echo "Clearing cache before updates..."
+                if $PHP_PATH $DRUSH_PATH cr; then
+                  echo "✓ Cache cleared"
+                else
+                  echo "⚠ Cache clear failed"
+                fi
+
+                echo "Importing configuration..."
+                if $PHP_PATH $DRUSH_PATH cim -y; then
+                  echo "✓ Configuration imported"
+                  CONFIG_IMPORTED=true
+                else
+                  echo "⚠ Config import failed or no changes to import"
+                  CONFIG_IMPORTED=false
+                fi
+
+                echo "Running database updates..."
+                if $PHP_PATH $DRUSH_PATH updb -y; then
+                  echo "✓ Database updates completed"
+                else
+                  echo "⚠ Database update failed or no updates needed"
+                fi
+
+                # Clear cache again after updates
+                echo "Clearing cache after updates..."
+                if $PHP_PATH $DRUSH_PATH cr; then
+                  echo "✓ Final cache clear completed"
+                else
+                  echo "⚠ Final cache clear failed"
+                fi
+
+                # If config import failed, try again after updb
+                if [ "$CONFIG_IMPORTED" = false ]; then
+                  echo "Retrying configuration import after database updates..."
+                  if $PHP_PATH $DRUSH_PATH cim -y; then
+                    echo "✓ Configuration imported on retry"
+                  else
+                    echo "⚠ Config import failed on retry"
+                  fi
+                fi
+
+                echo "Rebuilding cache..."
+                if $PHP_PATH $DRUSH_PATH cr; then
+                  echo "✓ Cache rebuilt successfully"
+                else
+                  echo "⚠ Cache rebuild failed"
+                fi
+
+                echo "Disabling maintenance mode..."
+                if $PHP_PATH $DRUSH_PATH state:set system.maintenance_mode 0; then
+                  echo "✓ Maintenance mode disabled"
+                else
+                  echo "⚠ Failed to disable maintenance mode"
+                fi
+              else
+                echo "ERROR: Drush test failed. Drush may not be properly configured."
+                echo "Skipping maintenance commands to avoid breaking the site."
+              fi
+            else
+              echo "Skipping all Drupal maintenance commands due to missing Drush"
+            fi
 
             # Cleanup
             rm -rf /tmp/deployment
