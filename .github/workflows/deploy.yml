@@ -69,26 +69,37 @@ jobs:
 
       - name: Prepare deployment files
         run: |
-          # Create basic structure
+          # Create deployment directory
           mkdir -p deployment-files
 
           # Copy all files except excluded ones
-          rsync -av --delete \
+          rsync -av \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='deployment-files' \
-            --exclude='vendor' \
             --exclude='node_modules' \
             --exclude='sites/default/files' \
             ./ deployment-files/
 
-          # Copy vendor
+          # Copy vendor if it exists
           if [ -d "vendor" ]; then
             cp -r vendor deployment-files/
           fi
 
           echo "Deployment files prepared:"
           ls -la deployment-files/ | head -10
+          echo "File count: $(find deployment-files -type f | wc -l)"
+
+      - name: Transfer files to server via SCP
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ github.ref_name == 'main' && secrets.PRODUCTION_HOST || secrets.STAGING_HOST }}
+          username: ${{ github.ref_name == 'main' && secrets.PRODUCTION_USER || secrets.STAGING_USER }}
+          key: ${{ github.ref_name == 'main' && secrets.PRODUCTION_SSH_KEY || secrets.STAGING_SSH_KEY }}
+          port: 22
+          source: "deployment-files/*"
+          target: "/tmp/deployment"
+          strip_components: 1
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.2.2
@@ -116,6 +127,11 @@ jobs:
             ls -la $DEPLOY_PATH/ 2>/dev/null | head -5 || echo "Deploy path does not exist yet"
             ls -la $WEBROOT_PATH/ 2>/dev/null | head -5 || echo "Webroot does not exist yet"
 
+            # Debug: Check transferred files
+            echo "=== TRANSFERRED FILES ==="
+            ls -la /tmp/deployment/ | head -10
+            echo "Transferred file count: $(find /tmp/deployment -type f 2>/dev/null | wc -l || echo 0)"
+
             # Debug: Test permissions
             echo "=== PERMISSION TEST ==="
             touch $DEPLOY_PATH/test_write.txt 2>/dev/null && \
@@ -129,24 +145,36 @@ jobs:
             # Create directories if they don't exist
             echo "=== SETUP DIRECTORIES ==="
             mkdir -p $DEPLOY_PATH $WEBROOT_PATH
-            ls -la $DEPLOY_PATH/ | head -3
 
-            # Simple file sync using rsync from current directory
+            # Sync files from transferred location
             echo "=== SYNCING FILES ==="
             rsync -av --delete \
               --exclude='sites/default/files' \
-              /github/workspace/deployment-files/ $DEPLOY_PATH/
+              /tmp/deployment/ $DEPLOY_PATH/
 
             echo "=== VERIFYING DEPLOYMENT ==="
+            echo "Deploy path contents:"
             ls -la $DEPLOY_PATH/ | head -10
-            ls -la $WEBROOT_PATH/ | head -5
+            echo "Webroot path contents:"
+            ls -la $WEBROOT_PATH/ | head -10
 
-            # Simple test - no complex operations yet
-            echo "=== BASIC TEST ==="
+            # Check for key files
+            echo "=== KEY FILE CHECK ==="
+            if [ -f "$DEPLOY_PATH/composer.json" ]; then
+              echo "✓ composer.json found"
+            else
+              echo "✗ composer.json not found"
+            fi
+
             if [ -f "$WEBROOT_PATH/index.php" ]; then
               echo "✓ index.php found"
             else
-              echo "✗ index.php not found"
+              echo "✗ index.php not found - checking alternative locations..."
+              find $DEPLOY_PATH -name "index.php" | head -3
             fi
+
+            # Cleanup temporary files
+            echo "=== CLEANUP ==="
+            rm -rf /tmp/deployment
 
             echo "=== DEPLOYMENT COMPLETED ==="
