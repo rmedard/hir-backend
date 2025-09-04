@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "83d57a752eab33f04a9d5ad74bdf38a6",
+    "content-hash": "5898b8f85a22b4100ad399e52b98cde8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6969,11 +6969,11 @@
         },
         {
             "name": "fontawesome/fontawesome",
-            "version": "6.5.1",
+            "version": "7.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FortAwesome/Font-Awesome",
-                "reference": "6.5.1"
+                "reference": "7.0.1"
             },
             "type": "drupal-library"
         },

@@ -82,12 +82,12 @@
             "type": "package",
             "package": {
                 "name": "fontawesome/fontawesome",
-                "version": "6.5.1",
+                "version": "7.0.1",
                 "type": "drupal-library",
                 "source": {
                     "type": "git",
                     "url": "https://github.com/FortAwesome/Font-Awesome",
-                    "reference": "6.5.1"
+                    "reference": "7.0.1"
                 }
             }
         },
@@ -181,7 +181,7 @@
         "drupal/youtube": "^3.0@beta",
         "drush/drush": "^13",
         "flexslider/flexslider": "^2.7",
-        "fontawesome/fontawesome": "^6.5",
+        "fontawesome/fontawesome": "^7.0",
         "jackmoore/colorbox": "^1.6",
         "jquery/jquery-countdown": "^2.2",
         "jquery/jquery-number": "^2.1",
