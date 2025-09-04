@@ -257,7 +257,7 @@ jobs:
                 echo "Drush test successful, proceeding with maintenance..."
 
                 echo "Setting maintenance mode..."
-                if $PHP_PATH $DRUSH_PATH state:set system.maintenance_mode 1; then
+                if $PHP_PATH $DRUSH_PATH state:set system.maintenance_mode 1 > /dev/null 2>&1; then
                   echo "✓ Maintenance mode enabled"
                 else
                   echo "⚠ Failed to enable maintenance mode"
@@ -265,14 +265,14 @@ jobs:
 
                 # Clear cache first to ensure clean state
                 echo "Clearing cache before updates..."
-                if $PHP_PATH $DRUSH_PATH cr; then
+                if $PHP_PATH $DRUSH_PATH cr > /dev/null 2>&1; then
                   echo "✓ Cache cleared"
                 else
                   echo "⚠ Cache clear failed"
                 fi
 
                 echo "Importing configuration..."
-                if $PHP_PATH $DRUSH_PATH cim -y; then
+                if $PHP_PATH $DRUSH_PATH cim -y > /dev/null 2>&1; then
                   echo "✓ Configuration imported"
                   CONFIG_IMPORTED=true
                 else
@@ -281,7 +281,7 @@ jobs:
                 fi
 
                 echo "Running database updates..."
-                if $PHP_PATH $DRUSH_PATH updb -y; then
+                if $PHP_PATH $DRUSH_PATH updb -y > /dev/null 2>&1; then
                   echo "✓ Database updates completed"
                 else
                   echo "⚠ Database update failed or no updates needed"
@@ -289,7 +289,7 @@ jobs:
 
                 # Clear cache again after updates
                 echo "Clearing cache after updates..."
-                if $PHP_PATH $DRUSH_PATH cr; then
+                if $PHP_PATH $DRUSH_PATH cr > /dev/null 2>&1; then
                   echo "✓ Final cache clear completed"
                 else
                   echo "⚠ Final cache clear failed"
@@ -298,22 +298,15 @@ jobs:
                 # If config import failed, try again after updb
                 if [ "$CONFIG_IMPORTED" = false ]; then
                   echo "Retrying configuration import after database updates..."
-                  if $PHP_PATH $DRUSH_PATH cim -y; then
+                  if $PHP_PATH $DRUSH_PATH cim -y > /dev/null 2>&1; then
                     echo "✓ Configuration imported on retry"
                   else
                     echo "⚠ Config import failed on retry"
                   fi
                 fi
 
-                echo "Rebuilding cache..."
-                if $PHP_PATH $DRUSH_PATH cr; then
-                  echo "✓ Cache rebuilt successfully"
-                else
-                  echo "⚠ Cache rebuild failed"
-                fi
-
                 echo "Disabling maintenance mode..."
-                if $PHP_PATH $DRUSH_PATH state:set system.maintenance_mode 0; then
+                if $PHP_PATH $DRUSH_PATH state:set system.maintenance_mode 0 > /dev/null 2>&1; then
                   echo "✓ Maintenance mode disabled"
                 else
                   echo "⚠ Failed to disable maintenance mode"
