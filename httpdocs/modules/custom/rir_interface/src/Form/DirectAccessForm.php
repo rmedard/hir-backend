@@ -56,8 +56,7 @@ class DirectAccessForm extends FormBase
         return $form;
     }
 
-    public function validateForm(array &$form, FormStateInterface $form_state)
-    {
+    public function validateForm(array &$form, FormStateInterface $form_state): void {
         if ($form_state->isValueEmpty('reference_number')) {
             $form_state->setErrorByName('reference_number', t('Provide reference number'));
         }
@@ -71,10 +70,9 @@ class DirectAccessForm extends FormBase
      * @param FormStateInterface $form_state
      *   The current state of the form.
      */
-    public function submitForm(array &$form, FormStateInterface $form_state)
-    {
+    public function submitForm(array &$form, FormStateInterface $form_state): void {
         $reference = trim($form_state->getValue('reference_number'));
-        $nodeQuery = Drupal::entityQuery('node')
+        $nodeQuery = Drupal::entityQuery('node')->accessCheck()
             ->condition('type', 'advert')
             ->condition('status', NodeInterface::PUBLISHED)
             ->condition('field_advert_reference', $reference);

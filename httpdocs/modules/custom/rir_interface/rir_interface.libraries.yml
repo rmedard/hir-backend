@@ -7,12 +7,12 @@ jquery-number:
   js:
     /libraries/jquery-number/jquery.number.min.js: { minified: true }
 
-custom:
-  js:
-    js/custom_interface.js: { }
-  dependencies:
-    - core/jquery
-    - core/drupal
+#custom:
+#  js:
+#    js/custom_interface.js: { }
+#  dependencies:
+#    - core/jquery
+#    - core/drupal
 
 auction-countdown:
   js:
