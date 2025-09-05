@@ -1,0 +1,11 @@
+entity.review.settings:
+  title: 'Review'
+  description: 'Configure a Review entity type.'
+  route_name:  entity.review.settings
+  parent: system.admin_structure
+
+entity.review.collection:
+  title: 'Reviews'
+  description: 'List of reviews.'
+  route_name: entity.review.collection
+  parent: system.admin_content

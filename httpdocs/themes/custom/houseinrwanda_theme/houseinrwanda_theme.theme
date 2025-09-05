@@ -375,7 +375,7 @@ function houseinrwanda_theme_preprocess_form(&$variables): void
 function houseinrwanda_theme_preprocess_form_element(&$variables): void
 {
   $no_margin_types = ['checkbox', 'radio'];
-  if (!in_array($variables['type'], $no_margin_types) && isset($variables['name']) && $variables['name'] !== 'reference_number') {
+  if (isset($variables['type']) && !in_array($variables['type'], $no_margin_types) && isset($variables['name']) && $variables['name'] !== 'reference_number') {
     $variables['attributes']['class'][] = 'mb-3';
   }
 

@@ -5,6 +5,7 @@ module:
   admin_toolbar: 0
   admin_toolbar_tools: 0
   adsense: 0
+  advertiser_review: 0
   automated_cron: 0
   back_to_top: 0
   basic_auth: 0
@@ -29,6 +30,7 @@ module:
   ctools_views: 0
   datetime: 0
   dblog: 0
+  devel: 0
   dynamic_page_cache: 0
   eca: 0
   eca_access: 0
@@ -43,7 +45,6 @@ module:
   field_ui: 0
   file: 0
   filter: 0
-  fivestar: 0
   flexslider: 0
   flexslider_fields: 0
   flexslider_views: 0

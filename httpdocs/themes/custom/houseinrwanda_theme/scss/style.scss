@@ -91,6 +91,19 @@ nav#navbar-main {
   margin-left: 10px;
 }
 
+// Mainly needed when displaying date and time inputs inline
+.form-inline {
+  .form-type-date {
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    margin-right: 1rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
 @include media-breakpoint-up(md) {
   nav#navbar-main {
     div.hir-header-navbar {

@@ -1,0 +1,13 @@
+uuid: 8927dc39-4f8c-4d02-ab7e-1a6eb2f9862b
+langcode: en
+status: true
+dependencies:
+  module:
+    - advertiser_review
+_core:
+  default_config_hash: 4z9kcypZVlOGRlkSdgVwlJy0bdQTqUqJ6E7nxgF6hGQ
+id: review_delete_action
+label: 'Delete reviews'
+type: review
+plugin: 'entity:delete_action:review'
+configuration: {  }

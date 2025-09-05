@@ -1,0 +1,73 @@
+uuid: b3f21796-a710-4d52-a27f-d5f521004614
+langcode: en
+status: true
+dependencies:
+  module:
+    - advertiser_review
+    - text
+    - user
+id: review.review.default
+targetEntityType: review
+bundle: review
+mode: default
+content:
+  advertiser:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  created:
+    type: timestamp
+    label: above
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+      tooltip:
+        date_format: long
+        custom_date_format: ''
+      time_diff:
+        enabled: false
+        future_format: '@interval hence'
+        past_format: '@interval ago'
+        granularity: 2
+        refresh: 60
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  message:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  name:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  rate:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  uid:
+    type: author
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden:
+  status: true

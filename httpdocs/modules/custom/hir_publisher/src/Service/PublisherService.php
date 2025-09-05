@@ -23,12 +23,12 @@ use function count;
 class PublisherService
 {
 
-    protected $entityTypeManager;
+    protected EntityTypeManagerInterface $entityTypeManager;
 
     /**
      * PublisherService constructor.
      *
-     * @param EntityTypeManager $entityTypeManager
+     * @param EntityTypeManagerInterface $entityTypeManager
      */
     public function __construct(EntityTypeManagerInterface $entityTypeManager)
     {

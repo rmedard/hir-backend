@@ -17,7 +17,6 @@
 
             // Mobile detection
             const userAgent = navigator.userAgent.toLowerCase();
-            console.log(userAgent);
             const isMobile = userAgent.includes('mobile');
             const isAndroidPhone = userAgent.includes('android');
             const isIPhone = userAgent.includes('iphone');

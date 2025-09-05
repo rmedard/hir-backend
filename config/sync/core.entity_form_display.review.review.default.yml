@@ -1,0 +1,49 @@
+uuid: 8d108afe-fbc9-4e4f-85e4-96b3443f6629
+langcode: en
+status: true
+dependencies:
+  module:
+    - advertiser_review
+    - text
+id: review.review.default
+targetEntityType: review
+bundle: review
+mode: default
+content:
+  advertiser:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: 'Select an advertiser'
+    third_party_settings: {  }
+  message:
+    type: text_textarea
+    weight: 3
+    region: content
+    settings:
+      rows: 6
+      placeholder: ''
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  rate:
+    type: number
+    weight: 2
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

@@ -1,0 +1,16 @@
+administer review entities:
+  title: 'Administer review entities'
+  description: 'Allow to access the administration pages for reviews.'
+  restrict access: true
+
+add review entities:
+  title: 'Create new Review entities'
+
+edit review entities:
+  title: 'Edit Review entities'
+
+delete review entities:
+  title: 'Delete Review entities'
+
+view review entities:
+  title: 'View Review entities'

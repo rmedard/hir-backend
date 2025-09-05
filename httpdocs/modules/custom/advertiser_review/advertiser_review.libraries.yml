@@ -1,0 +1,12 @@
+advertiser_rating:
+  css:
+    component:
+      css/advertiser-rating-widget.css: {}
+
+agent-tabs:
+  version: 1.x
+  js:
+    js/agent-tabs.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings

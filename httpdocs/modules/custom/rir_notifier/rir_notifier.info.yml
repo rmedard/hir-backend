@@ -1,6 +1,6 @@
 name: RiR Notifier
 description: 'This module handles alerts and notifications.'
-package: RIR Custom Modules
+package: HiR Custom
 configure: rir_notifier.admin_settings
 
 type: module

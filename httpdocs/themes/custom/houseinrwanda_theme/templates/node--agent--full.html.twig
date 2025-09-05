@@ -88,8 +88,8 @@
             <dt class="col-4 col-md-4">{{ content.field_advertiser_type|field_label }}</dt>
             <dd class="col-8 col-md-8 m-0">{{ content.field_advertiser_type|field_value }}</dd>
 
-            <dt class="col-4 col-md-4">{{ content.field_agent_rating|field_label }}</dt>
-            <dd class="col-8 col-md-8 m-0">{{ content.field_agent_rating|field_value }}</dd>
+            <dt class="col-4 col-md-4">{{ content.field_agent_review|field_label }}</dt>
+            <dd class="col-8 col-md-8 m-0">{{ content.field_agent_review|field_value }}</dd>
 
             <dt class="col-4 col-md-4">{{ content.field_agent_operations_area|field_label }}</dt>
             <dd class="col-8 col-md-8 m-0">{{ content.field_agent_operations_area|field_value }}</dd>
@@ -113,4 +113,39 @@
       </div>
     </div>
   </div>
+
+  {# Add the AJAX tabs section #}
+  {{ attach_library('advertiser_review/agent-tabs') }}
+
+  <div class="agent-tabs-container mt-4">
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active agent-tab-link" href="#"
+           data-tab="properties"
+           data-node-id="{{ node.id }}"
+           role="tab">
+          <i class="fas fa-home"></i> Properties
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link agent-tab-link" href="#"
+           data-tab="reviews"
+           data-node-id="{{ node.id }}"
+           role="tab">
+          <i class="fas fa-star"></i> Reviews <span class="float-end badge rounded-pill bg-warning"><span class="text-white font-weight-bold">4.1</span><small class="text-muted ms-1">/5</small></span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="tab-content bg-white border border-top-0 p-3">
+      <div class="tab-pane fade show active agent-tab-pane" id="tab-content-properties" role="tabpanel">
+        {# Content will be loaded via AJAX #}
+      </div>
+
+      <div class="tab-pane fade agent-tab-pane" id="tab-content-reviews" role="tabpanel">
+        {# Content will be loaded via AJAX #}
+      </div>
+    </div>
+  </div>
+
 </article>

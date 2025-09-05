@@ -1,0 +1,25 @@
+entity.review.settings:
+  path: 'admin/structure/review'
+  defaults:
+    _form: '\Drupal\advertiser_review\Form\ReviewSettingsForm'
+    _title: 'Review'
+  requirements:
+    _permission: 'administer review'
+
+advertiser_review.add_form:
+  path: '/advertiser/{node}/add-review'
+  defaults:
+    _controller: '\Drupal\advertiser_review\Controller\ReviewController::addReviewForm'
+    _title: 'Add Review'
+  requirements:
+    _permission: 'add review entities'
+    node: '\d+'
+
+advertiser_review.agent_tab_content:
+  path: '/agent/{node}/tab/{tab}'
+  defaults:
+    _controller: '\Drupal\advertiser_review\Controller\AgentTabController::getTabContent'
+  requirements:
+    _permission: 'access content'
+    _entity_access: 'node.view'
+    node: \d+
