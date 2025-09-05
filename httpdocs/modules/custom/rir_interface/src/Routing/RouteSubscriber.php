@@ -20,7 +20,7 @@ class RouteSubscriber extends RouteSubscriberBase {
      * @param RouteCollection $collection
      *   The route collection for adding routes.
      */
-    protected function alterRoutes(RouteCollection $collection) {
+    protected function alterRoutes(RouteCollection $collection): void {
         $management_routes = [
             'view.adverts.page_manage_adverts',
             'view.agents.page_manage_advertisers',

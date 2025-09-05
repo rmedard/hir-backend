@@ -61,8 +61,7 @@ class CampaignQueueWorker extends QueueWorkerBase
      *
      * @see \Drupal\Core\Cron::processQueues()
      */
-    public function processItem($data)
-    {
+    public function processItem($data): void {
         if (isset($data)) {
             $mailManager = Drupal::service('plugin.manager.mail');
             $module = 'rir_interface';

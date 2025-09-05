@@ -51,7 +51,7 @@ class CampaignAlertsConfigForm extends ConfigFormBase {
         return parent::buildForm($form, $form_state);
     }
 
-    public function submitForm(array &$form, FormStateInterface $form_state) {
+    public function submitForm(array &$form, FormStateInterface $form_state): void {
         $values = $form_state->getValues();
         $this->config('rir_notifier.settings')->set('crypto_secret_key', $values['crypto_secret_key'])->save();
         parent::submitForm($form, $form_state);
