@@ -18,12 +18,9 @@ final class ReviewForm extends ContentEntityForm {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildForm($form, $form_state);
-
     $form['message']['widget'][0]['#allowed_formats'] = ['basic_html'];
-    $form['message']['widget'][0]['format']['guidelines']['#access'] = FALSE;
 
     $current_route = Drupal::routeMatch()->getRouteName();
-
     if ($current_route === 'advertiser_review.add_form') {
       // Get the advertiser value that was pre-set
       $advertiser = $this->entity->get('advertiser')->entity;
@@ -41,6 +38,22 @@ final class ReviewForm extends ContentEntityForm {
         ];
       }
     }
+
+    // Replace rating field with Font Awesome star interface
+    if (isset($form['rate'])) {
+      $form['rate']['widget'][0]['value']['#type'] = 'hidden';
+      $form['rate']['widget'][0]['#suffix'] = '<div class="star-rating" data-rating="' . ($this->entity->get('rate')->value ?? 0) . '">
+      <i class="star fas fa-star" data-value="1"></i>
+      <i class="star fas fa-star" data-value="2"></i>
+      <i class="star fas fa-star" data-value="3"></i>
+      <i class="star fas fa-star" data-value="4"></i>
+      <i class="star fas fa-star" data-value="5"></i>
+    </div>';
+
+      // Attach the star rating library
+      $form['#attached']['library'][] = 'advertiser_review/star-rating';
+    }
+
     return $form;
   }
 

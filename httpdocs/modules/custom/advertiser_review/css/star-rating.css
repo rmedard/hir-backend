@@ -1,0 +1,21 @@
+.star-rating {
+  display: flex;
+  gap: 5px;
+  margin: 10px 0;
+}
+
+.star {
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  user-select: none;
+  color: #ddd;
+}
+
+.star.active {
+  color: #ffc107 !important;
+}
+
+.star.inactive {
+  color: #ddd !important;
+}

@@ -104,6 +104,13 @@ nav#navbar-main {
   }
 }
 
+/* Hide the "About text formats" link */
+.js-filter-wrapper .form-wrapper a[href*="/filter/tips"],
+.js-filter-wrapper .form-wrapper a[href*="/filter/class"] {
+  display: none !important;
+}
+
+
 @include media-breakpoint-up(md) {
   nav#navbar-main {
     div.hir-header-navbar {
