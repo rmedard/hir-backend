@@ -23,3 +23,7 @@ advertiser_review.agent_tab_content:
     _permission: 'access content'
     _entity_access: 'node.view'
     node: \d+
+  options:
+    parameters:
+      node:
+        type: entity:node

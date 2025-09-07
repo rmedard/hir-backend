@@ -9,8 +9,10 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
+use Drupal\views\Views;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class AgentTabController extends ControllerBase {
 
@@ -52,20 +54,33 @@ class AgentTabController extends ControllerBase {
   /**
    * Get tab content for agent node.
    *
+   * @param \Drupal\node\NodeInterface $node
+   *   The agent node.
+   * @param string $tab
+   *   The tab name.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   The JSON response.
+   *
    * @throws \Exception
    */
-  public function getTabContent(NodeInterface $node, $tab): JsonResponse {
+  public function getTabContent(NodeInterface $node, $tab, Request $request): JsonResponse {
     if ($node->bundle() !== 'agent') {
       return new JsonResponse(['error' => 'Invalid node type'], 400);
     }
 
+    // Get the page parameter from the request
+    $page = (int) $request->query->get('page', 0);
+
     switch ($tab) {
       case 'properties':
-        $content = $this->getPropertiesContent($node);
+        $content = $this->getPropertiesContent($node, $page);
         break;
 
       case 'reviews':
-        $content = $this->getReviewsContent($node);
+        $content = $this->getReviewsContent($node, $page);
         break;
 
       default:
@@ -78,64 +93,96 @@ class AgentTabController extends ControllerBase {
   /**
    * Get agent properties content.
    *
+   * @param \Drupal\node\NodeInterface $node
+   *   The agent node.
+   * @param int $page
+   *   The page number for pagination.
+   *
+   * @return \Drupal\Component\Render\MarkupInterface|string
+   *   The rendered content.
+   *
    * @throws \Exception
    */
-  protected function getPropertiesContent(NodeInterface $node): MarkupInterface|string {
-    // Load the view for agent properties
-    $view = $this->entityTypeManager->getStorage('view')->load('adverts_view');
+  protected function getPropertiesContent(NodeInterface $node, int $page = 0): MarkupInterface|string {
+    // Load the view using Views::getView() for better control over pagination
+    $view = Views::getView('adverts_view');
 
     if (!$view) {
       return '<div class="alert alert-danger">Properties view not found.</div>';
     }
 
-    $build = [
-      '#type' => 'view',
-      '#name' => 'adverts_view',
-      '#display_id' => 'block_adverts_per_agent',
-      '#arguments' => [$node->id()],
-      '#cache' => [
-        'tags' => $node->getCacheTags(),
-        'contexts' => ['user'],
-      ],
-    ];
+    // Set the display
+    $view->setDisplay('block_adverts_per_agent');
 
-    return $this->renderer->render($build);
+    // Set arguments (agent node ID)
+    $view->setArguments([$node->id()]);
+
+    // Set the current page for pagination (always set it, even for page 0)
+    $view->setCurrentPage($page);
+
+    // Execute the view
+    $view->execute();
+
+    // Get the rendered output
+    $rendered_view = $view->render();
+
+    return $this->renderer->render($rendered_view);
   }
 
   /**
    * Get agent reviews content.
    *
+   * @param \Drupal\node\NodeInterface $node
+   *   The agent node.
+   * @param int $page
+   *   The page number for pagination.
+   *
+   * @return \Drupal\Component\Render\MarkupInterface|string
+   *   The rendered content.
+   *
    * @throws \Exception
    */
-  protected function getReviewsContent(NodeInterface $node): MarkupInterface|string {
-    // Load the view for agent reviews
-    $view = $this->entityTypeManager->getStorage('view')->load('agent_reviews');
+  protected function getReviewsContent(NodeInterface $node, int $page = 0): MarkupInterface|string {
+    // Load the view using Views::getView() for better control over pagination
+    $view = Views::getView('agent_reviews');
+
     if (!$view) {
       return '<div class="alert alert-danger">Agent reviews view not found.</div>';
     }
 
+    // Set the display
+    $view->setDisplay('block_agent_reviews');
+
+    // Set arguments (agent node ID)
+    $view->setArguments([$node->id()]);
+
+    // Set the current page for pagination
+    if ($page > 0) {
+      $view->setCurrentPage($page);
+    }
+
+    // Execute the view
+    $view->execute();
+
+    // Get the rendered output
+    $rendered_view = $view->render();
+
+    // Build the complete content with the "Write a Review" link
     $build = [
-      '#type' => 'view',
-      '#name' => 'agent_reviews',
-      '#display_id' => 'block_agent_reviews',
-      '#arguments' => [$node->id()],
+      'view' => $rendered_view,
+      'add_review_link' => [
+        '#type' => 'link',
+        '#title' => t('<i class="fa-solid fa-pencil"></i> Write a Review'),
+        '#url' => Url::fromRoute('advertiser_review.add_form', ['node' => $node->id()]),
+        '#attributes' => ['class' => ['btn', 'btn-success', 'text-white', 'mt-3']],
+        '#weight' => 101,
+      ],
       '#cache' => [
         'tags' => $node->getCacheTags(),
-        'contexts' => ['user'],
+        'contexts' => ['user', 'url.query_args:page'],
       ],
     ];
 
-    // Add the "Write a Review" link
-     $build['add_review_link'] = [
-       '#type' => 'link',
-       '#title' => t('<i class="fa-solid fa-pencil"></i> Write a Review'),
-       '#url' => Url::fromRoute('advertiser_review.add_form', ['node' => $node->id()]),
-       '#attributes' => ['class' => ['btn', 'btn-success', 'text-white', 'mt-3']],
-       '#weight' => 101,
-     ];
-
     return $this->renderer->render($build);
   }
-
-
 }

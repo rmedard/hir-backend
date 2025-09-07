@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\advertiser_review\Plugin\Field\FieldFormatter;
 
-use Drupal\advertiser_review\Plugin\Field\FieldType\AdvertiserRatingItem;
 use Drupal\Core\Field\Annotation\FieldFormatter;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;

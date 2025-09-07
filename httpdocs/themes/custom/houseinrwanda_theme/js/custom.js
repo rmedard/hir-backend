@@ -48,27 +48,27 @@
             }
 
             // Initialize Select2 (if library is loaded)
-            if (window.jQuery && window.jQuery.fn.select2) {
-                // Property type select
-                const propertyTypeSelect = context.querySelector('select#edit-field-pr-property-type-value');
-                if (propertyTypeSelect && !propertyTypeSelect.classList.contains('select2-hidden-accessible')) {
-                    window.jQuery(propertyTypeSelect).select2({
-                        theme: 'bootstrap-5',
-                        placeholder: 'Select property type',
-                        width: '100%'
-                    });
-                }
-
-                // Request type select
-                const requestTypeSelect = context.querySelector('select#edit-field-pr-request-type-value');
-                if (requestTypeSelect && !requestTypeSelect.classList.contains('select2-hidden-accessible')) {
-                    window.jQuery(requestTypeSelect).select2({
-                        theme: 'bootstrap-5',
-                        minimumResultsForSearch: Infinity,
-                        width: '100%'
-                    });
-                }
-            }
+            // if (window.jQuery && window.jQuery.fn.select2) {
+            //     // Property type select
+            //     const propertyTypeSelect = context.querySelector('select#edit-field-pr-property-type-value');
+            //     if (propertyTypeSelect && !propertyTypeSelect.classList.contains('select2-hidden-accessible')) {
+            //         window.jQuery(propertyTypeSelect).select2({
+            //             theme: 'bootstrap-5',
+            //             placeholder: 'Select property type',
+            //             width: '100%'
+            //         });
+            //     }
+            //
+            //     // Request type select
+            //     const requestTypeSelect = context.querySelector('select#edit-field-pr-request-type-value');
+            //     if (requestTypeSelect && !requestTypeSelect.classList.contains('select2-hidden-accessible')) {
+            //         window.jQuery(requestTypeSelect).select2({
+            //             theme: 'bootstrap-5',
+            //             minimumResultsForSearch: Infinity,
+            //             width: '100%'
+            //         });
+            //     }
+            // }
 
             // Admin toolbar handling
             const adminToolBar = context.querySelector('nav#toolbar-bar');

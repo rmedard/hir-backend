@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\advertiser_review\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\Annotation\FieldType;
-use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
