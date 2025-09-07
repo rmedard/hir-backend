@@ -215,6 +215,12 @@ jobs:
             if [ -d "$DEPLOY_PATH/vendor" ]; then
               find $DEPLOY_PATH/vendor -type d -exec chmod 755 {} \; 2>/dev/null || true
               find $DEPLOY_PATH/vendor -type f -exec chmod 644 {} \; 2>/dev/null || true
+
+              # Make Drush executable for server-side commands
+              if [ -f "$DEPLOY_PATH/vendor/drush/drush/drush" ]; then
+                chmod +x "$DEPLOY_PATH/vendor/drush/drush/drush"
+                echo "✓ Made Drush executable at vendor/drush/drush/drush"
+              fi
             fi
 
             # Ensure we never touch the staging directory
