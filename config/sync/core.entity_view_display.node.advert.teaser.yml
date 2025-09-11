@@ -158,7 +158,7 @@ content:
     type: image_url
     label: above
     settings:
-      image_style: medium_thumbnail
+      image_style: advert_teaser
     third_party_settings: {  }
     weight: 4
     region: content
