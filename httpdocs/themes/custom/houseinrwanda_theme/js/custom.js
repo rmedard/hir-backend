@@ -12,7 +12,13 @@
             // Add 'rounded' class to all images
             const images = context.querySelectorAll('img');
             images.forEach(function(img) {
+              const hasRoundedClass = Array.from(img.classList).some(className =>
+                className === 'rounded' || className.startsWith('rounded-')
+              );
+
+              if (!hasRoundedClass) {
                 img.classList.add('rounded');
+              }
             });
 
             // Mobile detection

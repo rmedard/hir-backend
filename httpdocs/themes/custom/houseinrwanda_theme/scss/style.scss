@@ -177,3 +177,47 @@ div.site-footer__bottom {
 div#toolbar-administration > nav#toolbar-bar {
   z-index: 1032;
 }
+
+
+/* Custom carousel dot indicators */
+.carousel-indicators {
+  .carousel-dot-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    margin: 0 3px;
+    text-indent: -999px;
+    opacity: 1;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+      transform: scale(1.1);
+    }
+
+    &.active {
+      background-color: #fff;
+      width: 10px;
+      height: 6px;
+      border-radius: 3px 3px 3px 3px;
+    }
+  }
+}
+
+/* Hide carousel controls by default, show on hover */
+.carousel {
+  .carousel-control-prev,
+  .carousel-control-next {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    .carousel-control-prev,
+    .carousel-control-next {
+      opacity: 0.5;
+    }
+  }
+}

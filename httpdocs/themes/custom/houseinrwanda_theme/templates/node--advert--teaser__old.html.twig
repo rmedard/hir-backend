@@ -75,61 +75,17 @@
 {#  'node__content', 'clearfix', 'card', ' shadow-sm', content.is_super_sub ? 'border-success' : 'border-light'#}
 {#] %}#}
 {% set short_title = node.title.value|length > 50 ? node.title.value|slice(0, 50) ~ '...' : node.title.value %}
+{% set image_uri = attribute(content.field_advert_picture.0, '#markup') %}
 {% set publishedOn = attribute(content.published_at.0, '#markup')|replace({'-' : ''}) %}
 {% set expiresOn = attribute(content.field_advert_expirydate.0, '#markup') %}
 {% set postingPlan = attribute(content.field_advert_posting_plan.0, '#markup') %}
 {% set publisher = attribute(content.field_advert_advertiser.0, '#options').entity %}
 {% set property_type = attribute(content.field_advert_property_type|field_raw, 'value') %}
-{% set carousel_id = 'carousel-' ~ node.id() %}
-
 <article{{ attributes.addClass(classes) }}>
   <div{{ content_attributes.addClass(cardClasses) }}>
     <div class="row g-0">
       <div class="col-3">
-        {% if content.field_advert_picture['#items'] is not empty %}
-          {% set all_images = content.field_advert_picture['#items'] %}
-          {% set images = all_images|slice(0, 5) %}
-          {% if images|length > 1 %}
-            {# Multiple images - show carousel #}
-            <div id="{{ carousel_id }}" class="carousel slide carousel-fade">
-              {# Custom dot indicators #}
-              <div class="carousel-indicators">
-                {% for key, image in images %}
-                  <button type="button" data-bs-target="#{{ carousel_id }}" data-bs-slide-to="{{ key }}"
-                          class="carousel-dot-indicator {% if loop.first %}active{% endif %}"
-                          aria-current="{% if loop.first %}true{% endif %}"
-                          aria-label="Slide {{ key + 1 }}"></button>
-                {% endfor %}
-              </div>
-
-              {# Carousel inner content #}
-              <div class="carousel-inner">
-                {% for key, image in images %}
-                  {% set image_uri = attribute(content.field_advert_picture[key], '#markup') %}
-                  <div class="carousel-item {% if loop.first %}active{% endif %}">
-                    <a href="{{ url }}">
-                      <img src="{{ image_uri }}" class="d-block w-100 rounded-start-2" alt="{{ node.title.value }} - Image {{ key + 1 }}">
-                    </a>
-                  </div>
-                {% endfor %}
-              </div>
-
-              {# Carousel controls #}
-              <button class="carousel-control-prev" type="button" data-bs-target="#{{ carousel_id }}" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#{{ carousel_id }}" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div>
-          {% else %}
-            {# Single image - show as before #}
-            {% set image_uri = attribute(content.field_advert_picture.0, '#markup') %}
-            <a href="{{ url }}"><img src="{{ image_uri }}" class="img-fluid rounded-start-2" alt="{{ node.title.value }}"></a>
-          {% endif %}
-        {% endif %}
+        <a href="{{ url }}"><img src="{{ image_uri }}" class="img-fluid rounded-start-2" alt="{{ node.title.value }}"></a>
       </div>
       <div class="col-9">
         <div class="card-body p-2 d-flex flex-column h-100">
