@@ -56,7 +56,8 @@ settings:
         - '<h5 id>'
         - '<h6 id>'
     editor_advanced_link_link:
-      enabled_attributes: {  }
+      enabled_attributes:
+        - target
 image_upload:
   status: true
   scheme: public
