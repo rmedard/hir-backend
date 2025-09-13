@@ -56,6 +56,12 @@ $enable-gradients: false;
 // $breadcrumb-divider: quote(">");
 
 
+$btn-color: $white !important;
+
+$focus-ring-opacity: .25;
+$focus-ring-color: rgba($accent-shade, $focus-ring-opacity);
+$input-focus-border-color: lighten($accent-shade, 25%);
+
 $pagination-active-bg: $accent-shade;
 $pagination-active-border-color: $accent-shade;
 $pagination-hover-bg: $accent-shade;

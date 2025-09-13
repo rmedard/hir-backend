@@ -126,18 +126,16 @@ display:
         type: tag
         options: {  }
       empty:
-        area:
-          id: area
+        area_text_custom:
+          id: area_text_custom
           table: views
-          field: area
+          field: area_text_custom
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: text
+          plugin_id: text_custom
           empty: true
-          content:
-            value: 'This advertiser has no reviews yet!'
-            format: basic_html
+          content: "<div class=\"alert alert-success\" role=\"alert\">\r\n  This advertiser has no reviews yet.\r\n</div>"
           tokenize: false
       sorts: {  }
       arguments: {  }

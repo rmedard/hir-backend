@@ -1,3 +1,13 @@
+tom-select:
+  version: 2.4.3
+  css:
+    component:
+      node_modules/tom-select/dist/css/tom-select.bootstrap5.min.css: { minified: true }
+  js:
+    node_modules/tom-select/dist/js/tom-select.complete.min.js: { minified: true }
+  dependencies:
+    - core/drupal
+
 global-styling:
   version: '1.0.4'
   js:
@@ -6,12 +16,10 @@ global-styling:
     js/custom.js: { }
   css:
     component:
-      node_modules/select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css: { minified: true }
       css/style.css: { }
   dependencies:
     - core/jquery
     - webform/webform.element.telephone
-    - webform/webform.element.select2
     - flexslider/flexslider
     - jquery_ui_effects/core
     - core/drupal

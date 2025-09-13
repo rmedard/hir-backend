@@ -260,6 +260,7 @@ content:
           dependee: field_advert_is_agent
           settings:
             state: visible
+            reset: true
             condition: value
             grouping: AND
             values_set: 1

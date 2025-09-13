@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7f961a3e781be893a8368c85d504569",
+    "content-hash": "95723916208077ba933caf2e9fa2f90e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -8634,6 +8634,53 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v5.6.1"
             },
             "time": "2025-08-13T20:13:15+00:00"
+        },
+        {
+            "name": "orchidjs/tom-select",
+            "version": "v2.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/orchidjs/tom-select.git",
+                "reference": "2efbaab0abac19532bd38900f13b99762df601b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/orchidjs/tom-select/zipball/2efbaab0abac19532bd38900f13b99762df601b4",
+                "reference": "2efbaab0abac19532bd38900f13b99762df601b4",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "files": [
+                        "dist/js/tom-select.complete.min.js",
+                        "dist/css/tom-select.default.min.css"
+                    ],
+                    "styles": [
+                        "dist/css/tom-select.default.min.css"
+                    ],
+                    "scripts": [
+                        "dist/js/tom-select.complete.min.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Tom Select is a dynamic, framework agnostic, and lightweight (~16kb gzipped) <select> UI control. With autocomplete and native-feeling keyboard navigation, it's useful for tagging, contact lists, country selectors, and so on.",
+            "homepage": "https://tom-select.js.org/",
+            "support": {
+                "issues": "https://github.com/orchidjs/tom-select/issues",
+                "source": "https://github.com/orchidjs/tom-select/tree/v2.4.3"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/tom-select",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-02-12T17:10:02+00:00"
         },
         {
             "name": "pear/archive_tar",

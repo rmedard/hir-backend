@@ -26,6 +26,18 @@
                 }
             }
         },
+        "tom-select": {
+            "type": "package",
+            "package": {
+                "name": "archidjs/tom-select",
+                "version": "2.4.3",
+                "type": "drupal-library",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/orchidjs/tom-select/archive/refs/tags/v2.4.3.zip"
+                }
+            }
+        },
         "moment-tz": {
             "type": "package",
             "package": {
@@ -223,7 +235,7 @@
                 "type:drupal-core"
             ],
             "httpdocs/libraries/{$name}": [
-                "type:drupal-library"
+                "type:drupal-library", "type:npm-asset", "type:bower-asset"
             ],
             "httpdocs/modules/contrib/{$name}": [
                 "type:drupal-module"

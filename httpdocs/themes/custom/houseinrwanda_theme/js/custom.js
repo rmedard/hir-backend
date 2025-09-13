@@ -6,7 +6,11 @@
 (function (Drupal) {
     'use strict';
 
-    Drupal.behaviors.houseinrwanda_theme = {
+  /**
+   * @global TomSelect
+   */
+
+  Drupal.behaviors.houseinrwanda_theme = {
         attach: function (context, settings) {
 
             // Add 'rounded' class to all images
@@ -51,6 +55,24 @@
                         nationalMode: false
                     });
                 });
+            }
+
+            const prPropertyTypeSelect = context.querySelector('select#edit-field-pr-property-type-value');
+            if (prPropertyTypeSelect) {
+              new TomSelect(prPropertyTypeSelect, {
+                plugins: ['remove_button', 'clear_button'],
+                create: false,
+                placeholder: 'Chose property type',
+              });
+            }
+
+            const singleSelects = context.querySelectorAll('select:not([multiple])');
+            if (singleSelects && singleSelects.length > 0) {
+              singleSelects.forEach(function (singleSelect) {
+                new TomSelect(singleSelect, {
+                  create: false
+                });
+              });
             }
 
             // Initialize Select2 (if library is loaded)

@@ -2839,6 +2839,18 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: "<div class=\"alert alert-success mt-3\" role=\"alert\">\r\n  This advertiser has no published adverts.\r\n</div>"
+          tokenize: false
       arguments:
         field_advert_advertiser_target_id:
           id: field_advert_advertiser_target_id
@@ -2875,6 +2887,7 @@ display:
           not: false
           target_entity_type_id: node
       defaults:
+        empty: false
         use_ajax: true
         pager: false
         arguments: false
