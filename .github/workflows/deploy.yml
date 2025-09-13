@@ -47,8 +47,8 @@ jobs:
         id: npm-cache
         uses: actions/cache@v3
         with:
-          path: themes/custom/houseinrwanda_theme/node_modules
-          key: ${{ runner.os }}-node-20-${{ hashFiles('themes/custom/houseinrwanda_theme/package-lock.json') }}
+          path: httpdocs/themes/custom/houseinrwanda_theme/node_modules
+          key: ${{ runner.os }}-node-20-${{ hashFiles('httpdocs/themes/custom/houseinrwanda_theme/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-20-
 
@@ -61,7 +61,7 @@ jobs:
         run: |
           # Build houseinrwanda_theme assets
           echo "Building houseinrwanda_theme assets with Node.js $(node --version)..."
-          cd themes/custom/houseinrwanda_theme
+          cd httpdocs/themes/custom/houseinrwanda_theme
 
           # Install npm dependencies
           npm ci --silent
@@ -90,11 +90,11 @@ jobs:
               npm run
             fi
           else
-            echo "⚠ No package.json found in themes/custom/houseinrwanda_theme/"
+            echo "⚠ No package.json found in httpdocs/themes/custom/houseinrwanda_theme/"
           fi
 
           # Go back to root directory
-          cd ../../..
+          cd ../../../..
           echo "Theme build completed"
 
       - name: Prepare deployment files
@@ -125,8 +125,8 @@ jobs:
           echo "Deployment files prepared"
           du -sh deployment-files/
           echo "Theme built assets:"
-          ls -la themes/custom/houseinrwanda_theme/dist/ 2>/dev/null || echo "No dist directory found"
-          ls -la themes/custom/houseinrwanda_theme/build/ 2>/dev/null || echo "No build directory found"
+          ls -la httpdocs/themes/custom/houseinrwanda_theme/dist/ 2>/dev/null || echo "No dist directory found"
+          ls -la httpdocs/themes/custom/houseinrwanda_theme/build/ 2>/dev/null || echo "No build directory found"
 
       - name: Transfer files to server via SCP
         uses: appleboy/scp-action@v0.1.3
