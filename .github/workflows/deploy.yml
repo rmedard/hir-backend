@@ -27,8 +27,8 @@ jobs:
           extensions: pdo, pdo_mysql, json, gd, mbstring, zip
           tools: composer:v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
@@ -48,9 +48,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: themes/custom/houseinrwanda_theme/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('themes/custom/houseinrwanda_theme/package-lock.json') }}
+          key: ${{ runner.os }}-node-20-${{ hashFiles('themes/custom/houseinrwanda_theme/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-node-20-
 
       - name: Install PHP dependencies
         run: |
@@ -60,7 +60,7 @@ jobs:
       - name: Install and build theme assets
         run: |
           # Build houseinrwanda_theme assets
-          echo "Building houseinrwanda_theme assets..."
+          echo "Building houseinrwanda_theme assets with Node.js $(node --version)..."
           cd themes/custom/houseinrwanda_theme
 
           # Install npm dependencies
