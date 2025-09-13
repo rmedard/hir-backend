@@ -1,0 +1,140 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Image Derivatives Generator module.
+ */
+
+
+/**
+ * Generate derivatives for advert_teaser image style.
+ */
+function image_derivatives_generator_update_10001(): void {
+  $batch = [
+    'title' => t('Generating image derivatives for advert_teaser style'),
+    'operations' => [],
+    'finished' => '_image_derivatives_generator_batch_finished',
+    'init_message' => t('Starting derivative generation...'),
+    'progress_message' => t('Processed @current out of @total batches.'),
+    'error_message' => t('An error occurred during processing'),
+  ];
+
+  // Get all image files
+  $query = Drupal::entityTypeManager()->getStorage('file')->getQuery()
+    ->condition('filemime', [
+      'image/jpeg',
+      'image/jpg',
+      'image/png',
+      'image/gif',
+      'image/webp'
+    ], 'IN')
+    ->accessCheck(FALSE);
+
+  $fids = $query->execute();
+
+  if (empty($fids)) {
+    Drupal::messenger()->addMessage(t('No image files found.'));
+    return;
+  }
+
+  // Process in chunks of 25 to avoid memory/timeout issues
+  foreach (array_chunk($fids, 25) as $chunk) {
+    $batch['operations'][] = [
+      '_image_derivatives_generator_process_batch',
+      [$chunk, 'advert_teaser']
+    ];
+  }
+
+  batch_set($batch);
+
+  Drupal::messenger()
+    ->addMessage(t('Queued @count image files for derivative generation.', [
+      '@count' => count($fids)
+    ]));
+}
+
+/**
+ * Batch operation callback for generating image derivatives.
+ */
+function _image_derivatives_generator_process_batch($fids, $style_name, &$context): void {
+  // Initialize progress tracking
+  if (!isset($context['results']['processed'])) {
+    $context['results']['processed'] = 0;
+    $context['results']['success'] = 0;
+    $context['results']['failed'] = 0;
+    $context['results']['skipped'] = 0;
+    $context['results']['style_name'] = $style_name;
+  }
+
+  $style = Drupal::entityTypeManager()
+    ->getStorage('image_style')
+    ->load($style_name);
+
+  if (!$style) {
+    $context['results']['failed'] += count($fids);
+    $context['message'] = t('Image style "@style" not found!', ['@style' => $style_name]);
+    return;
+  }
+
+  $files = Drupal::entityTypeManager()
+    ->getStorage('file')
+    ->loadMultiple($fids);
+
+  foreach ($files as $file) {
+    $original_uri = $file->getFileUri();
+    $derivative_uri = $style->buildUri($original_uri);
+
+    // Check if derivative already exists
+    if (file_exists($derivative_uri)) {
+      $context['results']['skipped']++;
+      continue;
+    }
+
+    // Create the derivative
+    if ($style->createDerivative($original_uri, $derivative_uri)) {
+      $context['results']['success']++;
+    }
+    else {
+      $context['results']['failed']++;
+      Drupal::logger('image_derivatives_generator')
+        ->error('Failed to create derivative for: @uri', [
+          '@uri' => $original_uri
+        ]);
+    }
+
+    $context['results']['processed']++;
+  }
+
+  $context['message'] = t('Processed @processed files. Success: @success, Failed: @failed, Skipped: @skipped', [
+    '@processed' => $context['results']['processed'],
+    '@success' => $context['results']['success'],
+    '@failed' => $context['results']['failed'],
+    '@skipped' => $context['results']['skipped'],
+  ]);
+}
+
+/**
+ * Batch finished callback.
+ */
+function _image_derivatives_generator_batch_finished($success, $results, $operations): void {
+  if ($success) {
+    $message = t('Successfully processed @processed image files for "@style" style. Success: @success, Failed: @failed, Skipped: @skipped', [
+      '@processed' => $results['processed'],
+      '@style' => $results['style_name'],
+      '@success' => $results['success'],
+      '@failed' => $results['failed'],
+      '@skipped' => $results['skipped'],
+    ]);
+    Drupal::messenger()->addStatus($message);
+
+    // Log the completion
+    Drupal::logger('image_derivatives_generator')
+      ->info('Bulk derivative generation completed: @message', [
+        '@message' => $message->render()
+      ]);
+  }
+  else {
+    Drupal::messenger()
+      ->addError(t('Finished with errors. Check the logs for details.'));
+  }
+}

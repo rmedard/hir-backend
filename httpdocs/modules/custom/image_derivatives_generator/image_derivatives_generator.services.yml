@@ -1,0 +1,6 @@
+services:
+  image_derivatives_generator.commands:
+    class: Drupal\image_derivatives_generator\Drush\Commands\ImageDerivativesCommands
+    arguments: ['@entity_type.manager', '@database']
+    tags:
+      - { name: drush.command }
