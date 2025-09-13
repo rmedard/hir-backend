@@ -75,10 +75,6 @@
 {% else %}
   {% set cardClasses =  cardClasses|merge(['border-0'])%}
 {% endif %}
-
-{#{% set cardClasses = [#}
-{#  'node__content', 'clearfix', 'card', 'shadow-sm', content.is_super_sub ? 'border', 'border-success' : 'border-0'#}
-{#] %}#}
 {% set short_title = node.title.value|length > 50 ? node.title.value|slice(0, 50) ~ '...' : node.title.value %}
 {% set publishedAtTimestamp = content.published_at['#object'].published_at.value %}
 {% set expiresOn = attribute(content.field_advert_expirydate.0, '#markup') %}

@@ -144,7 +144,7 @@
         </div>
       </div>
     </div>
-    {% if publisher %}
+    {% if node.field_advert_is_agent.value and publisher %}
       <div class="card border-light mt-2">
         <div class="card-header border-light">
           <h4 class="card-title m-0 text-secondary">{{ 'Advertiser agent' }}</h4>
