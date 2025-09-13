@@ -3,77 +3,84 @@
  * Global utilities - Pure JavaScript Version
  */
 
-(function (Drupal) {
+(function (Drupal, once) {
     'use strict';
 
   /**
    * @global TomSelect
    */
 
+  /**
+   * @typedef {import('tom-select')} TomSelect
+   */
+
   Drupal.behaviors.houseinrwanda_theme = {
         attach: function (context, settings) {
 
             // Add 'rounded' class to all images
-            const images = context.querySelectorAll('img');
-            images.forEach(function(img) {
-              const hasRoundedClass = Array.from(img.classList).some(className =>
-                className === 'rounded' || className.startsWith('rounded-')
-              );
+          once('allImages', 'img', context).forEach(function (img) {
+            const hasRoundedClass = Array.from(img.classList).some(className =>
+              className === 'rounded' || className.startsWith('rounded-')
+            );
+            if (!hasRoundedClass) {
+              img.classList.add('rounded');
+            }
+          });
 
-              if (!hasRoundedClass) {
-                img.classList.add('rounded');
+
+          // Mobile detection
+          const userAgent = navigator.userAgent.toLowerCase();
+          const isMobile = userAgent.includes('mobile');
+          const isAndroidPhone = userAgent.includes('android');
+          const isIPhone = userAgent.includes('iphone');
+
+          if (isMobile && isAndroidPhone) {
+              const androidSpot = context.querySelector('div#android-app-spot');
+              if (androidSpot) {
+                  androidSpot.removeAttribute('hidden');
               }
+          }
+
+          // iPhone user agent does not include 'mobile'
+          if (isIPhone) {
+              const iosSpot = context.querySelector('div#ios-app-spot');
+              if (iosSpot) {
+                  iosSpot.removeAttribute('hidden');
+              }
+          }
+
+          // Initialize intlTelInput (if library is loaded)
+          if (window.intlTelInput) {
+            once('allTelInput', 'input.form-tel').forEach(function (input) {
+              window.intlTelInput(input, {
+                initialCountry: 'rw',
+                nationalMode: false
+              });
+            });
+          }
+
+          if (window.TomSelect) {
+
+            /** @type {typeof import('tom-select').default} */
+            const TomSel = window.TomSelect;
+
+            once('tomSelectSingle', 'select:not([multiple])', context).forEach(function (select) {
+              new TomSel(select, {
+                create: false
+              });
             });
 
-            // Mobile detection
-            const userAgent = navigator.userAgent.toLowerCase();
-            const isMobile = userAgent.includes('mobile');
-            const isAndroidPhone = userAgent.includes('android');
-            const isIPhone = userAgent.includes('iphone');
-
-            if (isMobile && isAndroidPhone) {
-                const androidSpot = context.querySelector('div#android-app-spot');
-                if (androidSpot) {
-                    androidSpot.removeAttribute('hidden');
-                }
-            }
-
-            // iPhone user agent does not include 'mobile'
-            if (isIPhone) {
-                const iosSpot = context.querySelector('div#ios-app-spot');
-                if (iosSpot) {
-                    iosSpot.removeAttribute('hidden');
-                }
-            }
-
-            // Initialize intlTelInput (if library is loaded)
-            if (window.intlTelInput) {
-                const telInputs = context.querySelectorAll('input.form-tel');
-                telInputs.forEach(function(input) {
-                    window.intlTelInput(input, {
-                        initialCountry: 'rw',
-                        nationalMode: false
-                    });
-                });
-            }
-
-            const prPropertyTypeSelect = context.querySelector('select#edit-field-pr-property-type-value');
-            if (prPropertyTypeSelect) {
-              new TomSelect(prPropertyTypeSelect, {
-                plugins: ['remove_button', 'clear_button'],
-                create: false,
-                placeholder: 'Chose property type',
-              });
-            }
-
-            const singleSelects = context.querySelectorAll('select:not([multiple])');
-            if (singleSelects && singleSelects.length > 0) {
-              singleSelects.forEach(function (singleSelect) {
-                new TomSelect(singleSelect, {
-                  create: false
+            const prPropertySelect = context.querySelector('select#edit-field-pr-property-type-value');
+            if (prPropertySelect) {
+              once('prPropertySelect', prPropertySelect, context).forEach(function (element) {
+                new TomSel(element, {
+                  create: false,
+                  plugins: ['remove_button', 'clear_button'],
+                  placeholder: 'Chose property type'
                 });
               });
             }
+          }
 
             // Initialize Select2 (if library is loaded)
             // if (window.jQuery && window.jQuery.fn.select2) {
@@ -151,4 +158,4 @@
             }
         }
     };
-})(Drupal);
+})(Drupal, once);

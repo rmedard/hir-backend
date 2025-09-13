@@ -18,9 +18,9 @@ global-styling:
     component:
       css/style.css: { }
   dependencies:
-    - core/jquery
+    - core/once
+    - core/drupal
     - webform/webform.element.telephone
     - flexslider/flexslider
     - jquery_ui_effects/core
-    - core/drupal
     - core/popperjs
