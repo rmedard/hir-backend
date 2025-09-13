@@ -174,8 +174,8 @@ class AgentTabController extends ControllerBase {
         '#type' => 'link',
         '#title' => t('<i class="fa-solid fa-pencil"></i> Write a Review'),
         '#url' => Url::fromRoute('advertiser_review.add_form', ['node' => $node->id()]),
-        '#attributes' => ['class' => ['btn', 'btn-success', 'text-white', 'mt-3']],
-        '#weight' => 101,
+        '#attributes' => ['class' => ['btn', 'btn-success', 'text-white', 'my-3', 'w-25', 'offset-9']],
+        '#weight' => -101,
       ],
       '#cache' => [
         'tags' => $node->getCacheTags(),

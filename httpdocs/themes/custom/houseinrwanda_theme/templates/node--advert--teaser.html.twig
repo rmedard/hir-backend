@@ -68,11 +68,16 @@
   view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
   'clearfix',
 ] %}
-{% set cardClasses = [
-  'node__content', 'clearfix', 'card', ' shadow-sm', 'border-0'
-] %}
+
+{% set cardClasses = ['node__content', 'clearfix', 'card', ' shadow-sm'] %}
+{% if content.is_super_sub %}
+  {% set cardClasses =  cardClasses|merge(['border', 'border-success'])%}
+{% else %}
+  {% set cardClasses =  cardClasses|merge(['border-0'])%}
+{% endif %}
+
 {#{% set cardClasses = [#}
-{#  'node__content', 'clearfix', 'card', ' shadow-sm', content.is_super_sub ? 'border-success' : 'border-light'#}
+{#  'node__content', 'clearfix', 'card', 'shadow-sm', content.is_super_sub ? 'border', 'border-success' : 'border-0'#}
 {#] %}#}
 {% set short_title = node.title.value|length > 50 ? node.title.value|slice(0, 50) ~ '...' : node.title.value %}
 {% set publishedAtTimestamp = content.published_at['#object'].published_at.value %}

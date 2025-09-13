@@ -11,6 +11,10 @@ Description: Bootstrap 4 with Sass
 
 /* COLORS
 --------------------------------------------------*/
+div#page {
+  background-color: #f4f9f6 !important;
+}
+
 
 a {
   color: $accent-shade;

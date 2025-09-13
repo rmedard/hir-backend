@@ -994,7 +994,7 @@ display:
         options:
           offset: 0
           pagination_heading_level: h4
-          items_per_page: 20
+          items_per_page: 100
           total_pages: null
           id: 0
           tags:
@@ -2817,6 +2817,28 @@ display:
     display_plugin: block
     position: 24
     display_options:
+      pager:
+        type: full
+        options:
+          offset: 0
+          pagination_heading_level: h4
+          items_per_page: 20
+          total_pages: null
+          id: 0
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
       arguments:
         field_advert_advertiser_target_id:
           id: field_advert_advertiser_target_id
@@ -2854,6 +2876,7 @@ display:
           target_entity_type_id: node
       defaults:
         use_ajax: true
+        pager: false
         arguments: false
       display_description: ''
       display_extenders: {  }
