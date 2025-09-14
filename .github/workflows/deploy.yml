@@ -145,42 +145,103 @@ jobs:
             # Build theme assets on server after files are deployed
             echo "=== BUILDING THEME ASSETS ON SERVER ==="
 
-            # Check if Node.js is available
-            if command -v node >/dev/null 2>&1; then
-              echo "Node.js version: $(node --version)"
+            # Auto-detect Plesk Node.js installation (prefer latest version)
+            PLESK_NODE=""
+            PLESK_NPM=""
+
+            # Look for Node.js 20 first (your current version)
+            if [ -f "/opt/plesk/node/20/bin/node" ] && [ -f "/opt/plesk/node/20/bin/npm" ]; then
+              PLESK_NODE="/opt/plesk/node/20/bin/node"
+              PLESK_NPM="/opt/plesk/node/20/bin/npm"
+            else
+              # Auto-detect any available Plesk Node.js version
+              for version in $(ls -1 /opt/plesk/node/ 2>/dev/null | sort -nr); do
+                if [ -f "/opt/plesk/node/$version/bin/node" ] && [ -f "/opt/plesk/node/$version/bin/npm" ]; then
+                  PLESK_NODE="/opt/plesk/node/$version/bin/node"
+                  PLESK_NPM="/opt/plesk/node/$version/bin/npm"
+                  echo "✅ Found Plesk Node.js version: $version"
+                  break
+                fi
+              done
+            fi
+
+            if [ -n "$PLESK_NODE" ] && [ -n "$PLESK_NPM" ]; then
+              echo "✅ Using Plesk Node.js at: $PLESK_NODE"
+              echo "Node.js version: $($PLESK_NODE --version)"
+              echo "npm version: $($PLESK_NPM --version)"
 
               # Navigate to theme directory
               cd $WEBROOT_PATH/themes/custom/houseinrwanda_theme
 
-              # Install npm dependencies (optimized with cache)
+              # Cache npm packages optimization
               echo "Installing npm dependencies..."
+              if [ -d "node_modules" ]; then
+                echo "Found existing node_modules, checking if update needed..."
+                # Check if package-lock.json is newer than node_modules
+                if [ -f "package-lock.json" ] && [ "package-lock.json" -nt "node_modules" ]; then
+                  echo "Package lock file is newer, updating dependencies..."
+                  rm -rf node_modules
+                fi
+              fi
+
+              # Install npm dependencies using Plesk's npm
               if [ -f "package-lock.json" ]; then
-                # Use npm ci for faster, reliable installs in production
-                npm ci --silent --production=false
+                $PLESK_NPM ci --silent --production=false
               else
-                # Fallback to npm install if no lock file
-                npm install --silent
+                $PLESK_NPM install --silent
               fi
               echo "✅ npm dependencies installed"
 
               # Build theme assets (this creates the libraries directory)
               echo "Building theme assets including TomSelect..."
-              npm run build --silent
-              echo "✅ Theme assets built"
 
-              # Verify TomSelect libraries were created
-              if [ -d "$WEBROOT_PATH/libraries/tom-select" ]; then
-                echo "✅ TomSelect libraries found at: $WEBROOT_PATH/libraries/tom-select"
-                ls -la $WEBROOT_PATH/libraries/tom-select/
+              # Capture build output for debugging
+              BUILD_LOG="/tmp/theme-build.log"
+              if $PLESK_NPM run build 2>&1 | tee "$BUILD_LOG"; then
+                echo "✅ Theme assets built successfully"
               else
-                echo "❌ TomSelect libraries not found!"
-                echo "Contents of libraries directory:"
-                ls -la $WEBROOT_PATH/libraries/ 2>/dev/null || echo "No libraries directory found"
+                echo "❌ Theme build failed!"
+                echo "Build output:"
+                cat "$BUILD_LOG"
+                exit 1
               fi
 
+              # CRITICAL: Verify TomSelect libraries were created - hard failure if not found
+              if [ -d "$WEBROOT_PATH/libraries/tom-select" ]; then
+                echo "✅ TomSelect libraries found at: $WEBROOT_PATH/libraries/tom-select"
+                TOMSELECT_FILES=$(ls -la $WEBROOT_PATH/libraries/tom-select/)
+                echo "$TOMSELECT_FILES"
+
+                # Verify essential files exist
+                if [ -f "$WEBROOT_PATH/libraries/tom-select/tom-select.complete.min.js" ] &&
+                   [ -f "$WEBROOT_PATH/libraries/tom-select/tom-select.min.css" ]; then
+                  echo "✅ Essential TomSelect files verified"
+                else
+                  echo "❌ CRITICAL: Essential TomSelect files missing!"
+                  echo "Expected files not found. Deployment failed."
+                  exit 1
+                fi
+              else
+                echo "❌ CRITICAL: TomSelect libraries not found - deployment failed!"
+                echo "Debugging information:"
+                echo "Libraries directory contents:"
+                ls -la $WEBROOT_PATH/libraries/ 2>/dev/null || echo "No libraries directory found"
+                echo "Theme directory contents:"
+                ls -la $WEBROOT_PATH/themes/custom/houseinrwanda_theme/
+                echo "Build log:"
+                cat "$BUILD_LOG" 2>/dev/null || echo "No build log found"
+                echo "Gulpfile check:"
+                ls -la $WEBROOT_PATH/themes/custom/houseinrwanda_theme/gulpfile.js 2>/dev/null || echo "No gulpfile found"
+                exit 1
+              fi
+
+              # Clean up build log
+              rm -f "$BUILD_LOG"
+
             else
-              echo "❌ Node.js not found on server - theme assets not built"
-              echo "Please install Node.js on the server or use alternative approach"
+              echo "❌ Plesk Node.js not found"
+              echo "Available Plesk Node.js versions:"
+              ls -la /opt/plesk/node/ 2>/dev/null || echo "No Plesk Node.js directory found"
               exit 1
             fi
 
@@ -197,25 +258,44 @@ jobs:
             DRUSH="$DEPLOY_PATH/vendor/drush/drush/drush"
 
             echo "Clearing cache..."
-            $DRUSH cr
-            echo "✅ Cache cleared"
+            if $DRUSH cr; then
+              echo "✅ Cache cleared"
+            else
+              echo "❌ Cache clear failed"
+              exit 1
+            fi
 
             echo "Importing configuration..."
-            $DRUSH cim -y
-            echo "✅ Configuration imported"
+            if $DRUSH cim -y; then
+              echo "✅ Configuration imported"
+            else
+              echo "❌ Configuration import failed"
+              exit 1
+            fi
 
             echo "Running database updates..."
-            $DRUSH updb -y
-            echo "✅ Database updates completed"
+            if $DRUSH updb -y; then
+              echo "✅ Database updates completed"
+            else
+              echo "❌ Database updates failed"
+              exit 1
+            fi
 
             echo "Final cache clear..."
-            $DRUSH cr
-            echo "✅ Final cache cleared"
+            if $DRUSH cr; then
+              echo "✅ Final cache cleared"
+            else
+              echo "❌ Final cache clear failed"
+              exit 1
+            fi
 
             # Optional: Rebuild cache for better performance
             echo "Rebuilding cache for optimal performance..."
-            $DRUSH cache:rebuild
-            echo "✅ Cache rebuilt"
+            if $DRUSH cache:rebuild; then
+              echo "✅ Cache rebuilt"
+            else
+              echo "⚠️ Cache rebuild failed, but continuing..."
+            fi
 
             # Clean up temporary files
             echo "=== CLEANING UP ==="
@@ -223,12 +303,31 @@ jobs:
             rm -f /tmp/server-rsync-excludes.txt
             echo "✅ Temporary files cleaned up"
 
-            # Final verification
+            # Final comprehensive verification
             echo "=== DEPLOYMENT VERIFICATION ==="
             echo "Deployed to: $DEPLOY_PATH"
             echo "Web root: $WEBROOT_PATH"
-            echo "Theme libraries:"
-            ls -la $WEBROOT_PATH/libraries/tom-select/ 2>/dev/null || echo "❌ TomSelect not found"
+
+            echo "Critical file checks:"
+            if [ -f "$WEBROOT_PATH/sites/default/settings.php" ]; then
+              echo "✅ settings.php preserved"
+            else
+              echo "❌ settings.php missing!"
+            fi
+
+            if [ -d "$WEBROOT_PATH/libraries/tom-select" ]; then
+              echo "✅ TomSelect libraries deployed"
+              FILE_COUNT=$(ls -1 $WEBROOT_PATH/libraries/tom-select/ | wc -l)
+              echo "   - $FILE_COUNT files in tom-select directory"
+            else
+              echo "❌ TomSelect libraries missing!"
+            fi
+
+            if $DRUSH status --field=bootstrap 2>/dev/null | grep -q "Successful"; then
+              echo "✅ Drupal bootstrap successful"
+            else
+              echo "⚠️ Drupal bootstrap check failed"
+            fi
 
             echo ""
             echo "🎉 DEPLOYMENT COMPLETED SUCCESSFULLY! 🎉"
