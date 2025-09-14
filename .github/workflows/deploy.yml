@@ -173,6 +173,14 @@ jobs:
               # Navigate to theme directory
               cd $WEBROOT_PATH/themes/custom/houseinrwanda_theme
 
+              # CRITICAL FIX: Set up PATH to include Plesk Node.js binaries
+              export PATH="/opt/plesk/node/20/bin:$PATH"
+
+              # Verify PATH is set correctly
+              echo "PATH updated to include Plesk Node.js"
+              echo "Node.js location: $(which node)"
+              echo "npm location: $(which npm)"
+
               # Cache npm packages optimization
               echo "Installing npm dependencies..."
               if [ -d "node_modules" ]; then
@@ -184,11 +192,11 @@ jobs:
                 fi
               fi
 
-              # Install npm dependencies using Plesk's npm
+              # Install npm dependencies (now using PATH instead of full paths)
               if [ -f "package-lock.json" ]; then
-                $PLESK_NPM ci --silent --production=false
+                npm ci --silent --production=false
               else
-                $PLESK_NPM install --silent
+                npm install --silent
               fi
               echo "✅ npm dependencies installed"
 
@@ -197,7 +205,7 @@ jobs:
 
               # Capture build output for debugging
               BUILD_LOG="/tmp/theme-build.log"
-              if $PLESK_NPM run build 2>&1 | tee "$BUILD_LOG"; then
+              if npm run build 2>&1 | tee "$BUILD_LOG"; then
                 echo "✅ Theme assets built successfully"
               else
                 echo "❌ Theme build failed!"
@@ -232,6 +240,9 @@ jobs:
                 cat "$BUILD_LOG" 2>/dev/null || echo "No build log found"
                 echo "Gulpfile check:"
                 ls -la $WEBROOT_PATH/themes/custom/houseinrwanda_theme/gulpfile.js 2>/dev/null || echo "No gulpfile found"
+                echo "Node.js PATH check:"
+                echo "Current PATH: $PATH"
+                echo "which node: $(which node 2>/dev/null || echo 'not found')"
                 exit 1
               fi
 
