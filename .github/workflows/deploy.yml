@@ -332,62 +332,153 @@ jobs:
             fi
 
             # Create Drush wrapper that uses correct PHP version
-            DRUSH_WRAPPER="/tmp/drush-wrapper"
-            cat > "$DRUSH_WRAPPER" << EOF
+            DRUSH_WRAPPER="$DEPLOY_PATH/drush-wrapper"
+            cat > "$DRUSH_WRAPPER" << 'EOF'
             #!/bin/bash
-            export PHP_BINARY="$PHP_BINARY"
+            export PHP_BINARY="__PHP_BINARY_PLACEHOLDER__"
+            $PHP_BINARY __DEPLOY_PATH_PLACEHOLDER__/vendor/drush/drush/drush.php "$@"
+            EOF
+
+            # Replace placeholders with actual values
+            sed -i "s|__PHP_BINARY_PLACEHOLDER__|$PHP_BINARY|g" "$DRUSH_WRAPPER"
+            sed -i "s|__DEPLOY_PATH_PLACEHOLDER__|$DEPLOY_PATH|g" "$DRUSH_WRAPPER"
+
+            # Set permissions and verify
+            chmod 755 "$DRUSH_WRAPPER"
+            if [ ! -x "$DRUSH_WRAPPER" ]; then
+              echo "⚠️ Setting execute permission failed, trying alternative location..."
+              DRUSH_WRAPPER="$HOME/drush-wrapper"
+              cat > "$DRUSH_WRAPPER" << EOF
+            #!/bin/bash
             $PHP_BINARY $DEPLOY_PATH/vendor/drush/drush/drush.php "\$@"
             EOF
-            chmod 755 "$DRUSH_WRAPPER"
-
-            # Verify Drush works with correct PHP
-            if ! $DRUSH_WRAPPER --version >/dev/null 2>&1; then
-              echo "❌ Drush not working with PHP $PHP_BINARY"
-              echo "Trying to run Drush version:"
-              $DRUSH_WRAPPER --version 2>&1 || echo "Failed to get Drush version"
-              exit 1
+              chmod 755 "$DRUSH_WRAPPER"
             fi
 
-            echo "✅ Drush verified and ready with $PHP_BINARY"
+            # Verify wrapper is executable
+            if [ ! -x "$DRUSH_WRAPPER" ]; then
+              echo "❌ Cannot create executable Drush wrapper"
+              echo "Trying direct PHP execution..."
+              # Fallback: test Drush directly with PHP
+              if $PHP_BINARY $DEPLOY_PATH/vendor/drush/drush/drush.php --version >/dev/null 2>&1; then
+                echo "✅ Drush works with direct PHP execution"
+                # Define a function instead of a script file
+                run_drush() {
+                  $PHP_BINARY $DEPLOY_PATH/vendor/drush/drush/drush.php "$@"
+                }
+                DRUSH_WRAPPER="run_drush"
+              else
+                echo "❌ Drush not working with PHP $PHP_BINARY"
+                exit 1
+              fi
+            else
+              echo "✅ Drush wrapper created successfully at $DRUSH_WRAPPER"
+            fi
+
+            # Verify Drush works with correct PHP
+            echo "Testing Drush..."
+            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
+              # Using function approach
+              if run_drush --version >/dev/null 2>&1; then
+                echo "✅ Drush verified and ready with $PHP_BINARY (function mode)"
+              else
+                echo "❌ Drush function test failed"
+                run_drush --version 2>&1 || echo "Failed to get Drush version"
+                exit 1
+              fi
+            else
+              # Using wrapper file approach
+              if $DRUSH_WRAPPER --version >/dev/null 2>&1; then
+                echo "✅ Drush verified and ready with $PHP_BINARY (wrapper mode)"
+              else
+                echo "❌ Drush wrapper test failed"
+                $DRUSH_WRAPPER --version 2>&1 || echo "Failed to get Drush version"
+                exit 1
+              fi
+            fi
 
             echo "Clearing cache..."
-            if $DRUSH_WRAPPER cr; then
+            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
+              run_drush_result=$(run_drush cr 2>&1)
+              drush_exit_code=$?
+            else
+              run_drush_result=$($DRUSH_WRAPPER cr 2>&1)
+              drush_exit_code=$?
+            fi
+
+            if [ $drush_exit_code -eq 0 ]; then
               echo "✅ Cache cleared"
             else
               echo "❌ Cache clear failed"
+              echo "$run_drush_result"
               exit 1
             fi
 
             echo "Importing configuration..."
-            if $DRUSH_WRAPPER cim -y; then
+            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
+              run_drush_result=$(run_drush cim -y 2>&1)
+              drush_exit_code=$?
+            else
+              run_drush_result=$($DRUSH_WRAPPER cim -y 2>&1)
+              drush_exit_code=$?
+            fi
+
+            if [ $drush_exit_code -eq 0 ]; then
               echo "✅ Configuration imported"
             else
               echo "❌ Configuration import failed"
+              echo "$run_drush_result"
               exit 1
             fi
 
             echo "Running database updates..."
-            if $DRUSH_WRAPPER updb -y; then
+            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
+              run_drush_result=$(run_drush updb -y 2>&1)
+              drush_exit_code=$?
+            else
+              run_drush_result=$($DRUSH_WRAPPER updb -y 2>&1)
+              drush_exit_code=$?
+            fi
+
+            if [ $drush_exit_code -eq 0 ]; then
               echo "✅ Database updates completed"
             else
               echo "❌ Database updates failed"
+              echo "$run_drush_result"
               exit 1
             fi
 
             echo "Final cache clear..."
-            if $DRUSH_WRAPPER cr; then
+            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
+              run_drush_result=$(run_drush cr 2>&1)
+              drush_exit_code=$?
+            else
+              run_drush_result=$($DRUSH_WRAPPER cr 2>&1)
+              drush_exit_code=$?
+            fi
+
+            if [ $drush_exit_code -eq 0 ]; then
               echo "✅ Final cache cleared"
             else
               echo "❌ Final cache clear failed"
+              echo "$run_drush_result"
               exit 1
             fi
 
             # Optional: Rebuild cache for better performance
             echo "Rebuilding cache for optimal performance..."
-            if $DRUSH_WRAPPER cache:rebuild; then
-              echo "✅ Cache rebuilt"
+            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
+              if run_drush cache:rebuild >/dev/null 2>&1; then
+                echo "✅ Cache rebuilt"
+              else
+                echo "⚠️ Cache rebuild failed, but continuing..."
+              fi
             else
-              echo "⚠️ Cache rebuild failed, but continuing..."
+              if $DRUSH_WRAPPER cache:rebuild >/dev/null 2>&1; then
+                echo "✅ Cache rebuilt"
+              else
+                echo "⚠️ Cache rebuild failed, but continuing..."
+              fi
             fi
 
             # Clean up temporary files
@@ -416,10 +507,18 @@ jobs:
               echo "❌ TomSelect libraries missing!"
             fi
 
-            if $DRUSH_WRAPPER status --field=bootstrap 2>/dev/null | grep -q "Successful"; then
-              echo "✅ Drupal bootstrap successful"
+            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
+              if run_drush status --field=bootstrap 2>/dev/null | grep -q "Successful"; then
+                echo "✅ Drupal bootstrap successful"
+              else
+                echo "⚠️ Drupal bootstrap check failed"
+              fi
             else
-              echo "⚠️ Drupal bootstrap check failed"
+              if $DRUSH_WRAPPER status --field=bootstrap 2>/dev/null | grep -q "Successful"; then
+                echo "✅ Drupal bootstrap successful"
+              else
+                echo "⚠️ Drupal bootstrap check failed"
+              fi
             fi
 
             # Clean up Drush wrapper
