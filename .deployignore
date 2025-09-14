@@ -14,3 +14,7 @@ dev.houseinrwanda.com/
 composer.phar
 .DS_Store
 Thumbs.db
+
+# Exclude node_modules directories
+node_modules
+httpdocs/themes/custom/*/node_modules

@@ -27,13 +27,6 @@ jobs:
           extensions: pdo, pdo_mysql, json, gd, mbstring, zip
           tools: composer:v2
 
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v5
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: httpdocs/themes/custom/houseinrwanda_theme/package-lock.json
-
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v3
@@ -43,47 +36,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
-      - name: Cache Node modules
-        id: npm-cache
-        uses: actions/cache@v3
-        with:
-          path: httpdocs/themes/custom/houseinrwanda_theme/node_modules
-          key: ${{ runner.os }}-node-20-${{ hashFiles('httpdocs/themes/custom/houseinrwanda_theme/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-20-
-
       - name: Install PHP dependencies
         run: |
           composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
           echo "PHP dependencies installed"
 
-      - name: Install and build theme assets
-        run: |
-          # Build houseinrwanda_theme assets
-          echo "Building houseinrwanda_theme assets with Node.js $(node --version)..."
-          cd httpdocs/themes/custom/houseinrwanda_theme
-
-          # Install npm dependencies
-          npm ci --silent
-          echo "✓ npm dependencies installed"
-
-          # Build assets using gulp (this will now include TomSelect copying)
-          npm run build --silent
-          echo "✓ Theme assets built including TomSelect libraries"
-
-          # Verify TomSelect files were copied
-          echo "TomSelect assets:"
-          ls -la libraries/tom-select/ 2>/dev/null || echo "TomSelect libraries directory not found"
-
-          # Go back to root directory
-          cd ../../../..
-          echo "Theme build completed"
+      # REMOVED: Install and build theme assets step
+      # This was creating files that couldn't be deployed due to .gitignore
 
       - name: Prepare deployment files
         run: |
           mkdir -p deployment-files
 
-          # First, copy everything with standard exclusions
+          # Copy everything with standard exclusions
           if [ -f ".deployignore" ]; then
             rsync -av --exclude-from='.deployignore' ./ deployment-files/
             echo "Using .deployignore file for exclusions"
@@ -105,10 +70,6 @@ jobs:
 
           echo "Deployment files prepared"
           du -sh deployment-files/
-          echo "Contents of theme directory in deployment:"
-          ls -la deployment-files/httpdocs/themes/custom/houseinrwanda_theme/
-          echo "Libraries directory:"
-          ls -la deployment-files/httpdocs/themes/custom/houseinrwanda_theme/libraries/ 2>/dev/null || echo "No libraries directory found"
 
       - name: Transfer files to server via SCP
         uses: appleboy/scp-action@v0.1.3
@@ -140,6 +101,80 @@ jobs:
 
             echo "=== DEPLOYING TO: $DEPLOY_PATH ==="
 
-            # [Rest of your existing deployment script remains unchanged]
-            # Safety checks, backup, rsync, permissions, Drush commands, etc.
-            # ... (your existing deployment script continues here)
+            # Safety checks
+            if [ ! -d "$DEPLOY_PATH" ]; then
+              echo "❌ Deploy path does not exist: $DEPLOY_PATH"
+              exit 1
+            fi
+
+            # Backup current deployment (if exists)
+            if [ -d "$DEPLOY_PATH" ]; then
+              echo "Creating backup..."
+              cp -r "$DEPLOY_PATH" "/tmp/backup-$(date +%Y%m%d-%H%M%S)" 2>/dev/null || echo "Backup failed, continuing..."
+            fi
+
+            # Sync files from temporary location to deployment path
+            echo "Syncing files to deployment location..."
+            rsync -av --delete /tmp/deployment/ $DEPLOY_PATH/
+
+            # Set proper permissions
+            echo "Setting permissions..."
+            find $DEPLOY_PATH -type d -exec chmod 755 {} \;
+            find $DEPLOY_PATH -type f -exec chmod 644 {} \;
+
+            # ADDED: Build theme assets on server after files are deployed
+            echo "=== BUILDING THEME ASSETS ON SERVER ==="
+
+            # Check if Node.js is available
+            if command -v node >/dev/null 2>&1; then
+              echo "Node.js version: $(node --version)"
+
+              # Navigate to theme directory
+              cd $WEBROOT_PATH/themes/custom/houseinrwanda_theme
+
+              # Install npm dependencies (optimized with cache)
+              echo "Installing npm dependencies..."
+              if [ -f "package-lock.json" ]; then
+                # Use npm ci for faster, reliable installs in production
+                npm ci --silent --production=false
+              else
+                # Fallback to npm install if no lock file
+                npm install --silent
+              fi
+              echo "✅ npm dependencies installed"
+
+              # Build theme assets (this creates the libraries directory)
+              echo "Building theme assets including TomSelect..."
+              npm run build --silent
+              echo "✅ Theme assets built"
+
+              # Verify TomSelect libraries were created
+              if [ -d "$WEBROOT_PATH/libraries/tom-select" ]; then
+                echo "✅ TomSelect libraries found at: $WEBROOT_PATH/libraries/tom-select"
+                ls -la $WEBROOT_PATH/libraries/tom-select/
+              else
+                echo "❌ TomSelect libraries not found!"
+              fi
+
+            else
+              echo "❌ Node.js not found on server - theme assets not built"
+              echo "Please install Node.js on the server or use Option 2 (build in theme directory)"
+            fi
+
+            # Drush commands
+            echo "=== RUNNING DRUSH COMMANDS ==="
+            cd $DEPLOY_PATH
+
+            echo "Clearing cache..."
+            $DEPLOY_PATH/vendor/drush/drush/drush cr
+
+            echo "Importing configuration..."
+            $DEPLOY_PATH/vendor/drush/drush/drush cim -y
+
+            echo "Running database updates..."
+            $DEPLOY_PATH/vendor/drush/drush/drush updb -y
+
+            echo "Final cache clear..."
+            $DEPLOY_PATH/vendor/drush/drush/drush cr
+
+            echo "✅ Deployment completed successfully!"
