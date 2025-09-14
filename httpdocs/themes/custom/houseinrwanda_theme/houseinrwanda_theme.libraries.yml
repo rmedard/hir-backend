@@ -2,10 +2,10 @@ tom-select:
   version: 2.4.3
   css:
     component:
-      libraries/tom-select/tom-select.min.css: { minified: true }
-      libraries/tom-select/tom-select.bootstrap5.min.css: { minified: true }
+      ../../../libraries/tom-select/tom-select.min.css: { minified: true }
+      ../../../libraries/tom-select/tom-select.bootstrap5.min.css: { minified: true }
   js:
-    libraries/tom-select/tom-select.complete.min.js: { minified: true }
+    ../../../libraries/tom-select/tom-select.complete.min.js: { minified: true }
   dependencies:
     - core/once
     - core/drupal

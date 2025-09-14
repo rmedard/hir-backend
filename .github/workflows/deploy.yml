@@ -100,13 +100,6 @@ jobs:
             echo "Using manual exclusions (no .deployignore found)"
           fi
 
-          # Explicitly ensure the libraries directory exists and is copied
-          if [ -d "httpdocs/themes/custom/houseinrwanda_theme/libraries" ]; then
-            echo "Libraries directory found, ensuring it's included..."
-            mkdir -p deployment-files/httpdocs/themes/custom/houseinrwanda_theme/libraries
-            cp -r httpdocs/themes/custom/houseinrwanda_theme/libraries/* deployment-files/httpdocs/themes/custom/houseinrwanda_theme/libraries/ 2>/dev/null || true
-          fi
-
           # Copy vendor
           cp -r vendor deployment-files/ 2>/dev/null || echo "Vendor directory not found"
 

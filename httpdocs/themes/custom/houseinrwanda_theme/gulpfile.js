@@ -38,7 +38,7 @@ const paths = {
   tomselect: {
     js: './node_modules/tom-select/dist/js/*.js',
     css: './node_modules/tom-select/dist/css/*.css',
-    dest: './libraries/tom-select'
+    dest: '../../../libraries/tom-select'
   }
 }
 
