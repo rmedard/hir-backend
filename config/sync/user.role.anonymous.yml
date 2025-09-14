@@ -9,6 +9,7 @@ dependencies:
     - node.type.advert
     - node.type.agent
   module:
+    - advertiser_review
     - comment
     - contact
     - field_permissions
@@ -27,6 +28,7 @@ permissions:
   - 'access comments'
   - 'access content'
   - 'access site-wide contact form'
+  - 'add review entities'
   - 'create advert content'
   - 'create agent content'
   - 'edit own webform submission'

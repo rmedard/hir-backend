@@ -10,6 +10,7 @@ dependencies:
     - node.type.advert
     - node.type.agent
   module:
+    - advertiser_review
     - comment
     - contact
     - field_permissions
@@ -33,6 +34,7 @@ permissions:
   - 'access fontawesome additional settings'
   - 'access shortcuts'
   - 'access site-wide contact form'
+  - 'add review entities'
   - 'create advert content'
   - 'create agent content'
   - 'delete own files'

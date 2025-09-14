@@ -174,7 +174,7 @@ final class Review extends ContentEntityBase implements ReviewInterface {
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Status'))
-      ->setDefaultValue(TRUE)
+      ->setDefaultValue(FALSE)
       ->setSetting('on_label', 'Enabled')
       ->setDisplayOptions('form', [
         'type' => 'boolean_checkbox',
