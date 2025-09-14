@@ -267,6 +267,30 @@ jobs:
             echo "=== RUNNING DRUSH COMMANDS ==="
             cd $DEPLOY_PATH
 
+            # Check for PHP 8.3 (matching your GitHub Actions setup)
+            PHP_BINARY=""
+            for php_version in php8.3 php83 php8.2 php82 php8.1 php81 php; do
+              if command -v $php_version >/dev/null 2>&1; then
+                PHP_VERSION_OUTPUT=$($php_version --version 2>/dev/null | head -1)
+                if echo "$PHP_VERSION_OUTPUT" | grep -q "PHP 8\.[1-3]"; then
+                  PHP_BINARY=$php_version
+                  echo "✅ Found compatible PHP: $PHP_VERSION_OUTPUT"
+                  break
+                fi
+              fi
+            done
+
+            if [ -z "$PHP_BINARY" ]; then
+              echo "❌ No compatible PHP version found (need PHP 8.1+)"
+              echo "Available PHP versions:"
+              for php_check in php php8.3 php83 php8.2 php82 php8.1 php81; do
+                if command -v $php_check >/dev/null 2>&1; then
+                  echo "  - $php_check: $($php_check --version 2>/dev/null | head -1)"
+                fi
+              done
+              exit 1
+            fi
+
             # Check if Drush is available and executable
             DRUSH="$DEPLOY_PATH/vendor/drush/drush/drush"
             if [ ! -f "$DRUSH" ]; then
@@ -282,20 +306,27 @@ jobs:
               chmod 755 "$DRUSH"
             fi
 
-            # Verify Drush works
-            if ! $DRUSH --version >/dev/null 2>&1; then
-              echo "❌ Drush executable but not working properly"
-              echo "Drush info:"
-              ls -la "$DRUSH"
+            # Create Drush wrapper that uses correct PHP version
+            DRUSH_WRAPPER="/tmp/drush-wrapper"
+            cat > "$DRUSH_WRAPPER" << EOF
+            #!/bin/bash
+            export PHP_BINARY="$PHP_BINARY"
+            $PHP_BINARY $DEPLOY_PATH/vendor/drush/drush/drush.php "\$@"
+            EOF
+            chmod 755 "$DRUSH_WRAPPER"
+
+            # Verify Drush works with correct PHP
+            if ! $DRUSH_WRAPPER --version >/dev/null 2>&1; then
+              echo "❌ Drush not working with PHP $PHP_BINARY"
               echo "Trying to run Drush version:"
-              $DRUSH --version 2>&1 || echo "Failed to get Drush version"
+              $DRUSH_WRAPPER --version 2>&1 || echo "Failed to get Drush version"
               exit 1
             fi
 
-            echo "✅ Drush verified and ready"
+            echo "✅ Drush verified and ready with $PHP_BINARY"
 
             echo "Clearing cache..."
-            if $DRUSH cr; then
+            if $DRUSH_WRAPPER cr; then
               echo "✅ Cache cleared"
             else
               echo "❌ Cache clear failed"
@@ -303,7 +334,7 @@ jobs:
             fi
 
             echo "Importing configuration..."
-            if $DRUSH cim -y; then
+            if $DRUSH_WRAPPER cim -y; then
               echo "✅ Configuration imported"
             else
               echo "❌ Configuration import failed"
@@ -311,7 +342,7 @@ jobs:
             fi
 
             echo "Running database updates..."
-            if $DRUSH updb -y; then
+            if $DRUSH_WRAPPER updb -y; then
               echo "✅ Database updates completed"
             else
               echo "❌ Database updates failed"
@@ -319,7 +350,7 @@ jobs:
             fi
 
             echo "Final cache clear..."
-            if $DRUSH cr; then
+            if $DRUSH_WRAPPER cr; then
               echo "✅ Final cache cleared"
             else
               echo "❌ Final cache clear failed"
@@ -328,7 +359,7 @@ jobs:
 
             # Optional: Rebuild cache for better performance
             echo "Rebuilding cache for optimal performance..."
-            if $DRUSH cache:rebuild; then
+            if $DRUSH_WRAPPER cache:rebuild; then
               echo "✅ Cache rebuilt"
             else
               echo "⚠️ Cache rebuild failed, but continuing..."
