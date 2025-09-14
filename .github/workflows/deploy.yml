@@ -349,7 +349,12 @@ jobs:
             DRUSH_WRAPPER="$DEPLOY_PATH/drush-wrapper"
             cat > "$DRUSH_WRAPPER" << 'EOF'
             #!/bin/bash
+            export PATH="/opt/plesk/php/8.3/bin:$PATH"
             export PHP_BINARY="__PHP_BINARY_PLACEHOLDER__"
+            export COMPOSER_ALLOW_SUPERUSER=1
+            export COMPOSER_DISABLE_XDEBUG_WARN=1
+            # Disable Composer platform checks that cause PHP version conflicts
+            export COMPOSER_PLATFORM_CHECK=0
             $PHP_BINARY __DEPLOY_PATH_PLACEHOLDER__/vendor/drush/drush/drush.php "$@"
             EOF
 
@@ -364,6 +369,10 @@ jobs:
               DRUSH_WRAPPER="$HOME/drush-wrapper"
               cat > "$DRUSH_WRAPPER" << EOF
             #!/bin/bash
+            export PATH="/opt/plesk/php/8.3/bin:$PATH"
+            export COMPOSER_ALLOW_SUPERUSER=1
+            export COMPOSER_DISABLE_XDEBUG_WARN=1
+            export COMPOSER_PLATFORM_CHECK=0
             $PHP_BINARY $DEPLOY_PATH/vendor/drush/drush/drush.php "\$@"
             EOF
               chmod 755 "$DRUSH_WRAPPER"
@@ -378,6 +387,12 @@ jobs:
                 echo "✅ Drush works with direct PHP execution"
                 # Define a function instead of a script file
                 run_drush() {
+                  # Set environment variables for this session
+                  export PATH="/opt/plesk/php/8.3/bin:$PATH"
+                  export COMPOSER_ALLOW_SUPERUSER=1
+                  export COMPOSER_DISABLE_XDEBUG_WARN=1
+                  # Disable Composer platform checks that cause PHP version conflicts
+                  export COMPOSER_PLATFORM_CHECK=0
                   $PHP_BINARY $DEPLOY_PATH/vendor/drush/drush/drush.php "$@"
                 }
                 DRUSH_WRAPPER="run_drush"
