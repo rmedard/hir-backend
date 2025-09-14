@@ -134,6 +134,11 @@ jobs:
             find $DEPLOY_PATH -type d -exec chmod 755 {} \;
             find $DEPLOY_PATH -type f -exec chmod 644 {} \;
 
+            # Set executable permissions for binaries
+            echo "Setting executable permissions for binaries..."
+            find $DEPLOY_PATH/vendor -name "drush" -type f -exec chmod 755 {} \;
+            find $DEPLOY_PATH/vendor -path "*/bin/*" -type f -exec chmod 755 {} \;
+
             # Ensure web server can write to files directory
             if [ -d "$WEBROOT_PATH/sites/default/files" ]; then
               chmod -R 775 "$WEBROOT_PATH/sites/default/files"
@@ -260,13 +265,32 @@ jobs:
             echo "=== RUNNING DRUSH COMMANDS ==="
             cd $DEPLOY_PATH
 
-            # Check if Drush is available
-            if [ ! -f "$DEPLOY_PATH/vendor/drush/drush/drush" ]; then
-              echo "❌ Drush not found at expected location"
+            # Check if Drush is available and executable
+            DRUSH="$DEPLOY_PATH/vendor/drush/drush/drush"
+            if [ ! -f "$DRUSH" ]; then
+              echo "❌ Drush not found at expected location: $DRUSH"
+              echo "Searching for Drush in vendor directory..."
+              find $DEPLOY_PATH/vendor -name "drush" -type f 2>/dev/null || echo "No drush binary found"
               exit 1
             fi
 
-            DRUSH="$DEPLOY_PATH/vendor/drush/drush/drush"
+            # Ensure Drush is executable
+            if [ ! -x "$DRUSH" ]; then
+              echo "⚠️ Drush found but not executable, fixing permissions..."
+              chmod 755 "$DRUSH"
+            fi
+
+            # Verify Drush works
+            if ! $DRUSH --version >/dev/null 2>&1; then
+              echo "❌ Drush executable but not working properly"
+              echo "Drush info:"
+              ls -la "$DRUSH"
+              echo "Trying to run Drush version:"
+              $DRUSH --version 2>&1 || echo "Failed to get Drush version"
+              exit 1
+            fi
+
+            echo "✅ Drush verified and ready"
 
             echo "Clearing cache..."
             if $DRUSH cr; then
