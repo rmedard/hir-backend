@@ -63,7 +63,7 @@ jobs:
           fi
 
           # Copy vendor
-          cp -r vendor deployment-files/ 2>/dev/null || echo "Vendor directory not found"
+          cp -r vendor deployment-files/ 2>/dev/null || echo "Vendor directory not found."
 
           echo "Deployment files prepared"
           du -sh deployment-files/
