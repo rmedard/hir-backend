@@ -120,12 +120,26 @@ jobs:
             httpdocs/sites/default/private
             EOF
 
+            # Verify exclusions file was created properly
+            echo "Verifying exclusion file contents:"
+            cat /tmp/server-rsync-excludes.txt
+
+            # Check if critical files exist before sync
+            echo "Checking critical files before sync:"
+            ls -la "$DEPLOY_PATH/httpdocs/sites/default/settings.php" 2>/dev/null && echo "✅ settings.php exists" || echo "⚠️ settings.php not found"
+            ls -la "$DEPLOY_PATH/httpdocs/sites/default/services.yml" 2>/dev/null && echo "✅ services.yml exists" || echo "⚠️ services.yml not found"
+
             # Sync files from temporary location to deployment path
             echo "Syncing files to deployment location (preserving server configs)..."
             rsync -av \
               --exclude-from='/tmp/server-rsync-excludes.txt' \
-              --delete \
-              /tmp/deployment/ $DEPLOY_PATH/
+              /tmp/deployment/ $DEPLOY_PATH/ \
+              --delete
+
+            # Verify critical files still exist after sync
+            echo "Checking critical files after sync:"
+            ls -la "$DEPLOY_PATH/httpdocs/sites/default/settings.php" 2>/dev/null && echo "✅ settings.php preserved" || echo "❌ settings.php was deleted!"
+            ls -la "$DEPLOY_PATH/httpdocs/sites/default/services.yml" 2>/dev/null && echo "✅ services.yml preserved" || echo "❌ services.yml was deleted!"
 
             echo "✅ Files synced, server configurations preserved"
 
