@@ -360,11 +360,14 @@ jobs:
               echo "❌ TomSelect libraries missing!"
             fi
 
-            if $DRUSH status --field=bootstrap 2>/dev/null | grep -q "Successful"; then
+            if $DRUSH_WRAPPER status --field=bootstrap 2>/dev/null | grep -q "Successful"; then
               echo "✅ Drupal bootstrap successful"
             else
               echo "⚠️ Drupal bootstrap check failed"
             fi
+
+            # Clean up Drush wrapper
+            rm -f "$DRUSH_WRAPPER"
 
             echo ""
             echo "🎉 DEPLOYMENT COMPLETED SUCCESSFULLY! 🎉"
