@@ -137,7 +137,9 @@ jobs:
             # Set executable permissions for binaries
             echo "Setting executable permissions for binaries..."
             find $DEPLOY_PATH/vendor -name "drush" -type f -exec chmod 755 {} \;
+            find $DEPLOY_PATH/vendor -name "drush.php" -type f -exec chmod 755 {} \;
             find $DEPLOY_PATH/vendor -path "*/bin/*" -type f -exec chmod 755 {} \;
+            find $DEPLOY_PATH/vendor -name "*.php" -path "*/drush/*" -type f -exec chmod 755 {} \;
 
             # Ensure web server can write to files directory
             if [ -d "$WEBROOT_PATH/sites/default/files" ]; then
