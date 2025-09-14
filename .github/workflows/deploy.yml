@@ -269,20 +269,45 @@ jobs:
 
             # Check for PHP 8.3 (matching your GitHub Actions setup)
             PHP_BINARY=""
-            for php_version in php8.3 php83 php8.2 php82 php8.1 php81 php; do
-              if command -v $php_version >/dev/null 2>&1; then
-                PHP_VERSION_OUTPUT=$($php_version --version 2>/dev/null | head -1)
+
+            # First check Plesk PHP installations
+            for php_version in 8.3 8.2 8.1; do
+              PLESK_PHP="/opt/plesk/php/$php_version/bin/php"
+              if [ -f "$PLESK_PHP" ] && [ -x "$PLESK_PHP" ]; then
+                PHP_VERSION_OUTPUT=$($PLESK_PHP --version 2>/dev/null | head -1)
                 if echo "$PHP_VERSION_OUTPUT" | grep -q "PHP 8\.[1-3]"; then
-                  PHP_BINARY=$php_version
-                  echo "✅ Found compatible PHP: $PHP_VERSION_OUTPUT"
+                  PHP_BINARY=$PLESK_PHP
+                  echo "✅ Found Plesk PHP: $PHP_VERSION_OUTPUT at $PLESK_PHP"
                   break
                 fi
               fi
             done
 
+            # Fallback to system PHP if Plesk PHP not found
+            if [ -z "$PHP_BINARY" ]; then
+              for php_version in php8.3 php83 php8.2 php82 php8.1 php81 php; do
+                if command -v $php_version >/dev/null 2>&1; then
+                  PHP_VERSION_OUTPUT=$($php_version --version 2>/dev/null | head -1)
+                  if echo "$PHP_VERSION_OUTPUT" | grep -q "PHP 8\.[1-3]"; then
+                    PHP_BINARY=$php_version
+                    echo "✅ Found system PHP: $PHP_VERSION_OUTPUT"
+                    break
+                  fi
+                fi
+              done
+            fi
+
             if [ -z "$PHP_BINARY" ]; then
               echo "❌ No compatible PHP version found (need PHP 8.1+)"
               echo "Available PHP versions:"
+              echo "Plesk PHP installations:"
+              for php_check in 8.3 8.2 8.1; do
+                PLESK_PHP_CHECK="/opt/plesk/php/$php_check/bin/php"
+                if [ -f "$PLESK_PHP_CHECK" ]; then
+                  echo "  - $PLESK_PHP_CHECK: $($PLESK_PHP_CHECK --version 2>/dev/null | head -1)"
+                fi
+              done
+              echo "System PHP installations:"
               for php_check in php php8.3 php83 php8.2 php82 php8.1 php81; do
                 if command -v $php_check >/dev/null 2>&1; then
                   echo "  - $php_check: $($php_check --version 2>/dev/null | head -1)"
