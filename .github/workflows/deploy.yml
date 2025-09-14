@@ -83,12 +83,11 @@ jobs:
         run: |
           mkdir -p deployment-files
 
-          # Copy all files except excluded ones, using .deployignore if it exists
+          # First, copy everything with standard exclusions
           if [ -f ".deployignore" ]; then
             rsync -av --exclude-from='.deployignore' ./ deployment-files/
             echo "Using .deployignore file for exclusions"
           else
-            # Fallback to manual exclusions if .deployignore doesn't exist
             rsync -av \
               --exclude='.git' \
               --exclude='.github' \
@@ -101,14 +100,22 @@ jobs:
             echo "Using manual exclusions (no .deployignore found)"
           fi
 
+          # Explicitly ensure the libraries directory exists and is copied
+          if [ -d "httpdocs/themes/custom/houseinrwanda_theme/libraries" ]; then
+            echo "Libraries directory found, ensuring it's included..."
+            mkdir -p deployment-files/httpdocs/themes/custom/houseinrwanda_theme/libraries
+            cp -r httpdocs/themes/custom/houseinrwanda_theme/libraries/* deployment-files/httpdocs/themes/custom/houseinrwanda_theme/libraries/ 2>/dev/null || true
+          fi
+
           # Copy vendor
           cp -r vendor deployment-files/ 2>/dev/null || echo "Vendor directory not found"
 
           echo "Deployment files prepared"
           du -sh deployment-files/
-          echo "Theme built assets:"
-          ls -la httpdocs/themes/custom/houseinrwanda_theme/dist/ 2>/dev/null || echo "No dist directory found"
-          ls -la httpdocs/themes/custom/houseinrwanda_theme/build/ 2>/dev/null || echo "No build directory found"
+          echo "Contents of theme directory in deployment:"
+          ls -la deployment-files/httpdocs/themes/custom/houseinrwanda_theme/
+          echo "Libraries directory:"
+          ls -la deployment-files/httpdocs/themes/custom/houseinrwanda_theme/libraries/ 2>/dev/null || echo "No libraries directory found"
 
       - name: Transfer files to server via SCP
         uses: appleboy/scp-action@v0.1.3
