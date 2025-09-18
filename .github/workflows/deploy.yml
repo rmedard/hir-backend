@@ -76,7 +76,7 @@ jobs:
           key: ${{ github.ref_name == 'main' && secrets.PRODUCTION_SSH_KEY || secrets.STAGING_SSH_KEY }}
           port: 22
           source: "deployment-files/*"
-          target: "/tmp/deployment"
+          target: "/tmp_cicd/deployment"
           strip_components: 1
 
       - name: Deploy to server
@@ -107,12 +107,12 @@ jobs:
             # Backup current deployment (if exists)
             echo "Creating backup..."
             if [ -d "$DEPLOY_PATH" ]; then
-              BACKUP_DIR="/tmp/backup-$(date +%Y%m%d-%H%M%S)"
+              BACKUP_DIR="/tmp_cicd/backup-$(date +%Y%m%d-%H%M%S)"
               cp -r "$DEPLOY_PATH" "$BACKUP_DIR" 2>/dev/null && echo "✅ Backup created: $BACKUP_DIR" || echo "⚠️ Backup failed, continuing..."
             fi
 
             # Create server-side exclusions to preserve critical files
-            cat > /tmp/server-rsync-excludes.txt << 'EOF'
+            cat > /tmp_cicd/server-rsync-excludes.txt << 'EOF'
             httpdocs/sites/default/settings.php
             httpdocs/sites/default/settings.local.php
             httpdocs/sites/default/services.yml
@@ -122,7 +122,7 @@ jobs:
 
             # Verify exclusions file was created properly
             echo "Verifying exclusion file contents:"
-            cat /tmp/server-rsync-excludes.txt
+            cat /tmp_cicd/server-rsync-excludes.txt
 
             # Check if critical files exist before sync
             echo "Checking critical files before sync:"
@@ -132,8 +132,8 @@ jobs:
             # Sync files from temporary location to deployment path
             echo "Syncing files to deployment location (preserving server configs)..."
             rsync -av \
-              --exclude-from='/tmp/server-rsync-excludes.txt' \
-              /tmp/deployment/ $DEPLOY_PATH/ \
+              --exclude-from='/tmp_cicd/server-rsync-excludes.txt' \
+              /tmp_cicd/deployment/ $DEPLOY_PATH/ \
               --delete
 
             # Verify critical files still exist after sync
@@ -225,7 +225,7 @@ jobs:
               echo "Building theme assets including TomSelect..."
 
               # Capture build output for debugging
-              BUILD_LOG="/tmp/theme-build.log"
+              BUILD_LOG="/tmp_cicd/theme-build.log"
               if npm run build 2>&1 | tee "$BUILD_LOG"; then
                 echo "✅ Theme assets built successfully"
               else
@@ -512,8 +512,8 @@ jobs:
 
             # Clean up temporary files
             echo "=== CLEANING UP ==="
-            rm -rf /tmp/deployment
-            rm -f /tmp/server-rsync-excludes.txt
+            rm -rf /tmp_cicd/deployment
+            rm -f /tmp_cicd/server-rsync-excludes.txt
             echo "✅ Temporary files cleaned up"
 
             # Final comprehensive verification

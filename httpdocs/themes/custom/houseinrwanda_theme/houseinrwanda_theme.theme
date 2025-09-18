@@ -54,6 +54,9 @@ function houseinrwanda_theme_preprocess_node(&$variables): void
           $goldBadgeHtml = "<img src='" . $goldCheck . "' alt='vip advertiser' style='height: 1.1em; width: auto' />";
 
           if ($node->bundle() === 'advert') {
+            /**
+             * @var \Drupal\rir_interface\Service\ThemingService $themingService
+             */
               $themingService = Drupal::service('rir_interface.theming_service');
               $isRent = in_array($node->get('field_advert_type')->value, ['rent', 'short_rent']);
               $variables['content']['property_type_pill'] = ['#markup' => $themingService->getPropertyTypePill($node)];

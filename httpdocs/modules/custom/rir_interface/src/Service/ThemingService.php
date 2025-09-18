@@ -9,7 +9,6 @@ class ThemingService
 {
   public function getPropertyTypePill(Node $advert): string
   {
-    $propertyType = $advert->get('field_advert_property_type');
     $colors = [
       'house' => 'primary',
       'apartment' => 'danger',
@@ -22,7 +21,9 @@ class ThemingService
       'office' => 'secondary',
       'land' => 'dark'
     ];
-    return '<span class="badge bg-' . $colors[$propertyType->value] . '">' . $this->getListValue($propertyType) . '</span>';
+    $propertyType = $advert->get('field_advert_property_type');
+    $color = $colors[$propertyType->value];
+    return '<span class="badge bg-' . $color . '-subtle text-' . $color . '-emphasis">' . $this->getListValue($propertyType) . '</span>';
   }
 
   public function getPropertyPricePill(Node $advert): string
