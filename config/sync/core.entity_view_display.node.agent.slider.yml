@@ -54,7 +54,7 @@ content:
     type: image_url
     label: hidden
     settings:
-      image_style: medium
+      image_style: agent_slider
     third_party_settings: {  }
     weight: 0
     region: content

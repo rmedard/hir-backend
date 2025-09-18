@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\advertiser_review\Plugin\Field\FieldWidget;
 
-use Drupal\advertiser_review\Plugin\Field\FieldType\AdvertiserRatingItem;
 use Drupal\Core\Field\Annotation\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
  * Defines the 'advertiser_rating' field widget.
@@ -30,7 +28,7 @@ final class AdvertiserRatingWidget extends WidgetBase {
     $element['average_rating'] = [
       '#type' => 'number',
       '#title' => t('Average Rating'),
-      '#default_value' => isset($items[$delta]->average_rating) ? $items[$delta]->average_rating : NULL,
+      '#default_value' => isset($items[$delta]->average_rating) ? $items[$delta]->average_rating : 0,
       '#step' => 0.01,
       '#min' => 0,
       '#max' => 5,
@@ -41,7 +39,7 @@ final class AdvertiserRatingWidget extends WidgetBase {
     $element['review_count'] = [
       '#type' => 'number',
       '#title' => t('Review Count'),
-      '#default_value' => isset($items[$delta]->review_count) ? $items[$delta]->review_count : NULL,
+      '#default_value' => isset($items[$delta]->review_count) ? $items[$delta]->review_count : 0,
       '#min' => 0,
       '#disabled' => TRUE,
       '#description' => t('This field is automatically calculated.'),
