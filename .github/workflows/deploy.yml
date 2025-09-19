@@ -113,11 +113,7 @@ jobs:
 
             # Create server-side exclusions to preserve critical files
             cat > /tmp_cicd/server-rsync-excludes.txt << 'EOF'
-            httpdocs/sites/default/settings.php
-            httpdocs/sites/default/settings.local.php
-            httpdocs/sites/default/services.yml
-            httpdocs/sites/default/files
-            httpdocs/sites/default/private
+            httpdocs/sites/default
             tmp
             private
             EOF
