@@ -118,6 +118,8 @@ jobs:
             httpdocs/sites/default/services.yml
             httpdocs/sites/default/files
             httpdocs/sites/default/private
+            tmp
+            private
             EOF
 
             # Verify exclusions file was created properly
