@@ -8,7 +8,7 @@ use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 
 /**
@@ -21,7 +21,7 @@ final readonly class ReviewManager {
   /**
    * Constructs a ReviewManager object.
    */
-  public function __construct(private EntityTypeManagerInterface $entityTypeManager, private LoggerChannelFactory $loggerChannel) {
+  public function __construct(private EntityTypeManagerInterface $entityTypeManager, private LoggerChannelFactoryInterface $loggerChannel) {
     $this->logger = $this->loggerChannel->get('advertiser_review');
   }
 
@@ -72,7 +72,7 @@ final readonly class ReviewManager {
       $review_ids = $query->execute();
 
       if (empty($review_ids)) {
-        return 0;
+        return 0.0;
       }
 
       $reviews = $review_storage->loadMultiple($review_ids);
@@ -83,15 +83,15 @@ final readonly class ReviewManager {
        * @var \Drupal\advertiser_review\Entity\Review $review
        */
       foreach ($reviews as $review) {
-        $total_rating += $review->get('rate')->value;
+        $total_rating += (int) $review->get('rate')->value;
         $count++;
       }
 
-      return $count > 0 ? round($total_rating / $count) : 0;
+      return $count > 0 ? round($total_rating / $count, 1) : 0.0;
     }
     catch (InvalidPluginDefinitionException|PluginNotFoundException $e) {
       $this->logger->error($e);
-      return 0;
+      return 0.0;
     }
   }
 
