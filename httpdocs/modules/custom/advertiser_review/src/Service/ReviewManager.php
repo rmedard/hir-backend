@@ -39,6 +39,7 @@ final readonly class ReviewManager {
       $review_storage = $this->entityTypeManager->getStorage('review');
       $query = $review_storage->getQuery()
         ->condition('advertiser', $advertiser_nid)
+        ->condition('status', TRUE)
         ->sort('created', 'DESC')
         ->accessCheck();
 
@@ -65,6 +66,7 @@ final readonly class ReviewManager {
       $review_storage = $this->entityTypeManager->getStorage('review');
       $query = $review_storage->getQuery()
         ->condition('advertiser', $advertiser_nid)
+        ->condition('status', TRUE)
         ->accessCheck();
 
       $review_ids = $query->execute();
@@ -103,6 +105,7 @@ final readonly class ReviewManager {
       $review_storage = $this->entityTypeManager->getStorage('review');
       return $review_storage->getQuery()
         ->condition('advertiser', $advertiser_nid)
+        ->condition('status', TRUE)
         ->accessCheck()
         ->count()
         ->execute();
@@ -136,7 +139,7 @@ final readonly class ReviewManager {
       if (empty($reviews)) {
         // No reviews, set to null/empty
         $agent_node->set('field_agent_review', [
-          'average_rating' => NULL,
+          'average_rating' => 0,
           'review_count' => 0,
         ]);
       }
