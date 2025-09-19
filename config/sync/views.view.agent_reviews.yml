@@ -137,7 +137,23 @@ display:
           empty: true
           content: "<div class=\"alert alert-success\" role=\"alert\">\r\n  This advertiser has no reviews yet.\r\n</div>"
           tokenize: false
-      sorts: {  }
+      sorts:
+        created:
+          id: created
+          table: review
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: review
+          entity_field: created
+          plugin_id: date
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+          granularity: second
       arguments: {  }
       filters:
         status:

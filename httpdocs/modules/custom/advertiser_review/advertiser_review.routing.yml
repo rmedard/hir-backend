@@ -27,3 +27,21 @@ advertiser_review.agent_tab_content:
     parameters:
       node:
         type: entity:node
+
+entity.review.enable_form:
+  path: '/review/{review}/enable'
+  defaults:
+    _entity_form: 'review.enable'
+    _title: 'Enable Review'
+  requirements:
+    _entity_access: 'review.update'
+    _custom_access: '\Drupal\advertiser_review\Access\ReviewAccess::checkEnableAccess'
+
+entity.review.disable_form:
+  path: '/review/{review}/disable'
+  defaults:
+    _entity_form: 'review.disable'
+    _title: 'Disable Review'
+  requirements:
+    _entity_access: 'review.update'
+    _custom_access: '\Drupal\advertiser_review\Access\ReviewAccess::checkDisableAccess'

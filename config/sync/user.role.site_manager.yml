@@ -9,6 +9,7 @@ dependencies:
     - node.type.news
     - node.type.property_request
   module:
+    - advertiser_review
     - block_content_permissions
     - field_permissions
     - file
@@ -35,6 +36,7 @@ permissions:
   - 'create field_pr_proposed_properties'
   - 'create news content'
   - 'delete own files'
+  - 'delete review entities'
   - 'edit any advert content'
   - 'edit any agent content'
   - 'edit any news content'
@@ -52,6 +54,7 @@ permissions:
   - 'edit own field_agent_category'
   - 'edit own field_how_to_submit_advert'
   - 'edit own field_pr_proposed_properties'
+  - 'edit review entities'
   - 'set advert published on date'
   - 'update any banner_block block content'
   - 'use text format full_html'

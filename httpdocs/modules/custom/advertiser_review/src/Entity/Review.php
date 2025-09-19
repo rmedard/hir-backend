@@ -29,6 +29,7 @@ use Drupal\user\EntityOwnerTrait;
  *   handlers = {
  *     "list_builder" = "Drupal\advertiser_review\ReviewListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
+ *     "action" = "Drupal\advertiser_review\ReviewAction",
  *     "form" = {
  *       "add" = "Drupal\advertiser_review\Form\ReviewForm",
  *       "edit" = "Drupal\advertiser_review\Form\ReviewForm",
