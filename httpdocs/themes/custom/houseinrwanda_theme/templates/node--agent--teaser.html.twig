@@ -77,13 +77,13 @@
 <article{{ attributes.addClass(classes) }}>
   <div{{ content_attributes.addClass(cardClasses) }}>
     <img src="{{ image_uri }}" class="card-img-top" alt="employer photo">
-    <div class="card-body text-center py-1">
+    <div class="card-body py-1 d-flex flex-column align-items-center">
       <h6 class="m-0"><a href="{{ url }}" class="stretched-link">{{ label }}</a></h6>
-      <div class="small"><i class="fas fa-map-marker-alt"></i> {{ node.field_agent_operations_area.value }}</div>
+      <div class="small"><i class="fa-solid fa-location-dot"></i>{{ node.field_agent_operations_area.value }}</div>
     </div>
     <div class="card-footer bg-success text-white border-0 p-2 rounded">
-      <div class="small text-center"><i class="fas fa-phone-alt"></i> {{ node.field_agent_phone.value }}</div>
-      <div class="small d-flex overflow-hidden align-items-baseline justify-content-center"><i class="fas fa-at"></i> <span class="ps-1">{{ node.field_agent_email.value }}</span></div>
+      <div class="small text-center"><i class="fas fa-phone-alt"></i>{{ node.field_agent_phone.value }}</div>
+      <div class="small d-flex overflow-hidden align-items-center justify-content-center"><i class="fas fa-at"></i> <span class="ps-1">{{ node.field_agent_email.value }}</span></div>
     </div>
   </div>
 </article>

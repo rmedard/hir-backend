@@ -147,7 +147,7 @@
     // Remove active class from all tab links
     const allTabLinks = document.querySelectorAll('.agent-tab-link');
     allTabLinks.forEach(function(link) {
-      link.classList.remove('active');
+      link.classList.remove('active', 'bg-success-subtle', 'rounded-top');
     });
 
     // Remove active classes from all tab panes
@@ -157,7 +157,7 @@
     });
 
     // Add active class to clicked link
-    activeLink.classList.add('active');
+    activeLink.classList.add('active', 'bg-success-subtle', 'rounded-top');
 
     // Add active classes to corresponding tab pane
     const activePane = document.getElementById('tab-content-' + activeTab);
