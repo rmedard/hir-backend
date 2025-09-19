@@ -48,8 +48,8 @@ function houseinrwanda_theme_preprocess_node(&$variables): void
       if (in_array($node->bundle(), ['advert', 'agent'])) {
           $host = Drupal::request()->getSchemeAndHttpHost();
           $location = $host . '/' . Drupal::theme()->getActiveTheme()->getPath();
-          $blueCheck = $location . '/images/icons/check-blue.svg';
-          $goldCheck = $location . '/images/icons/twitter-gold.svg';
+          $blueCheck = $location . '/images/check-blue.svg';
+          $goldCheck = $location . '/images/twitter-gold.svg';
           $blueBadgeHtml = "<img src='" . $blueCheck . "' alt='featured advertiser' style='height: 1.1em; width: auto' />";
           $goldBadgeHtml = "<img src='" . $goldCheck . "' alt='vip advertiser' style='height: 1.1em; width: auto' />";
 
