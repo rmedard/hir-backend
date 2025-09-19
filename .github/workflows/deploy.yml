@@ -528,6 +528,13 @@ jobs:
               echo "❌ settings.php missing!"
             fi
 
+            if [ -d "$WEBROOT_PATH/sites/default/files" ]; then
+              FILE_COUNT=$(find "$WEBROOT_PATH/sites/default/files" -type f | wc -l)
+              echo "✅ files directory preserved with $FILE_COUNT files"
+            else
+              echo "❌ files directory missing!"
+            fi
+
             if [ -d "$WEBROOT_PATH/libraries/tom-select" ]; then
               echo "✅ TomSelect libraries deployed"
               FILE_COUNT=$(ls -1 $WEBROOT_PATH/libraries/tom-select/ | wc -l)
