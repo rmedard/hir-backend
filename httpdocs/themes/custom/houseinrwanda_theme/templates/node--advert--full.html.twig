@@ -211,3 +211,19 @@
     {{ drupal_entity('webform', 'interest_form') }}
   </div>
 </div>
+
+{% if node.field_advert_is_agent.value and publisher %}
+  <div class="card border-0 mt-2 shadow-sm bg-warning-subtle border-warning-subtle text-warning-emphasis">
+    <div class="card-body">
+      Please note that we are diligent in our efforts to ensure that our advertisers and visitors can be trusted.
+      <br>
+      We will review and validate each property posted on our website to ensure that they are genuine.
+      <br>
+      However, should you experience any issues with this advert, please click here to leave a feedback.
+    </div>
+    <div class="card-footer border-warning-subtle d-flex justify-content-between align-items-center">
+      <div>By sharing your experience, you help the next users fine tune their choices.</div>
+      <a class="btn btn-danger btn-sm" href="{{ url('advertiser_review.add_form', {'node': publisher.id}) }}">Write review</a>
+    </div>
+  </div>
+{% endif %}
