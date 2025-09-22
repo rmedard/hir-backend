@@ -84,20 +84,16 @@
         <div class="agent-identification-details">
           <h4 class="text-center text-md-start">{{ label }}</h4>
           <dl class="row">
-            <dt
-              class="col-4 col-md-4">{{ content.field_advertiser_type|field_label }}</dt>
-            <dd
-              class="col-8 col-md-8 m-0">{{ content.field_advertiser_type|field_value }}</dd>
+            <dt class="col-4 col-md-4">{{ content.field_advertiser_type|field_label }}</dt>
+            <dd class="col-8 col-md-8 m-0">{{ content.field_advertiser_type|field_value }}</dd>
 
-            <dt
-              class="col-4 col-md-4">{{ content.field_agent_review|field_label }}</dt>
-            <dd
-              class="col-8 col-md-8 m-0">{{ content.field_agent_review|field_value }}</dd>
-
-            <dt
-              class="col-4 col-md-4">{{ content.field_agent_operations_area|field_label }}</dt>
-            <dd
-              class="col-8 col-md-8 m-0">{{ content.field_agent_operations_area|field_value }}</dd>
+            <dt class="col-4 col-md-4">{{ content.field_agent_review|field_label }}</dt>
+            <dd class="col-8 col-md-8 m-0">
+              <a href="#" class="review-link text-decoration-none" data-node-id="{{ node.id }}">
+                {{ content.field_agent_review|field_value }}
+              </a>
+            <dt class="col-4 col-md-4">{{ content.field_agent_operations_area|field_label }}</dt>
+            <dd class="col-8 col-md-8 m-0">{{ content.field_agent_operations_area|field_value }}</dd>
           </dl>
           {{ content.field_agent_summary|field_value }}
         </div>

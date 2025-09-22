@@ -21,6 +21,38 @@
         });
       });
 
+      // Handle review link clicks
+      const reviewLinks = context.querySelectorAll('.review-link:not([data-review-processed])');
+
+      reviewLinks.forEach(function(reviewLink) {
+        // Mark as processed
+        reviewLink.setAttribute('data-review-processed', 'true');
+
+        reviewLink.addEventListener('click', function(e) {
+          e.preventDefault();
+
+          const nodeId = this.getAttribute('data-node-id');
+
+          // Scroll to the tabs container
+          const tabsContainer = document.querySelector('.agent-tabs-container');
+          if (tabsContainer) {
+            tabsContainer.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+
+          // Small delay to allow scroll to start, then switch to reviews tab
+          setTimeout(function() {
+            const reviewsTabLink = document.querySelector('.agent-tab-link[data-tab="reviews"]');
+            if (reviewsTabLink) {
+              loadTabContent('reviews', nodeId);
+              updateTabStates('reviews', reviewsTabLink);
+            }
+          }, 300);
+        });
+      });
+
       // Handle pagination links within tab content - use Bootstrap pagination classes
       const paginationLinks = context.querySelectorAll('.agent-tab-pane .page-link:not([data-pagination-processed])');
       console.log('Found pagination links:', paginationLinks.length);
@@ -94,7 +126,7 @@
     // Show loading spinner
     contentElement.innerHTML = `
       <div class="text-center p-4">
-        <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+        <i class="fas fa-spinner fa-spin fa-2x text-success"></i>
         <div class="mt-2">Loading...</div>
       </div>
     `;

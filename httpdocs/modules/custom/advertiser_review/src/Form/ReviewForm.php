@@ -7,6 +7,7 @@ namespace Drupal\advertiser_review\Form;
 use Drupal;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use LogicException;
 
 /**
  * Form controller for the review entity edit forms.
@@ -16,7 +17,7 @@ final class ReviewForm extends ContentEntityForm {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
     $form['message']['widget'][0]['#allowed_formats'] = ['basic_html'];
 
@@ -74,18 +75,22 @@ final class ReviewForm extends ContentEntityForm {
       case SAVED_NEW:
         $this->messenger()->addStatus($this->t('New review %label has been created.', $message_args));
         $this->logger('advertiser_review')->notice('New review %label has been created.', $logger_args);
+        /** @var \Drupal\node\Entity\Node $advertiser */
+        $advertiser = $this->entity->get('advertiser')->entity;
+        $redirectUrl = $advertiser->toUrl();
         break;
 
       case SAVED_UPDATED:
         $this->messenger()->addStatus($this->t('The review %label has been updated.', $message_args));
         $this->logger('advertiser_review')->notice('The review %label has been updated.', $logger_args);
+        $redirectUrl = $this->entity->toUrl();
         break;
 
       default:
-        throw new \LogicException('Could not save the entity.');
+        throw new LogicException('Could not save the entity.');
     }
 
-    $form_state->setRedirectUrl($this->entity->toUrl());
+    $form_state->setRedirectUrl($redirectUrl);
 
     return $result;
   }

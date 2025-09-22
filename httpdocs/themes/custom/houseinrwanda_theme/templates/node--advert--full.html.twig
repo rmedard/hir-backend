@@ -78,8 +78,8 @@
     {{ content.field_advert_picture }}
     {% if node.field_advert_video_presentation.value %}
     <div class="card border-light mt-2">
-      <div class="card-header bg-primary-subtle">
-        <h4 class="card-title m-0 text-primary">{{ 'Video presentation' }}</h4>
+      <div class="card-header bg-primary-subtle border-0">
+        <h4 class="card-title m-0 text-primary-emphasis">{{ 'Video presentation' }}</h4>
       </div>
       <div class="card-body p-2">
         {{ content.field_advert_video_presentation }}
@@ -87,8 +87,8 @@
     </div>
     {% endif %}
     <div class="card border-light mt-2">
-      <div class="card-header bg-primary-subtle">
-        <h4 class="card-title m-0 text-primary">{{ 'Property details' }}</h4>
+      <div class="card-header bg-primary-subtle border-0">
+        <h4 class="card-title m-0 text-primary-emphasis">{{ 'Property details' }}</h4>
       </div>
       <div class="card-body">
         <div class="row">
@@ -112,16 +112,16 @@
       </div>
     </div>
     <div class="card border-light mt-2">
-      <div class="card-header bg-primary-subtle">
-        <h4 class="card-title m-0 text-primary">{{ 'Property description' }}</h4>
+      <div class="card-header bg-primary-subtle border-0">
+        <h4 class="card-title m-0 text-primary-emphasis">{{ 'Property description' }}</h4>
       </div>
       <div class="card-body">
         {{ content.field_property_description }}
       </div>
     </div>
     <div class="card border-light mt-2">
-      <div class="card-header bg-primary-subtle">
-        <h4 class="card-title m-0 text-primary">{{ 'Contact details' }}</h4>
+      <div class="card-header bg-primary-subtle border-0">
+        <h4 class="card-title m-0 text-primary-emphasis">{{ 'Contact details' }}</h4>
       </div>
       <div class="card-body">
         <blockquote class="blockquote">
@@ -145,9 +145,11 @@
       </div>
     </div>
     {% if node.field_advert_is_agent.value and publisher %}
+      {% set averageRating = publisher.field_agent_review.0.average_rating %}
+      {% set reviewsCount = publisher.field_agent_review.0.review_count %}
       <div class="card border-light mt-2">
-        <div class="card-header border-light">
-          <h4 class="card-title m-0 text-secondary">{{ 'Advertiser agent' }}</h4>
+        <div class="card-header bg-success-subtle border-0">
+          <h4 class="card-title m-0 text-success-emphasis">{{ 'Advertiser agent' }}</h4>
         </div>
         <div class="card-body">
           <div class="row">
@@ -163,7 +165,11 @@
               </a>
             </div>
             <div class="col-md-5">
-                <div><strong>{{ 'Name' }}:</strong> <a href="{{ drupal_url('node/' ~ publisher.nid.value) }}">{{ publisher.title.value }}</a></div>
+                <div>
+                  <strong>{{ 'Name' }}:</strong>
+                  <a href="{{ drupal_url('node/' ~ publisher.nid.value) }}">{{ publisher.title.value }}</a>
+                  <span class="badge bg-success-subtle text-success-emphasis">{{ averageRating }}/5 ({{ reviewsCount }} reviews)</span>
+                </div>
                 <div><strong>{{ 'Phone number' }}:</strong> {{ publisher.field_agent_phone.value }}</div>
                 <div><strong>{{ 'Location of interest' }}:</strong> {{ publisher.field_agent_operations_area.value }}</div>
             </div>
@@ -177,8 +183,8 @@
       </div>
     {% endif %}
     {% if node.field_advert_location.value %}
-      <div class="d-flex justify-content-between my-2 p-2 bg-light rounded">
-        <button type="button" class="btn btn-primary btn-sm text-white" data-bs-toggle="modal" data-bs-target="#advertLocationMap"><i class="fas fa-map-marked-alt"></i> View map</button>
+      <div class="d-flex justify-content-between my-2 p-2 bg-success-subtle rounded">
+        <button type="button" class="btn btn-success btn-sm text-white" data-bs-toggle="modal" data-bs-target="#advertLocationMap"><i class="fas fa-map-marked-alt"></i> View map</button>
         {{ content.addtoany }}
       </div>
       <div class="modal fade" id="advertLocationMap" tabindex="-1" role="dialog" aria-labelledby="advertLocationMapModalLabel" aria-hidden="true">
@@ -197,9 +203,9 @@
     {% endif %}
   </div>
 </article>
-<div class="card border-light mt-2">
-  <div class="card-header border-light">
-    <h4 class="card-title m-0 text-secondary">{{ 'Get in touch' }}</h4>
+<div class="card border-0 mt-2 shadow-sm">
+  <div class="card-header bg-warning-subtle border-0">
+    <h4 class="card-title m-0 text-warning-emphasis">{{ 'Get in touch' }}</h4>
   </div>
   <div class="card-body">
     {{ drupal_entity('webform', 'interest_form') }}
