@@ -1,5 +1,5 @@
 administer review entities:
-  title: 'Administer review entities'
+  title: 'Administer Review entities'
   description: 'Allow to access the administration pages for reviews.'
   restrict access: true
 

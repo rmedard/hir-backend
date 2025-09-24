@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - advertiser_review
+    - path
     - text
 id: review.review.default
 targetEntityType: review
@@ -35,6 +36,12 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 4
+    region: content
+    settings: {  }
     third_party_settings: {  }
   rate:
     type: number

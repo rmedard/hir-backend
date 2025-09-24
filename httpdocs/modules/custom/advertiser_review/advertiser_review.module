@@ -51,11 +51,6 @@ function advertiser_review_theme_suggestions_review(array $variables): array {
  */
 function template_preprocess_review(array &$variables): void {
 
-  // Add debugging
-  \Drupal::logger('advertiser_review')->notice('Preprocess called for view mode: @mode', [
-    '@mode' => $variables['elements']['#view_mode'] ?? 'undefined'
-  ]);
-
   $variables['view_mode'] = $variables['elements']['#view_mode'];
   $variables['review'] = $variables['elements']['#review'];
 

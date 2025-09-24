@@ -14,8 +14,7 @@ use Drupal\webform\WebformSubmissionInterface;
 /**
  * Implements hook_cron().
  */
-function hir_publisher_cron()
-{
+function hir_publisher_cron(): void {
     $day_format = 'dmY';
     $request_time = Drupal::time()->getRequestTime();
     $last_unPublish_run = Drupal::state()->get('unpublish.last.run');
@@ -41,6 +40,7 @@ function hir_publisher_cron()
     /**
      * UnPublish expired Property Requests
      */
+    /** @var PublisherService $publisher_service */
     $publisher_service = Drupal::service('hir_publisher.publisher_service');
     $publisher_service->unPublishExpiredPropertyRequests();
 }

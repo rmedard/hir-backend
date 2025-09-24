@@ -45,3 +45,16 @@ entity.review.disable_form:
   requirements:
     _entity_access: 'review.update'
     _custom_access: '\Drupal\advertiser_review\Access\ReviewAccess::checkDisableAccess'
+
+# Add this to your routing file
+entity.review.canonical:
+  path: '/review/{review}'
+  defaults:
+    _entity_view: 'review.full'
+    _title: 'Review'
+  requirements:
+    _entity_access: 'review.view'
+  options:
+    parameters:
+      review:
+        type: entity:review

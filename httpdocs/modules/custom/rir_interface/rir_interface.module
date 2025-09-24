@@ -251,13 +251,12 @@ function rir_interface_entity_insert(EntityInterface $entity): void
 /**
  * Implements hook_ENTITY_TYPE_update().
  *
- * @param EntityInterface $entity
+ * @param \Drupal\node\NodeInterface $entity
  *
- * @throws MissingDataException
+ * @throws \Drupal\Core\TypedData\Exception\MissingDataException
  */
 function rir_interface_node_update(NodeInterface $entity): void
 {
-  Drupal::logger('xxx')->debug('Updating node: ' . $entity->id());
   if ($entity->bundle() == 'advert') {
     /**
      * Send validation notification on first publishing
@@ -486,7 +485,7 @@ function rir_interface_node_presave(NodeInterface $entity): void
      */
     $village = '';
     if(isset($entity->get('field_advert_village')->value)) {
-      $village = str_replace(' ', '', strtolower($entity->get('field_advert_village')->value)); 
+      $village = str_replace(' ', '', strtolower($entity->get('field_advert_village')->value));
     }
     $cell = '';
     if($entity->get('field_advert_cell')->value) {

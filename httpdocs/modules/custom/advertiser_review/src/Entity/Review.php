@@ -29,6 +29,7 @@ use Drupal\user\EntityOwnerTrait;
  *   handlers = {
  *     "list_builder" = "Drupal\advertiser_review\ReviewListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
+ *     "access" = "Drupal\advertiser_review\Access\ReviewAccessControlHandler",
  *     "action" = "Drupal\advertiser_review\ReviewAction",
  *     "form" = {
  *       "add" = "Drupal\advertiser_review\Form\ReviewForm",
@@ -234,6 +235,18 @@ final class Review extends ContentEntityBase implements ReviewInterface {
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the review was last edited.'));
+
+    // Add path field
+    $fields['path'] = BaseFieldDefinition::create('path')
+      ->setLabel(t('URL alias'))
+      ->setDescription(t('The path alias for this review.'))
+      ->setRevisionable(FALSE)
+      ->setDisplayOptions('form', [
+        'type' => 'path',
+        'weight' => 30,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setComputed(TRUE);
 
     return $fields;
   }

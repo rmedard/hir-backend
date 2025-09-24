@@ -65,3 +65,4 @@ permissions:
   - 'view own field_agent_category'
   - 'view own field_agent_relative_path'
   - 'view own field_pr_relative_path'
+  - 'view review entities'

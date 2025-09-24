@@ -7,6 +7,7 @@ namespace Drupal\advertiser_review;
 use Drupal;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
+use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Link;
 
 /**
@@ -62,6 +63,21 @@ final class ReviewListBuilder extends EntityListBuilder {
     $row['created'] = Drupal::service('date.formatter')->format($entity->get('created')->value, 'short');
     $row['changed'] = Drupal::service('date.formatter')->format($entity->get('changed')->value, 'short');
     return $row + parent::buildRow($entity);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEntityListQuery(): QueryInterface {
+    $query = $this->getStorage()->getQuery()
+      ->accessCheck()
+      ->sort($this->entityType->getKey(EntityListBuilder::SORT_KEY), 'DESC');
+
+    // Only add the pager if a limit is specified.
+    if ($this->limit) {
+      $query->pager($this->limit);
+    }
+    return $query;
   }
 
 }

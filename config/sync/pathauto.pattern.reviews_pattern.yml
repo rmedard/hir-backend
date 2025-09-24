@@ -1,0 +1,14 @@
+uuid: 72613566-8e63-4484-865c-e63474f7c1c2
+langcode: en
+status: true
+dependencies:
+  module:
+    - advertiser_review
+id: reviews_pattern
+label: 'Reviews Pattern'
+type: 'canonical_entities:review'
+pattern: 'review/[review:id]'
+selection_criteria: {  }
+selection_logic: and
+weight: 0
+relationships: {  }
