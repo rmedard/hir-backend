@@ -126,7 +126,8 @@ final class Review extends ContentEntityBase implements ReviewInterface {
     // Message field - Review text
     $fields['message'] = BaseFieldDefinition::create('text_long')
       ->setLabel(t('Review Message'))
-      ->setRequired(FALSE)
+      ->setRequired(TRUE)
+      ->setDefaultValue('')
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'text_default',
