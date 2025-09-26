@@ -31,7 +31,7 @@ const paths = {
     bootstrap: './node_modules/bootstrap/dist/js/bootstrap.min.js',
     bootstrap_map: './node_modules/bootstrap/dist/js/bootstrap.min.js.map',
     popper: './node_modules/@popperjs/core/dist/umd/popper.min.js',
-    barrio: '../../contrib/bootstrap_barrio/js/barrio.js',
+    barrio: '../../contrib/bootstrap_barrio/js/*.js',
     dest: './js'
   },
   // Add TomSelect paths

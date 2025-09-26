@@ -13,7 +13,8 @@ tom-select:
 global-styling:
   version: '1.0.4'
   js:
-    js/bootstrap.min.js: { weight: -48 }
+    js/bootstrap.min.js: { minified: true, weight: -48 }
+    js/messages.js: { }
     js/barrio.js: { }
     js/custom.js: { }
   css:
@@ -24,5 +25,4 @@ global-styling:
     - core/drupal
     - webform/webform.element.telephone
     - flexslider/flexslider
-    - jquery_ui_effects/core
     - core/popperjs

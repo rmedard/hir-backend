@@ -55,8 +55,6 @@
 
       // Handle pagination links within tab content - use Bootstrap pagination classes
       const paginationLinks = context.querySelectorAll('.agent-tab-pane .page-link:not([data-pagination-processed])');
-      console.log('Found pagination links:', paginationLinks.length);
-
       paginationLinks.forEach(function(paginationLink) {
         // Skip if this is just a span (current page indicator)
         if (paginationLink.tagName.toLowerCase() === 'span') {
@@ -69,8 +67,6 @@
         paginationLink.addEventListener('click', function(e) {
           e.preventDefault();
 
-          console.log('Pagination link clicked:', this.href);
-
           // Get the current active tab
           const activeTab = document.querySelector('.agent-tab-link.active');
           if (!activeTab) {
@@ -82,8 +78,6 @@
           const nodeId = activeTab.getAttribute('data-node-id');
           const url = new URL(this.href, window.location.origin);
           const page = parseInt(url.searchParams.get('page')) || 0;
-
-          console.log('Tab:', tab, 'NodeId:', nodeId, 'Page:', page);
 
           loadTabContent(tab, nodeId, page);
         });
@@ -136,8 +130,6 @@
     if (page && page > 0) {
       url += '?page=' + page;
     }
-
-    console.log('Making AJAX request to:', url);
 
     // Make AJAX request using fetch
     fetch(url, {
