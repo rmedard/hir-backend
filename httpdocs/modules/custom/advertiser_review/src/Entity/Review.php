@@ -86,17 +86,62 @@ final class Review extends ContentEntityBase implements ReviewInterface {
     // Name field - Name of the reviewer
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Your Name'))
-      ->setDescription(t('The name of the person writing the review.'))
       ->setRequired(TRUE)
       ->setDefaultValue('')
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
-        'weight' => -4,
+        'weight' => -6,
       ])
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
+        'weight' => -6,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    // Email field - Email address of the reviewer
+    $fields['email'] = BaseFieldDefinition::create('email')
+      ->setLabel(t('Email Address'))
+      ->setRequired(TRUE)
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'email_mailto',
+        'weight' => -5,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'email_default',
+        'weight' => -5,
+        'settings' => [
+          'size' => 60,
+          'placeholder' => 'Enter email address',
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    // Phone field - Phone number of the reviewer with E164 validation
+    $fields['phone'] = BaseFieldDefinition::create('telephone')
+      ->setLabel(t('Phone Number'))
+      ->setRequired(TRUE)
+      ->setDefaultValue('')
+      ->setSettings([
+        'telephone_format' => 'e164',
+        'telephone_validation' => TRUE,
+      ])
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'telephone_link',
         'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'telephone_default',
+        'weight' => -4,
+        'settings' => [
+          'size' => 60,
+          'placeholder' => '+250712345678',
+        ],
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);

@@ -4,7 +4,7 @@ status: true
 dependencies:
   module:
     - advertiser_review
-    - path
+    - telephone
     - text
 id: review.review.default
 targetEntityType: review
@@ -21,9 +21,17 @@ content:
       size: 60
       placeholder: 'Select an advertiser'
     third_party_settings: {  }
+  email:
+    type: email_default
+    weight: 2
+    region: content
+    settings:
+      placeholder: 'Enter email address'
+      size: 60
+    third_party_settings: {  }
   message:
     type: text_textarea
-    weight: 3
+    weight: 5
     region: content
     settings:
       rows: 6
@@ -37,20 +45,22 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  path:
-    type: path
-    weight: 4
+  phone:
+    type: telephone_default
+    weight: 3
     region: content
-    settings: {  }
+    settings:
+      placeholder: '+1234567890'
     third_party_settings: {  }
   rate:
     type: number
-    weight: 2
+    weight: 4
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
 hidden:
   created: true
+  path: true
   status: true
   uid: true
