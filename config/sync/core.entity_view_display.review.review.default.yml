@@ -1,9 +1,10 @@
-uuid: b3f21796-a710-4d52-a27f-d5f521004614
+uuid: 14e6173e-4e4f-473d-b2a0-7ed443128f60
 langcode: en
 status: true
 dependencies:
   module:
     - advertiser_review
+    - telephone
     - text
     - user
 id: review.review.default
@@ -17,7 +18,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 3
+    weight: 5
     region: content
   created:
     type: timestamp
@@ -36,22 +37,37 @@ content:
         granularity: 2
         refresh: 60
     third_party_settings: {  }
-    weight: 5
+    weight: 7
+    region: content
+  email:
+    type: email_mailto
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
     region: content
   message:
     type: text_default
-    label: hidden
+    label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 4
     region: content
   name:
     type: string
-    label: inline
+    label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
     weight: 0
+    region: content
+  phone:
+    type: telephone_link
+    label: above
+    settings:
+      title: ''
+    third_party_settings: {  }
+    weight: 2
     region: content
   rate:
     type: number_integer
@@ -60,14 +76,14 @@ content:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 1
+    weight: 3
     region: content
   uid:
     type: author
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 6
     region: content
 hidden:
   status: true

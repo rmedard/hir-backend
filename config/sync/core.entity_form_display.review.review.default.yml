@@ -1,4 +1,4 @@
-uuid: 8d108afe-fbc9-4e4f-85e4-96b3443f6629
+uuid: 5fe52677-06ad-41f5-b372-82048996d4a0
 langcode: en
 status: true
 dependencies:
@@ -50,7 +50,7 @@ content:
     weight: 3
     region: content
     settings:
-      placeholder: '+1234567890'
+      placeholder: '+250712345678'
     third_party_settings: {  }
   rate:
     type: number

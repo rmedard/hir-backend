@@ -83,7 +83,6 @@ final class Review extends ContentEntityBase implements ReviewInterface {
 
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    // Name field - Name of the reviewer
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Your Name'))
       ->setRequired(TRUE)
@@ -102,9 +101,10 @@ final class Review extends ContentEntityBase implements ReviewInterface {
 
     // Email field - Email address of the reviewer
     $fields['email'] = BaseFieldDefinition::create('email')
-      ->setLabel(t('Email Address'))
+      ->setLabel(t('Your email address'))
       ->setRequired(TRUE)
       ->setDefaultValue('')
+      ->setDescription(t('This will only be used by us if we need to contact you.'))
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'email_mailto',
@@ -123,9 +123,10 @@ final class Review extends ContentEntityBase implements ReviewInterface {
 
     // Phone field - Phone number of the reviewer with E164 validation
     $fields['phone'] = BaseFieldDefinition::create('telephone')
-      ->setLabel(t('Phone Number'))
+      ->setLabel(t('Your phone number'))
       ->setRequired(TRUE)
       ->setDefaultValue('')
+      ->setDescription(t('This will only be used by us if we need to contact you.'))
       ->setSettings([
         'telephone_format' => 'e164',
         'telephone_validation' => TRUE,

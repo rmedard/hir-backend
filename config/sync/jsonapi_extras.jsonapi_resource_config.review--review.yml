@@ -1,4 +1,4 @@
-uuid: 8bc2a454-c695-4aae-bda7-90101e39d414
+uuid: 37343cbe-37fc-4b55-a564-b4241933d241
 langcode: en
 status: true
 dependencies:
@@ -29,6 +29,18 @@ resourceFields:
     disabled: false
     fieldName: name
     publicName: name
+    enhancer:
+      id: ''
+  email:
+    disabled: false
+    fieldName: email
+    publicName: email
+    enhancer:
+      id: ''
+  phone:
+    disabled: false
+    fieldName: phone
+    publicName: phone
     enhancer:
       id: ''
   rate:
@@ -70,7 +82,7 @@ resourceFields:
     enhancer:
       id: ''
   changed:
-    disabled: true
+    disabled: false
     fieldName: changed
     publicName: changed
     enhancer:

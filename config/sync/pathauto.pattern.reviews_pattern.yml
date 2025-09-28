@@ -1,4 +1,4 @@
-uuid: 72613566-8e63-4484-865c-e63474f7c1c2
+uuid: d02c5db2-3ca7-4200-ad19-bc922e90c675
 langcode: en
 status: true
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
 id: reviews_pattern
 label: 'Reviews Pattern'
 type: 'canonical_entities:review'
-pattern: 'review/[review:id]'
+pattern: 'review/[review:id]_[random:number]'
 selection_criteria: {  }
 selection_logic: and
 weight: 0
