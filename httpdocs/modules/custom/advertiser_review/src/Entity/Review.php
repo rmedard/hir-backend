@@ -83,6 +83,81 @@ final class Review extends ContentEntityBase implements ReviewInterface {
 
     $fields = parent::baseFieldDefinitions($entity_type);
 
+    // Advertiser field - Reference to advertiser node
+    $fields['advertiser'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Advertiser'))
+      ->setDescription(t('The advertiser being reviewed.'))
+      ->setRequired(TRUE)
+      ->setSetting('target_type', 'node')
+      ->setSetting('handler', 'default')
+      ->setSetting('handler_settings', [
+        'target_bundles' => ['agent' => 'agent'],
+        'sort' => [
+          'field' => 'title',
+          'direction' => 'ASC',
+        ],
+      ])
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'entity_reference_label',
+        'weight' => -9,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => -9,
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => 'Select an advertiser',
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+
+    // Rate field - Rating from 0 to 5
+    $fields['rate'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Rating'))
+      ->setDescription(t('Rating from 0 to 5 stars.'))
+      ->setRequired(TRUE)
+      ->setSettings([
+        'min' => 0,
+        'max' => 5,
+      ])
+      ->setDefaultValue(0)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'number_integer',
+        'weight' => -8,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'number',
+        'weight' => -8,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    // Message field - Review text
+    $fields['message'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Review Message'))
+      ->setRequired(TRUE)
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'text_default',
+        'weight' => -7,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'text_textarea',
+        'weight' => -7,
+        'settings' => [
+          'rows' => 6
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Your Name'))
       ->setRequired(TRUE)
@@ -142,80 +217,6 @@ final class Review extends ContentEntityBase implements ReviewInterface {
         'settings' => [
           'size' => 60,
           'placeholder' => '+250712345678',
-        ],
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    // Rate field - Rating from 0 to 5
-    $fields['rate'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Rating'))
-      ->setDescription(t('Rating from 0 to 5 stars.'))
-      ->setRequired(TRUE)
-      ->setSettings([
-        'min' => 0,
-        'max' => 5,
-      ])
-      ->setDefaultValue(0)
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'number_integer',
-        'weight' => -3,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'number',
-        'weight' => -3,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    // Message field - Review text
-    $fields['message'] = BaseFieldDefinition::create('text_long')
-      ->setLabel(t('Review Message'))
-      ->setRequired(TRUE)
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'text_default',
-        'weight' => -2,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'text_textarea',
-        'weight' => -2,
-        'settings' => [
-          'rows' => 6
-        ],
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    // Advertiser field - Reference to advertiser node
-    $fields['advertiser'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Advertiser'))
-      ->setDescription(t('The advertiser being reviewed.'))
-      ->setRequired(TRUE)
-      ->setSetting('target_type', 'node')
-      ->setSetting('handler', 'default')
-      ->setSetting('handler_settings', [
-        'target_bundles' => ['agent' => 'agent'],
-        'sort' => [
-          'field' => 'title',
-          'direction' => 'ASC',
-        ],
-      ])
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'entity_reference_label',
-        'weight' => -1,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
-        'weight' => -1,
-        'settings' => [
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'autocomplete_type' => 'tags',
-          'placeholder' => 'Select an advertiser',
         ],
       ])
       ->setDisplayConfigurable('form', TRUE)
