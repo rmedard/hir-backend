@@ -55,6 +55,13 @@ final class ReviewForm extends ContentEntityForm {
       $form['#attached']['library'][] = 'advertiser_review/star-rating';
     }
 
+    // Change submit button text for new entities
+    if ($this->entity->isNew()) {
+      $form['actions']['submit']['#value'] = $this->t('Submit Review');
+    } else {
+      $form['actions']['submit']['#value'] = $this->t('Update Review');
+    }
+
     return $form;
   }
 

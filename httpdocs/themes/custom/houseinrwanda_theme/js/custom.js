@@ -27,7 +27,6 @@
             }
           });
 
-
           // Mobile detection
           const userAgent = navigator.userAgent.toLowerCase();
           const isMobile = userAgent.includes('mobile');

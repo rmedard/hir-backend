@@ -74,7 +74,7 @@
 {% set linkedin = attribute(content.field_agent_linkedin.0, '#title') %}
 {% set twitter = attribute(content.field_agent_twitter.0, '#title') %}
 <article{{ attributes.addClass(classes) }}>
-  <div{{ content_attributes.addClass('node__content', 'clearfix', 'card', 'bg-white', 'border-warning', 'p-2', 'mb-3') }}>
+  <div{{ content_attributes.addClass('node__content', 'clearfix', 'card', 'bg-white', 'border-warning', 'p-2', 'mb-3', 'mt-0') }}>
     <div class="d-flex flex-wrap justify-content-center flex-md-nowrap">
       <div class="flex-shrink-0">
         <img src="{{ logo_uri }}" alt="employer photo">
@@ -110,15 +110,21 @@
                 class="text-white">{{ website }}</a>{% endif %}
             </div>
             <div class="agent-social-media">
-              {% if facebook %}<a href="{{ facebook }}" target="_blank"
-                                  class="text-white"><i
-                  class="fab fa-facebook"></i></a>{% endif %}
-              {% if twitter %}<a href="{{ twitter }}" target="_blank"
-                                 class="text-white"><i
-                  class="fab fa-twitter"></i></a>{% endif %}
-              {% if linkedin %}<a href="{{ linkedin }}" target="_blank"
-                                  class="text-white"><i
-                  class="fab fa-linkedin-in"></i></a>{% endif %}
+              {% if facebook %}
+                <a href="{{ facebook }}" target="_blank" class="text-white">
+                  <i class="fab fa-facebook"></i>
+                </a>
+              {% endif %}
+              {% if twitter %}
+                <a href="{{ twitter }}" target="_blank" class="text-white">
+                  <i class="fab fa-twitter"></i>
+                </a>
+              {% endif %}
+              {% if linkedin %}
+                <a href="{{ linkedin }}" target="_blank" class="text-white">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -146,26 +152,23 @@
            role="tab">
           <i class="fas fa-star"></i> Reviews
           {% if content.reviews.count > 0 %}
-          <span class="badge rounded-pill bg-warning">
-            <span class="text-white font-weight-bold">{{ node.field_agent_review.average_rating }}</span>
-            <small class="text-muted">/5</small>
-          </span>
+            <span class="badge rounded-pill bg-warning">
+              <span class="text-white font-weight-bold">{{ node.field_agent_review.average_rating }}</span>
+              <small class="text-muted">/5</small>
+            </span>
           {% endif %}
         </a>
       </li>
     </ul>
 
     <div class="tab-content border-0 px-0">
-      <div class="tab-pane fade show active agent-tab-pane"
-           id="tab-content-properties" role="tabpanel">
+      <div class="tab-pane fade show active agent-tab-pane" id="tab-content-properties" role="tabpanel">
         {# Content will be loaded via AJAX #}
       </div>
 
-      <div class="tab-pane fade agent-tab-pane" id="tab-content-reviews"
-           role="tabpanel">
+      <div class="tab-pane fade agent-tab-pane" id="tab-content-reviews" role="tabpanel">
         {# Content will be loaded via AJAX #}
       </div>
     </div>
   </div>
-
 </article>
