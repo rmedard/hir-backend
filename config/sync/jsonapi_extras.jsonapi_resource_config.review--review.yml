@@ -7,6 +7,8 @@ dependencies:
     - jsonapi_defaults
 third_party_settings:
   jsonapi_defaults:
+    default_filter:
+      'filter:status': '1'
     page_limit: 50
 id: review--review
 disabled: false
@@ -25,22 +27,10 @@ resourceFields:
     publicName: uuid
     enhancer:
       id: ''
-  name:
+  advertiser:
     disabled: false
-    fieldName: name
-    publicName: name
-    enhancer:
-      id: ''
-  email:
-    disabled: false
-    fieldName: email
-    publicName: email
-    enhancer:
-      id: ''
-  phone:
-    disabled: false
-    fieldName: phone
-    publicName: phone
+    fieldName: advertiser
+    publicName: advertiser
     enhancer:
       id: ''
   rate:
@@ -57,10 +47,22 @@ resourceFields:
       id: nested
       settings:
         path: value
-  advertiser:
+  name:
     disabled: false
-    fieldName: advertiser
-    publicName: advertiser
+    fieldName: name
+    publicName: name
+    enhancer:
+      id: ''
+  email:
+    disabled: false
+    fieldName: email
+    publicName: email
+    enhancer:
+      id: ''
+  phone:
+    disabled: false
+    fieldName: phone
+    publicName: phone
     enhancer:
       id: ''
   status:
@@ -82,7 +84,7 @@ resourceFields:
     enhancer:
       id: ''
   changed:
-    disabled: false
+    disabled: true
     fieldName: changed
     publicName: changed
     enhancer:

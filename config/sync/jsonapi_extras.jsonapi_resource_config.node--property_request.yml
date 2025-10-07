@@ -41,7 +41,7 @@ resourceFields:
     enhancer:
       id: ''
   type:
-    disabled: false
+    disabled: true
     fieldName: type
     publicName: type
     enhancer:
@@ -137,7 +137,7 @@ resourceFields:
     enhancer:
       id: ''
   menu_link:
-    disabled: false
+    disabled: true
     fieldName: menu_link
     publicName: menu_link
     enhancer:

@@ -32,19 +32,19 @@ resourceFields:
     enhancer:
       id: ''
   dependencies:
-    disabled: false
+    disabled: true
     fieldName: dependencies
     publicName: dependencies
     enhancer:
       id: ''
   third_party_settings:
-    disabled: false
+    disabled: true
     fieldName: third_party_settings
     publicName: third_party_settings
     enhancer:
       id: ''
   _core:
-    disabled: false
+    disabled: true
     fieldName: _core
     publicName: _core
     enhancer:
@@ -74,25 +74,25 @@ resourceFields:
     enhancer:
       id: ''
   provider:
-    disabled: false
+    disabled: true
     fieldName: provider
     publicName: provider
     enhancer:
       id: ''
   plugin:
-    disabled: false
+    disabled: true
     fieldName: plugin
     publicName: plugin
     enhancer:
       id: ''
   settings:
-    disabled: false
+    disabled: true
     fieldName: settings
     publicName: settings
     enhancer:
       id: ''
   visibility:
-    disabled: false
+    disabled: true
     fieldName: visibility
     publicName: visibility
     enhancer:
