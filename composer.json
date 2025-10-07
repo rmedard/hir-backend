@@ -162,6 +162,7 @@
         "drupal/memcache": "^2.3",
         "drupal/metatag": "^2.0",
         "drupal/module_filter": "^5.0",
+        "drupal/openapi_jsonapi": "^3.0",
         "drupal/pathauto": "^1.8",
         "drupal/plugin": "^2.9",
         "drupal/publication_date": "^3.0",
