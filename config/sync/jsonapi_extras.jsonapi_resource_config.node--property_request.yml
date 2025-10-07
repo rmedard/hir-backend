@@ -13,7 +13,7 @@ third_party_settings:
     page_limit: 50
 id: node--property_request
 disabled: false
-path: property_request
+path: property_requests
 resourceType: node--property_request
 resourceFields:
   nid:
@@ -47,19 +47,19 @@ resourceFields:
     enhancer:
       id: ''
   revision_timestamp:
-    disabled: false
+    disabled: true
     fieldName: revision_timestamp
     publicName: revision_timestamp
     enhancer:
       id: ''
   revision_uid:
-    disabled: false
+    disabled: true
     fieldName: revision_uid
     publicName: revision_uid
     enhancer:
       id: ''
   revision_log:
-    disabled: false
+    disabled: true
     fieldName: revision_log
     publicName: revision_log
     enhancer:
@@ -89,7 +89,7 @@ resourceFields:
     enhancer:
       id: ''
   changed:
-    disabled: false
+    disabled: true
     fieldName: changed
     publicName: changed
     enhancer:
@@ -190,6 +190,12 @@ resourceFields:
     publicName: field_pr_first_name
     enhancer:
       id: ''
+  field_pr_is_synchronised:
+    disabled: false
+    fieldName: field_pr_is_synchronised
+    publicName: field_pr_is_synchronised
+    enhancer:
+      id: ''
   field_pr_last_name:
     disabled: false
     fieldName: field_pr_last_name
@@ -260,6 +266,12 @@ resourceFields:
     disabled: false
     fieldName: field_pr_reference
     publicName: field_pr_reference
+    enhancer:
+      id: ''
+  field_pr_relative_path:
+    disabled: false
+    fieldName: field_pr_relative_path
+    publicName: field_pr_relative_path
     enhancer:
       id: ''
   field_pr_request_type:

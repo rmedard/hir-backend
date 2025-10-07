@@ -8,6 +8,8 @@ dependencies:
     - jsonapi_defaults
 third_party_settings:
   jsonapi_defaults:
+    default_filter:
+      'filter:status': '1'
     page_limit: 50
 id: taxonomy_term--sectors
 disabled: false
