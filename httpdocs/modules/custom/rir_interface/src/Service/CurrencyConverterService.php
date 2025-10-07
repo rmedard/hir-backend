@@ -31,14 +31,14 @@ final class CurrencyConverterService
                     Drupal::state()->set(Constants::USD_RWF_EXCHANGE_RATE, $rate);
                     Drupal::state()->set(Constants::LATEST_DAY_EXCHANGE_RATE, $thisMonth);
                     Drupal::logger('CurrencyConverterService')
-                        ->info(t('Latest currency rate: 1USD => @rate RWF', ['$rate' => $rate]));
+                        ->info(t('Latest currency rate: 1USD => :rate RWF', [':rate' => $rate]));
                     return $rate;
                 } else {
                     Drupal::logger('CurrencyConverterService')
-                        ->error(t('Currency Converter Error. Code: @code | Message: @message',
+                        ->error(t('Currency Converter Error. Code: :code | Message: :message',
                             [
-                                '@code' => $response->getStatusCode(),
-                                '@message' => $response->getReasonPhrase()
+                                ':code' => $response->getStatusCode(),
+                                ':message' => $response->getReasonPhrase()
                             ]));
                 }
             } catch (RequestException $e) {
