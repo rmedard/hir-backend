@@ -153,7 +153,7 @@
           <i class="fas fa-star"></i> Reviews
           {% if content.reviews.count > 0 %}
             <span class="badge rounded-pill bg-warning">
-              <span class="text-white font-weight-bold">{{ node.field_agent_review.average_rating }}</span>
+              <span class="text-white font-weight-bold">{{ node.field_agent_review.average_rating|round(1, 'common') }}</span>
               <small class="text-muted">/5</small>
             </span>
           {% endif %}
