@@ -149,11 +149,21 @@
             <span class="card-title text-white">How to submit your property <small><em>(For Owners/managers of properties)</em></small></span>
         </div>
         <div class="card-body">
-            {{ drupal_field('field_how_to_submit_advert', 'node', node.id) }}
+          <p>
+            If you own or manage a property matching the requirements displayed on this advert, please read below how to suggest it directly to our customer:
+          </p>
+          <p>
+            Does this <strong>property</strong> <strong>already exist online,</strong> and you have its URL/link ?
+          </p>
+          <ul>
+            <li>
+              If not, click on “<strong>Submit your property”</strong> button to create it online and send it immediately to our customer.
+            </li>
+          </ul>
         </div>
         <div class="card-footer border-0 d-flex justify-content-end">
-            <a href="/node/add/advert?field_advert_posting_plan=standard&advert_target_pr={{ node.id }}"
-               class="btn btn-sm btn-warning text-white">Submit your property</a>
+          <a href="{{ path('node.add', {'node_type': 'advert'}, {'query': {'field_advert_posting_plan': 'standard', 'advert_target_pr': node.id}}) }}"
+             class="btn btn-sm btn-warning text-white">Submit your property</a>
         </div>
     </div>
 </article>

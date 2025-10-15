@@ -48,19 +48,18 @@ function hir_publisher_cron(): void {
 /**
  * Implements hook_ENTITY_TYPE_insert().
  */
-function hir_publisher_webform_submission_insert(WebformSubmissionInterface $entity)
-{
+function hir_publisher_webform_submission_insert(WebformSubmissionInterface $entity): void {
     if ($entity->getWebform()->id() == 'property_request_form') {
         createdMappedPropertyRequest(array($entity));
     }
 }
 
+
 /**
  * Implements hook_install().
  */
-function hir_publisher_install()
-{
-    /* @var PublisherService */
+function hir_publisher_install(): void {
+    /* @var PublisherService $publisherService */
     $publisherService = Drupal::service('hir_publisher.publisher_service');
     $submissions = $publisherService->loadNonMappedPropertyRequests();
     if (!empty($submissions)) {
@@ -73,8 +72,7 @@ function hir_publisher_install()
 /**
  * Implements hook_query_TAG_alter().
  */
-function hir_publisher_query_is_pr_mapped_alter(SelectInterface $query)
-{
+function hir_publisher_query_is_pr_mapped_alter(SelectInterface $query): void {
     $connection = \Drupal::database();
     $subQuery = $connection->select('node_field_data', 'n');
     $subQuery->innerJoin('node__field_pr_reference', 'pr', 'n.nid=pr.entity_id');
@@ -88,8 +86,7 @@ function hir_publisher_query_is_pr_mapped_alter(SelectInterface $query)
 /**
  * @param $submissions array of Webform submissions of type Property Request
  */
-function createdMappedPropertyRequest($submissions)
-{
+function createdMappedPropertyRequest(array $submissions): void {
     foreach ($submissions as $entity) {
         try {
             if ($entity instanceof WebformSubmissionInterface) {
@@ -114,15 +111,7 @@ function createdMappedPropertyRequest($submissions)
                     'field_pr_last_name' => $entity->getElementData('proreq_last_name'),
                     'field_pr_phone_number' => $entity->getElementData('proreq_phone_number'),
                     'field_pr_email' => $entity->getElementData('proreq_email'),
-                    'field_pr_reference' => $entity->id(),
-                    'field_how_to_submit_advert' => ['value' =>
-                            '<p>If you own or manage a property matching the requirements displayed on this advert, please read below how to suggest it directly to our customer:</p>
-                            <p>Does this&nbsp;<strong>property</strong>&nbsp;<strong>already exist online</strong>&nbsp;and you have its URL/link ?</p>
-
-                            <ul>
-                                <li>If yes, send its URL/link by email to the following email address:&nbsp;'. $entity->getElementData('proreq_email') .'</li>
-                                <li>If not, click on “<strong>Submit your property”</strong>&nbsp;button to create it online and send it immediately to our customer.</li>
-                            </ul>', 'format' => 'full_html'],
+                    'field_pr_reference' => $entity->id()
                 ]);
 //                $pr->setOwnerId(1);
                 $pr->save();

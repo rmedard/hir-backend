@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.property_request.field_how_to_submit_advert
     - field.field.node.property_request.field_pr_area_city_interest
     - field.field.node.property_request.field_pr_currency
     - field.field.node.property_request.field_pr_email
@@ -39,13 +38,6 @@ targetEntityType: node
 bundle: property_request
 mode: default
 content:
-  field_how_to_submit_advert:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 21
-    region: content
   field_pr_area_city_interest:
     type: string
     label: above

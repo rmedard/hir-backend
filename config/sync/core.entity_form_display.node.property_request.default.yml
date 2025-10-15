@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.property_request.field_how_to_submit_advert
     - field.field.node.property_request.field_pr_area_city_interest
     - field.field.node.property_request.field_pr_currency
     - field.field.node.property_request.field_pr_email
@@ -44,14 +43,6 @@ content:
     weight: 2
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_how_to_submit_advert:
-    type: text_textarea
-    weight: 26
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
     third_party_settings: {  }
   field_pr_area_city_interest:
     type: string_textfield
