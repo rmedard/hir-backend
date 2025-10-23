@@ -130,6 +130,12 @@ nav#navbar-main {
   }
 }
 
+div.view-display-id-page_search_adverts > div.view-content > div:first-child {
+  article > div {
+    margin-top: 0;
+  }
+}
+
 article.node--type-agent.node--view-mode-teaser {
   div.card-footer {
     background-image: linear-gradient(90deg, $primary-shade, $accent-shade);

@@ -410,7 +410,7 @@ function houseinrwanda_theme_form_alter(&$form, FormStateInterface $form_state, 
       $form['field_advert_type_value']['#options']['All'] = t('- Offer type -');
       $form['field_advert_property_type_value']['#options']['All'] = t('- Property type -');
       $form['field_advert_bedrooms_value']['#options']['All'] = t('- Rooms -');
-      $form['field_price_in_rwf_value']['#options']['All'] = t('- Price -');
+      $form['field_advert_price_in_rwf_value']['#options']['All'] = t('- Price -');
       $form['field_advert_furnished_value']['#options']['All'] = t('- Furnished -');
       $form['field_advert_furnished_value']['#options']['1'] = t('Yes');
       $form['field_advert_furnished_value']['#options']['0'] = t('No');
