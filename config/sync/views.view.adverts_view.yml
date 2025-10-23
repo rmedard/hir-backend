@@ -13,10 +13,10 @@ dependencies:
     - field.storage.node.field_advert_locality_province
     - field.storage.node.field_advert_locality_sector
     - field.storage.node.field_advert_price
+    - field.storage.node.field_advert_price_in_rwf
     - field.storage.node.field_advert_property_type
     - field.storage.node.field_advert_type
     - field.storage.node.field_advert_village
-    - field.storage.node.field_price_in_rwf
     - node.type.advert
     - system.menu.main
   module:
@@ -106,10 +106,10 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_price_in_rwf:
-          id: field_price_in_rwf
-          table: node__field_price_in_rwf
-          field: field_price_in_rwf
+        field_advert_price_in_rwf:
+          id: field_advert_price_in_rwf
+          table: node__field_advert_price_in_rwf
+          field: field_advert_price_in_rwf
           relationship: none
           group_type: group
           admin_label: ''
@@ -156,9 +156,11 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: number_integer
+          type: number_decimal
           settings:
             thousand_separator: ''
+            decimal_separator: .
+            scale: 2
             prefix_suffix: true
           group_column: value
           group_columns: {  }
@@ -1143,10 +1145,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   attachment_apartments:
     id: attachment_apartments
     display_title: Attach-apartments
@@ -1297,10 +1299,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   attachment_auctions:
     id: attachment_auctions
     display_title: Attach-auctions
@@ -1453,10 +1455,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   attachment_commerces:
     id: attachment_commerces
     display_title: Attach-commerces
@@ -1608,10 +1610,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   attachment_featured:
     id: attachment_featured
     display_title: 'Attach - Entreprise Pack'
@@ -1721,10 +1723,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   attachment_houses:
     id: attachment_houses
     display_title: Attach-houses
@@ -1876,10 +1878,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   attachment_lands:
     id: attachment_lands
     display_title: Attach-lands
@@ -2030,10 +2032,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   attachment_offices:
     id: attachment_offices
     display_title: Attach-offices
@@ -2184,10 +2186,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   attachment_rents:
     id: attachment_rents
     display_title: Attach-rents
@@ -2341,10 +2343,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   attachment_rooms:
     id: attachment_rooms
     display_title: Attach-rooms
@@ -2495,10 +2497,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   attachment_sales:
     id: attachment_sales
     display_title: Attach-sales
@@ -2651,10 +2653,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   attachment_short_rents:
     id: attachment_short_rents
     display_title: Attach-short-rents
@@ -2807,10 +2809,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   block_adverts_per_agent:
     id: block_adverts_per_agent
     display_title: 'Adverts of Agent Block'
@@ -2984,10 +2986,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_all_auction:
     id: page_all_auction
     display_title: Auctions
@@ -3139,10 +3141,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_all_rent:
     id: page_all_rent
     display_title: Rents
@@ -3295,10 +3297,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_all_sale:
     id: page_all_sale
     display_title: Sales
@@ -3450,10 +3452,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_all_short_rent:
     id: page_all_short_rent
     display_title: 'Short Rents'
@@ -3630,10 +3632,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_apartments:
     id: page_apartments
     display_title: Apartments
@@ -3783,10 +3785,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_commerces:
     id: page_commerces
     display_title: Commerces
@@ -3937,10 +3939,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_featured_adverts:
     id: page_featured_adverts
     display_title: 'Featured adverts'
@@ -4045,10 +4047,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_houses:
     id: page_houses
     display_title: Houses
@@ -4199,10 +4201,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_lands:
     id: page_lands
     display_title: Lands
@@ -4352,10 +4354,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_offices:
     id: page_offices
     display_title: Offices
@@ -4505,10 +4507,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_rooms:
     id: page_rooms
     display_title: Rooms
@@ -4658,10 +4660,10 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
   page_search_adverts:
     id: page_search_adverts
     display_title: 'Search Page'
@@ -4799,10 +4801,10 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           reduce_duplicates: false
-        field_price_in_rwf_value:
-          id: field_price_in_rwf_value
-          table: node__field_price_in_rwf
-          field: field_price_in_rwf_value
+        field_advert_price_in_rwf_value:
+          id: field_advert_price_in_rwf_value
+          table: node__field_advert_price_in_rwf
+          field: field_advert_price_in_rwf_value
           relationship: none
           group_type: group
           admin_label: ''
@@ -4815,14 +4817,14 @@ display:
           group: 1
           exposed: true
           expose:
-            operator_id: field_price_in_rwf_value_op
-            label: 'Price in RWF (field_price_in_rwf)'
+            operator_id: field_advert_price_in_rwf_value_op
+            label: 'Price in RWF (field_advert_price_in_rwf)'
             description: null
             use_operator: false
-            operator: field_price_in_rwf_value_op
+            operator: field_advert_price_in_rwf_value_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: field_price_in_rwf_value
+            identifier: field_advert_price_in_rwf_value
             required: false
             remember: false
             multiple: false
@@ -4835,7 +4837,7 @@ display:
           group_info:
             label: ''
             description: ''
-            identifier: field_price_in_rwf_value
+            identifier: field_advert_price_in_rwf_value
             optional: true
             widget: select
             multiple: false
@@ -4845,7 +4847,7 @@ display:
             group_items:
               1:
                 title: 'less than 100k'
-                operator: '<='
+                operator: '<'
                 value:
                   min: ''
                   max: ''
@@ -4926,7 +4928,7 @@ display:
                 value:
                   min: '75000000'
                   max: '100000000'
-                  value: '75000000'
+                  value: ''
               13:
                 title: '100M - 150M'
                 operator: between
@@ -5170,7 +5172,7 @@ display:
         - 'config:field.storage.node.field_advert_locality_province'
         - 'config:field.storage.node.field_advert_locality_sector'
         - 'config:field.storage.node.field_advert_price'
+        - 'config:field.storage.node.field_advert_price_in_rwf'
         - 'config:field.storage.node.field_advert_property_type'
         - 'config:field.storage.node.field_advert_type'
         - 'config:field.storage.node.field_advert_village'
-        - 'config:field.storage.node.field_price_in_rwf'
