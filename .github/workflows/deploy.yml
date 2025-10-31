@@ -56,7 +56,8 @@ jobs:
               --exclude='deployment-files' \
               --exclude='node_modules' \
               --exclude='httpdocs/sites/default' \
-              --exclude='subdomains'
+              --exclude='subdomains' \
+              --exclude='.ssh'
               ./ deployment-files/
             echo "Using manual exclusions (no .deployignore found)"
           fi
