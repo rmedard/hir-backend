@@ -6,9 +6,11 @@ tmp
 private
 logs
 dev.houseinrwanda.com/
+subdomains/
 *.log
 .env
 .env.local
+.ssh
 composer.phar
 .DS_Store
 Thumbs.db
