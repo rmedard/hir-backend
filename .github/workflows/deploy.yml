@@ -123,6 +123,7 @@ jobs:
 
             # Create server-side exclusions to preserve critical files
             cat > /tmp_cicd/server-rsync-excludes.txt << 'EOF'
+            dev.houseinrwanda.com
             httpdocs/sites/default
             subdomains
             tmp
@@ -155,10 +156,26 @@ jobs:
 
             echo "✅ Files synced, server configurations preserved"
 
-            # Set proper permissions
+            # Set proper permissions (excluding user uploads to avoid timeout)
             echo "Setting permissions..."
-            find $DEPLOY_PATH -type d -exec chmod 755 {} \;
-            find $DEPLOY_PATH -type f -exec chmod 644 {} \;
+
+            # Set permissions on deployment root and webroot
+            chmod 755 $DEPLOY_PATH 2>/dev/null || true
+            chmod 755 $WEBROOT_PATH 2>/dev/null || true
+
+            # Set permissions on code directories only (exclude user files)
+            find $DEPLOY_PATH -type d \
+            -not -path "$WEBROOT_PATH/sites/default/files*" \
+            -exec chmod 755 {} + 2>/dev/null &
+
+            find $DEPLOY_PATH -type f \
+            -not -path "$WEBROOT_PATH/sites/default/files*" \
+            -exec chmod 644 {} + 2>/dev/null &
+
+            # Wait for background jobs with timeout
+            wait
+
+            echo "✅ Permissions set (code only)"
 
             # Set executable permissions for binaries
             echo "Setting executable permissions for binaries..."
