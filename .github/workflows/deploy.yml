@@ -111,7 +111,11 @@ jobs:
               # Backup using rsync, excluding only the large files directory
 
               rsync -a --quiet \
-              --exclude='httpdocs/sites/default/files' \
+              --exclude='httpdocs/sites/default' \
+              --exclude='subdomains' \
+              --exclude='.ssh' \
+              --exclude='.github' \
+              --exclude='.git' \
               "$DEPLOY_PATH/" "$BACKUP_DIR/" 2>/dev/null && \
               echo "✅ Backup created (excluding user files): $BACKUP_DIR" || \
               echo "⚠️ Backup failed, continuing..."
