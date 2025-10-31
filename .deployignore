@@ -6,6 +6,7 @@ tmp
 private
 logs
 dev.houseinrwanda.com/
+subdomains/
 *.log
 .env
 .env.local
