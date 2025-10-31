@@ -55,9 +55,7 @@ jobs:
               --exclude='.github' \
               --exclude='deployment-files' \
               --exclude='node_modules' \
-              --exclude='httpdocs/sites/default/files' \
-              --exclude='httpdocs/sites/default/settings.local.php' \
-              --exclude='httpdocs/sites/default/settings.php' \
+              --exclude='httpdocs/sites/default'
               ./ deployment-files/
             echo "Using manual exclusions (no .deployignore found)"
           fi
@@ -108,7 +106,13 @@ jobs:
             echo "Creating backup..."
             if [ -d "$DEPLOY_PATH" ]; then
               BACKUP_DIR="/tmp_cicd/backup-$(date +%Y%m%d-%H%M%S)"
-              cp -r "$DEPLOY_PATH" "$BACKUP_DIR" 2>/dev/null && echo "✅ Backup created: $BACKUP_DIR" || echo "⚠️ Backup failed, continuing..."
+              # Backup using rsync, excluding only the large files directory
+
+              rsync -a --quiet \
+              --exclude='httpdocs/sites/default/files' \
+              "$DEPLOY_PATH/" "$BACKUP_DIR/" 2>/dev/null && \
+              echo "✅ Backup created (excluding user files): $BACKUP_DIR" || \
+              echo "⚠️ Backup failed, continuing..."
             fi
 
             # Create server-side exclusions to preserve critical files

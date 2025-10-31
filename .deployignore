@@ -1,9 +1,7 @@
 .git
 .github
 deployment-files
-httpdocs/sites/default/settings.php
-httpdocs/sites/default/settings.local.php
-httpdocs/sites/default/files
+httpdocs/sites/default
 tmp
 private
 logs
