@@ -1,0 +1,4 @@
+services:
+  advertiser_review.manager:
+    class: Drupal\advertiser_review\Service\ReviewManager
+    arguments: ['@entity_type.manager', '@logger.factory']

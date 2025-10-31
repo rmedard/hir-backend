@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.property_request.field_how_to_submit_advert
     - field.field.node.property_request.field_pr_area_city_interest
     - field.field.node.property_request.field_pr_currency
     - field.field.node.property_request.field_pr_email
@@ -122,7 +121,6 @@ content:
     region: content
 hidden:
   addtoany: true
-  field_how_to_submit_advert: true
   field_pr_email: true
   field_pr_equipment: true
   field_pr_expiry_date: true

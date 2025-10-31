@@ -1,0 +1,30 @@
+
+# Default value.
+field.value.advertiser_rating:
+  type: mapping
+  label: Default value
+  mapping:
+    average_rating:
+      type: float
+      label: Average Rating
+    review_count:
+      type: integer
+      label: Review Count
+
+# Field widget.
+field.widget.settings.advertiser_rating:
+  type: mapping
+  label: Example widget settings
+  mapping:
+    foo:
+      type: string
+      label: Foo
+
+# Field formatter.
+field.formatter.settings.advertiser_rating_default:
+  type: mapping
+  label: Example formatter settings
+  mapping:
+    foo:
+      type: string
+      label: Foo

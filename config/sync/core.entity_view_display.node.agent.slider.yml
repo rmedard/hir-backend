@@ -16,8 +16,8 @@ dependencies:
     - field.field.node.agent.field_agent_logo
     - field.field.node.agent.field_agent_operations_area
     - field.field.node.agent.field_agent_phone
-    - field.field.node.agent.field_agent_rating
     - field.field.node.agent.field_agent_relative_path
+    - field.field.node.agent.field_agent_review
     - field.field.node.agent.field_agent_sector
     - field.field.node.agent.field_agent_street
     - field.field.node.agent.field_agent_summary
@@ -54,7 +54,7 @@ content:
     type: image_url
     label: hidden
     settings:
-      image_style: medium
+      image_style: agent_slider
     third_party_settings: {  }
     weight: 0
     region: content
@@ -81,8 +81,8 @@ hidden:
   field_agent_facebook: true
   field_agent_linkedin: true
   field_agent_operations_area: true
-  field_agent_rating: true
   field_agent_relative_path: true
+  field_agent_review: true
   field_agent_sector: true
   field_agent_street: true
   field_agent_summary: true

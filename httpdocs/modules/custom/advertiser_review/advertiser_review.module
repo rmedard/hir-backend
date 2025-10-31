@@ -1,0 +1,161 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Provides a review entity type.
+ */
+
+use Drupal\advertiser_review\Entity\Review;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Render\Element;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function advertiser_review_theme(): array {
+  return [
+    'review' => [
+      'render element' => 'elements'
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function advertiser_review_theme_suggestions_review(array $variables): array {
+  $suggestions = [];
+  $review = $variables['elements']['#review'];
+  $view_mode = $variables['elements']['#view_mode'];
+
+  $suggestions[] = 'review__' . $view_mode;
+  $suggestions[] = 'review__' . $review->id();
+  $suggestions[] = 'review__' . $view_mode . '__' . $review->id();
+
+  return $suggestions;
+}
+
+/**
+ * Prepares variables for review templates.
+ *
+ * Default template: review.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the review information and any
+ *     fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_review(array &$variables): void {
+
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  $variables['review'] = $variables['elements']['#review'];
+
+  // Helpful $content variable for templates.
+  $variables['content'] = [];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+
+  // Add additional variables for teaser mode
+  if ($variables['view_mode'] === 'teaser') {
+    $review = $variables['review'];
+
+    // Add star rating
+    $rate = intval($review->get('rate')->value);
+    $filled_stars = str_repeat('<i class="fa-solid fa-star text-warning"></i>', $rate);
+    $empty_stars = str_repeat('<i class="fa-solid fa-star text-muted"></i>', 5 - $rate);
+    $variables['star_rating'] = $filled_stars . $empty_stars;
+
+    // Add truncated message (first 100 characters)
+    $message = $review->get('message')->value;
+    $truncated = strlen($message) > 100 ? substr($message, 0, 100) . '...' : $message;
+    $variables['truncated_message'] = [
+      '#markup' => $truncated,
+    ];
+
+    // Add formatted date
+    $variables['formatted_date'] = \Drupal::service('date.formatter')
+      ->format($review->get('created')->value, 'medium');
+
+    // Add reviewer name
+    $variables['reviewer_name'] = $review->get('name')->value;
+
+    // Add rating value
+    $variables['rating_value'] = $rate;
+  }
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function advertiser_review_node_view(array &$build, NodeInterface $node, $display, $view_mode): void {
+  if ($node->bundle() === 'agent' && $view_mode === 'full') {
+    /**
+     * @var \Drupal\advertiser_review\Service\ReviewManager $reviewManagers
+     */
+    $reviewManagers = Drupal::service('advertiser_review.manager');
+
+    $reviewsCount = $reviewManagers->getReviewsCount(intval($node->id()));
+
+    $averageRate = intval($reviewManagers->getAverageRating(intval($node->id())));
+    $filled_stars = str_repeat('<i class="fa-solid fa-star text-warning"></i>', $averageRate);
+    $empty_stars = str_repeat('<i class="fa-solid fa-star text-muted"></i>', 5 - $averageRate);
+    $stars = $filled_stars . $empty_stars;
+    $build['reviews']['average_rating'][] = [
+      '#markup' => '<span class="rating">' . $stars . '</span>',
+    ];
+    $build['reviews']['count'] = $reviewsCount;
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function advertiser_review_entity_insert(EntityInterface $entity): void {
+  if ($entity instanceof Review) {
+    $agent_id = $entity->get('advertiser')->target_id;
+    if ($agent_id) {
+      /**
+       * @var \Drupal\advertiser_review\Service\ReviewManager $reviewManager
+       */
+      $reviewManager = Drupal::service('advertiser_review.manager');
+      $reviewManager->updateAgentRating(intval($agent_id));
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function advertiser_review_entity_update(EntityInterface $entity): void {
+  if ($entity instanceof Review) {
+    $agent_id = $entity->get('advertiser')->target_id;
+    if ($agent_id) {
+      /**
+       * @var \Drupal\advertiser_review\Service\ReviewManager $reviewManager
+       */
+      $reviewManager = Drupal::service('advertiser_review.manager');
+      $reviewManager->updateAgentRating(intval($agent_id));
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function advertiser_review_entity_delete(EntityInterface $entity): void {
+  if ($entity instanceof Review) {
+    $agent_id = $entity->get('advertiser')->target_id;
+    if ($agent_id) {
+      /**
+       * @var \Drupal\advertiser_review\Service\ReviewManager $reviewManager
+       */
+      $reviewManager = Drupal::service('advertiser_review.manager');
+      $reviewManager->updateAgentRating(intval($agent_id));
+    }
+  }
+}

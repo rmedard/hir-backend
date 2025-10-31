@@ -15,8 +15,8 @@ dependencies:
     - field.field.node.agent.field_agent_logo
     - field.field.node.agent.field_agent_operations_area
     - field.field.node.agent.field_agent_phone
-    - field.field.node.agent.field_agent_rating
     - field.field.node.agent.field_agent_relative_path
+    - field.field.node.agent.field_agent_review
     - field.field.node.agent.field_agent_sector
     - field.field.node.agent.field_agent_street
     - field.field.node.agent.field_agent_summary
@@ -28,6 +28,7 @@ dependencies:
     - image.style.thumbnail
     - node.type.agent
   module:
+    - advertiser_review
     - field_group
     - image
     - link
@@ -149,6 +150,12 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_agent_review:
+    type: advertiser_rating
+    weight: 39
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_agent_sector:
     type: string_textfield
     weight: 33
@@ -237,7 +244,6 @@ content:
 hidden:
   created: true
   field_advertiser_featured: true
-  field_agent_rating: true
   path: true
   promote: true
   sticky: true

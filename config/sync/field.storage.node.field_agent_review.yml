@@ -1,0 +1,19 @@
+uuid: 8d1d0684-8b63-4954-acbc-1ff3f15423cc
+langcode: en
+status: true
+dependencies:
+  module:
+    - advertiser_review
+    - node
+id: node.field_agent_review
+field_name: field_agent_review
+entity_type: node
+type: advertiser_rating
+settings: {  }
+module: advertiser_review
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

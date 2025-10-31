@@ -14,7 +14,6 @@ use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityStorageException;
-use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\node\NodeInterface;
@@ -23,12 +22,12 @@ use function count;
 class PublisherService
 {
 
-    protected $entityTypeManager;
+    protected EntityTypeManagerInterface $entityTypeManager;
 
     /**
      * PublisherService constructor.
      *
-     * @param EntityTypeManager $entityTypeManager
+     * @param EntityTypeManagerInterface $entityTypeManager
      */
     public function __construct(EntityTypeManagerInterface $entityTypeManager)
     {
@@ -77,11 +76,11 @@ class PublisherService
         return array();
     }
 
-    public function unPublishExpiredPropertyRequests() {
+    public function unPublishExpiredPropertyRequests(): void {
         try {
             $storage = $this->entityTypeManager->getStorage('node');
             $now = new DrupalDateTime('now');
-            $query = $storage->getQuery()
+            $query = $storage->getQuery()->accessCheck(FALSE)
                 ->condition('type', 'property_request')
                 ->condition('status', NodeInterface::PUBLISHED)
                 ->condition('field_pr_expiry_date', $now->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT), '<');

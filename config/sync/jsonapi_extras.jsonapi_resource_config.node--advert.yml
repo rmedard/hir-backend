@@ -41,7 +41,7 @@ resourceFields:
     enhancer:
       id: ''
   type:
-    disabled: false
+    disabled: true
     fieldName: type
     publicName: type
     enhancer:
@@ -71,7 +71,7 @@ resourceFields:
     enhancer:
       id: ''
   uid:
-    disabled: false
+    disabled: true
     fieldName: uid
     publicName: uid
     enhancer:
@@ -186,6 +186,12 @@ resourceFields:
     publicName: field_advert_bid_start_value
     enhancer:
       id: ''
+  field_advert_business_comment:
+    disabled: false
+    fieldName: field_advert_business_comment
+    publicName: field_advert_business_comment
+    enhancer:
+      id: ''
   field_advert_cell:
     disabled: false
     fieldName: field_advert_cell
@@ -252,6 +258,12 @@ resourceFields:
     publicName: field_advert_is_first_published
     enhancer:
       id: ''
+  field_advert_is_synchronised:
+    disabled: false
+    fieldName: field_advert_is_synchronised
+    publicName: field_advert_is_synchronised
+    enhancer:
+      id: ''
   field_advert_living_area:
     disabled: false
     fieldName: field_advert_living_area
@@ -312,6 +324,12 @@ resourceFields:
     publicName: field_advert_price
     enhancer:
       id: ''
+  field_advert_price_in_rwf:
+    disabled: false
+    fieldName: field_advert_price_in_rwf
+    publicName: field_advert_price_in_rwf
+    enhancer:
+      id: ''
   field_advert_price_negociable:
     disabled: false
     fieldName: field_advert_price_negociable
@@ -328,6 +346,12 @@ resourceFields:
     disabled: false
     fieldName: field_advert_reference
     publicName: field_advert_reference
+    enhancer:
+      id: ''
+  field_advert_relative_path:
+    disabled: false
+    fieldName: field_advert_relative_path
+    publicName: field_advert_relative_path
     enhancer:
       id: ''
   field_advert_rented_sold:

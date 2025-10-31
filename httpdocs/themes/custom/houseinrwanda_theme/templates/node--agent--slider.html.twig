@@ -69,20 +69,22 @@
   'clearfix',
 ] %}
 {% set cardClasses = [
-  'node__content', 'clearfix', 'card', 'border-info', 'm-0', 'p-2', 'd-flex', 'justify-content-center'
+  'node__content', 'm-0', 'clearfix', 'card', 'border-info','justify-content-center'
 ] %}
 {% set image_uri = attribute(content.field_agent_logo[0], '#markup') %}
 <article{{ attributes.addClass(classes) }}>
-  <div{{ content_attributes.addClass(cardClasses) }} style="height: 8em">
-    <div class="row">
-      <div class="col-8 d-flex flex-column align-items-start justify-content-center">
-        <h6 class="m-0 float-start"><a href="{{ url }}" class="stretched-link">{{ label }}</a></h6>
-        <div class="mb-2">{{ content.field_advertiser_type|field_value }}</div>
-        <div class="small d-inline-block"><i class="fas fa-phone-alt"></i> {{ node.field_agent_phone.value }}</div>
-        <div class="text-nowrap overflow-hidden"><i class="fas fa-map-marker-alt"></i> {{ node.field_agent_operations_area.value }}</div>
+  <div{{ content_attributes.addClass(cardClasses) }}>
+    <div class="row g-0">
+      <div class="col-8">
+        <div class="card-body p-3 d-flex flex-column h-100 w-100">
+          <h6 class="card-title"><a href="{{ url }}" class="stretched-link">{{ label }}</a></h6>
+          <div class="mb-2">{{ content.field_advertiser_type|field_value }}</div>
+          <div class="small d-inline-block"><i class="fas fa-phone-alt"></i> {{ node.field_agent_phone.value }}</div>
+          <div class="text-nowrap overflow-hidden"><i class="fas fa-map-marker-alt"></i> {{ node.field_agent_operations_area.value }}</div>
+        </div>
       </div>
       <div class="col-4">
-        <img src="{{ image_uri }}" class="card-img-top" alt="employer photo">
+        <img src="{{ image_uri }}" class="img-fluid rounded-end" alt="employer photo">
       </div>
     </div>
   </div>

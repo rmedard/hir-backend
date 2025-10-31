@@ -15,8 +15,8 @@ dependencies:
     - field.field.node.agent.field_agent_logo
     - field.field.node.agent.field_agent_operations_area
     - field.field.node.agent.field_agent_phone
-    - field.field.node.agent.field_agent_rating
     - field.field.node.agent.field_agent_relative_path
+    - field.field.node.agent.field_agent_review
     - field.field.node.agent.field_agent_sector
     - field.field.node.agent.field_agent_street
     - field.field.node.agent.field_agent_summary
@@ -29,8 +29,8 @@ dependencies:
     - image.style.scaled_90x90
     - node.type.agent
   module:
+    - advertiser_review
     - colorbox
-    - fivestar
     - image
     - link
     - options
@@ -130,16 +130,6 @@ content:
     third_party_settings: {  }
     weight: 11
     region: content
-  field_agent_rating:
-    type: fivestar_stars
-    label: inline
-    settings:
-      text_format: average
-      display_format: average
-      fivestar_widget: oxygen
-    third_party_settings: {  }
-    weight: 2
-    region: content
   field_agent_relative_path:
     type: string
     label: above
@@ -147,6 +137,15 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 14
+    region: content
+  field_agent_review:
+    type: advertiser_rating_default
+    label: above
+    settings:
+      display_format: stars_and_text
+      show_count: true
+    third_party_settings: {  }
+    weight: 16
     region: content
   field_agent_summary:
     type: text_default
@@ -183,13 +182,13 @@ content:
     type: colorbox
     label: hidden
     settings:
-      colorbox_node_style: scaled_90x90
-      colorbox_node_style_first: ''
       colorbox_image_style: flexslider_full
       colorbox_gallery: field_post
       colorbox_gallery_custom: ''
       colorbox_caption: auto
       colorbox_caption_custom: ''
+      colorbox_node_style: scaled_90x90
+      colorbox_node_style_first: ''
     third_party_settings: {  }
     weight: 6
     region: content

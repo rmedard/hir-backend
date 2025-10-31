@@ -1,0 +1,15 @@
+uuid: 7f94ab9b-7954-4c5a-8c8e-6ed42391f3f0
+langcode: en
+status: true
+dependencies: {  }
+name: agent_slider
+label: 'Agent Slider'
+effects:
+  041eb6a7-9f91-40c2-a02b-3e70aa301ce9:
+    uuid: 041eb6a7-9f91-40c2-a02b-3e70aa301ce9
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 130
+      height: 130
+      anchor: center-center

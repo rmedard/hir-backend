@@ -1,0 +1,9 @@
+name: 'Advertiser Review'
+type: module
+description: 'Custom module to manage HiR advertisers reviews'
+package: HiR Custom
+core_version_requirement: ^10 || ^11
+version: '1.0.0'
+dependencies:
+  - drupal:datetime
+  - drupal:node

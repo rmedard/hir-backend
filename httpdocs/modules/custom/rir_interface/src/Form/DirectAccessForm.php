@@ -42,22 +42,44 @@ class DirectAccessForm extends FormBase
      */
     public function buildForm(array $form, FormStateInterface $form_state): array
     {
-        $form['reference_number'] = array(
-            '#type' => 'textfield',
-            '#attributes' => array(
-                'placeholder' => $this->t('Reference number'),
-                'size' => 30,
-                'maxlength' => 30
-            ));
-        $form['submit'] = array(
-            '#type' => 'submit',
-            '#value' => $this->t('Find')
-        );
-        return $form;
+      $form['search_group'] = [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => ['input-group']
+        ],
+      ];
+
+      $form['search_group']['reference_number'] = [
+        '#type' => 'textfield',
+        '#attributes' => [
+          'placeholder' => $this->t('Reference number'),
+          'size' => 30,
+          'maxlength' => 30,
+          'class' => ['form-control'],
+          'aria-label' => $this->t('Reference number'),
+          'aria-describedby' => 'button-search-reference',
+        ],
+        '#wrapper_attributes' => [
+          'class' => [] // This target the wrapper div
+        ],
+        '#theme_wrappers' => []
+      ];
+      $form['search_group']['submit'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Find'),
+        '#attributes' => [
+          'class' => ['btn', 'btn-primary', 'text-white'],
+          'type' => 'button',
+          'id' => 'button-search-reference',
+        ],
+        '#wrapper_attributes' => [
+          'class' => [] // Remove default wrapper classes
+        ]
+      ];
+      return $form;
     }
 
-    public function validateForm(array &$form, FormStateInterface $form_state)
-    {
+    public function validateForm(array &$form, FormStateInterface $form_state): void {
         if ($form_state->isValueEmpty('reference_number')) {
             $form_state->setErrorByName('reference_number', t('Provide reference number'));
         }
@@ -71,10 +93,9 @@ class DirectAccessForm extends FormBase
      * @param FormStateInterface $form_state
      *   The current state of the form.
      */
-    public function submitForm(array &$form, FormStateInterface $form_state)
-    {
+    public function submitForm(array &$form, FormStateInterface $form_state): void {
         $reference = trim($form_state->getValue('reference_number'));
-        $nodeQuery = Drupal::entityQuery('node')
+        $nodeQuery = Drupal::entityQuery('node')->accessCheck()
             ->condition('type', 'advert')
             ->condition('status', NodeInterface::PUBLISHED)
             ->condition('field_advert_reference', $reference);

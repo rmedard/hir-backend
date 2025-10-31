@@ -1,0 +1,66 @@
+uuid: 5fe52677-06ad-41f5-b372-82048996d4a0
+langcode: en
+status: true
+dependencies:
+  module:
+    - advertiser_review
+    - telephone
+    - text
+id: review.review.default
+targetEntityType: review
+bundle: review
+mode: default
+content:
+  advertiser:
+    type: entity_reference_autocomplete
+    weight: -5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: 'Select an advertiser'
+    third_party_settings: {  }
+  email:
+    type: email_default
+    weight: 4
+    region: content
+    settings:
+      placeholder: 'Enter email address'
+      size: 60
+    third_party_settings: {  }
+  message:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 6
+      placeholder: ''
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  phone:
+    type: telephone_default
+    weight: 5
+    region: content
+    settings:
+      placeholder: '+250712345678'
+    third_party_settings: {  }
+  rate:
+    type: number
+    weight: 0
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  status: true
+  uid: true

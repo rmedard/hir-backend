@@ -11,7 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
 class CurrencyConverterSettingsForm extends ConfigFormBase
 {
 
-    const SETTINGS = 'rir_interface.currency_converter.settings';
+    const string SETTINGS = 'rir_interface.currency_converter.settings';
 
     protected function getEditableConfigNames(): array
     {
@@ -35,8 +35,7 @@ class CurrencyConverterSettingsForm extends ConfigFormBase
         return parent::buildForm($form, $form_state);
     }
 
-    public function validateForm(array &$form, FormStateInterface $form_state)
-    {
+    public function validateForm(array &$form, FormStateInterface $form_state): void {
         if (!$form_state->isValueEmpty('currency_converter_url')) {
             if (!UrlHelper::isValid($form_state->getValue('currency_converter_url'), true)) {
                 $form_state->setErrorByName('currency_converter_url', 'Invalid URL. This url has to be valid and absolute.');
@@ -45,8 +44,7 @@ class CurrencyConverterSettingsForm extends ConfigFormBase
         parent::validateForm($form, $form_state);
     }
 
-    public function submitForm(array &$form, FormStateInterface $form_state)
-    {
+    public function submitForm(array &$form, FormStateInterface $form_state): void {
         $this->configFactory->getEditable(static::SETTINGS)
             ->set('currency_converter_url', $form_state->getValue('currency_converter_url'))
             ->save();

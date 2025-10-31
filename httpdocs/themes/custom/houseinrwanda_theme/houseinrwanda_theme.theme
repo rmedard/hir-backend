@@ -48,12 +48,15 @@ function houseinrwanda_theme_preprocess_node(&$variables): void
       if (in_array($node->bundle(), ['advert', 'agent'])) {
           $host = Drupal::request()->getSchemeAndHttpHost();
           $location = $host . '/' . Drupal::theme()->getActiveTheme()->getPath();
-          $blueCheck = $location . '/images/icons/check-blue.svg';
-          $goldCheck = $location . '/images/icons/twitter-gold.svg';
+          $blueCheck = $location . '/images/check-blue.svg';
+          $goldCheck = $location . '/images/twitter-gold.svg';
           $blueBadgeHtml = "<img src='" . $blueCheck . "' alt='featured advertiser' style='height: 1.1em; width: auto' />";
           $goldBadgeHtml = "<img src='" . $goldCheck . "' alt='vip advertiser' style='height: 1.1em; width: auto' />";
 
           if ($node->bundle() === 'advert') {
+            /**
+             * @var \Drupal\rir_interface\Service\ThemingService $themingService
+             */
               $themingService = Drupal::service('rir_interface.theming_service');
               $isRent = in_array($node->get('field_advert_type')->value, ['rent', 'short_rent']);
               $variables['content']['property_type_pill'] = ['#markup' => $themingService->getPropertyTypePill($node)];
@@ -103,7 +106,7 @@ function houseinrwanda_theme_preprocess_node(&$variables): void
               $isVip = $node->get('field_agent_category')->value === 'vip';
               if ($isFeatured or $isVip) {
                   $badge = $isFeatured ? $blueBadgeHtml : $goldBadgeHtml;
-                  $variables['label'] = Markup::create('<span class="d-flex align-items-center justify-content-center"><span style="white-space: nowrap">' . $node->getTitle() . '</span>' . $badge . '</span>');
+                  $variables['label'] = Markup::create('<span class="d-flex align-items-center justify-content-start"><span style="white-space: nowrap">' . $node->getTitle() . '</span>' . $badge . '</span>');
                   $node->setTitle($variables['label']);
               }
           }
@@ -275,8 +278,7 @@ function houseinrwanda_theme_preprocess_block(&$variables): void
   ];
   if (in_array($variables['plugin_id'], $blocks_with_background)
     or in_array($variables['attributes']['id'], $content_blocks_with_background)) {
-    $variables['attributes']['class'][] = 'p-2';
-    $variables['attributes']['class'][] = 'bg-light';
+    $variables['attributes']['class'][] = 'p-2 bg-white rounded shadow-sm';
   }
   if ($variables['plugin_id'] === 'copyright_block') {
     $variables['attributes']['class'][] = 'm-0';
@@ -375,7 +377,7 @@ function houseinrwanda_theme_preprocess_form(&$variables): void
 function houseinrwanda_theme_preprocess_form_element(&$variables): void
 {
   $no_margin_types = ['checkbox', 'radio'];
-  if (!in_array($variables['type'], $no_margin_types) && isset($variables['name']) && $variables['name'] !== 'reference_number') {
+  if (isset($variables['type']) && !in_array($variables['type'], $no_margin_types) && isset($variables['name']) && $variables['name'] !== 'reference_number') {
     $variables['attributes']['class'][] = 'mb-3';
   }
 
@@ -408,7 +410,7 @@ function houseinrwanda_theme_form_alter(&$form, FormStateInterface $form_state, 
       $form['field_advert_type_value']['#options']['All'] = t('- Offer type -');
       $form['field_advert_property_type_value']['#options']['All'] = t('- Property type -');
       $form['field_advert_bedrooms_value']['#options']['All'] = t('- Rooms -');
-      $form['field_price_in_rwf_value']['#options']['All'] = t('- Price -');
+      $form['field_advert_price_in_rwf_value']['#options']['All'] = t('- Price -');
       $form['field_advert_furnished_value']['#options']['All'] = t('- Furnished -');
       $form['field_advert_furnished_value']['#options']['1'] = t('Yes');
       $form['field_advert_furnished_value']['#options']['0'] = t('No');

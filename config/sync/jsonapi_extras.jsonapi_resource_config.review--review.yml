@@ -1,0 +1,105 @@
+uuid: 37343cbe-37fc-4b55-a564-b4241933d241
+langcode: en
+status: true
+dependencies:
+  module:
+    - advertiser_review
+    - jsonapi_defaults
+third_party_settings:
+  jsonapi_defaults:
+    default_filter:
+      'filter:status': '1'
+    page_limit: 50
+id: review--review
+disabled: false
+path: reviews
+resourceType: review--review
+resourceFields:
+  id:
+    disabled: false
+    fieldName: id
+    publicName: id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  advertiser:
+    disabled: false
+    fieldName: advertiser
+    publicName: advertiser
+    enhancer:
+      id: ''
+  rate:
+    disabled: false
+    fieldName: rate
+    publicName: rate
+    enhancer:
+      id: ''
+  message:
+    disabled: false
+    fieldName: message
+    publicName: message
+    enhancer:
+      id: nested
+      settings:
+        path: value
+  name:
+    disabled: false
+    fieldName: name
+    publicName: name
+    enhancer:
+      id: ''
+  email:
+    disabled: false
+    fieldName: email
+    publicName: email
+    enhancer:
+      id: ''
+  phone:
+    disabled: false
+    fieldName: phone
+    publicName: phone
+    enhancer:
+      id: ''
+  status:
+    disabled: false
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  uid:
+    disabled: true
+    fieldName: uid
+    publicName: uid
+    enhancer:
+      id: ''
+  created:
+    disabled: false
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  changed:
+    disabled: true
+    fieldName: changed
+    publicName: changed
+    enhancer:
+      id: ''
+  path:
+    disabled: false
+    fieldName: path
+    publicName: path
+    enhancer:
+      id: nested
+      settings:
+        path: alias
+  metatag:
+    disabled: true
+    fieldName: metatag
+    publicName: metatag
+    enhancer:
+      id: ''

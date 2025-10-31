@@ -16,8 +16,8 @@ dependencies:
     - field.field.node.agent.field_agent_logo
     - field.field.node.agent.field_agent_operations_area
     - field.field.node.agent.field_agent_phone
-    - field.field.node.agent.field_agent_rating
     - field.field.node.agent.field_agent_relative_path
+    - field.field.node.agent.field_agent_review
     - field.field.node.agent.field_agent_sector
     - field.field.node.agent.field_agent_street
     - field.field.node.agent.field_agent_summary
@@ -99,8 +99,8 @@ hidden:
   field_agent_cell: true
   field_agent_facebook: true
   field_agent_linkedin: true
-  field_agent_rating: true
   field_agent_relative_path: true
+  field_agent_review: true
   field_agent_summary: true
   field_agent_tin_nbr: true
   field_agent_twitter: true

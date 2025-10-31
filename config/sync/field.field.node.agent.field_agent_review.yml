@@ -1,0 +1,21 @@
+uuid: 780443f3-b208-475b-992b-825f1b3e251d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agent_review
+    - node.type.agent
+  module:
+    - advertiser_review
+id: node.agent.field_agent_review
+field_name: field_agent_review
+entity_type: node
+bundle: agent
+label: Review
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: advertiser_rating

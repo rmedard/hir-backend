@@ -1,0 +1,15 @@
+uuid: 8b8ee30d-1a58-4c7f-bee8-c143604d5d8a
+langcode: en
+status: true
+dependencies: {  }
+name: advert_teaser
+label: 'Advert Teaser'
+effects:
+  c2777807-7af3-460d-ac89-052678e053c2:
+    uuid: c2777807-7af3-460d-ac89-052678e053c2
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 215
+      height: 165
+      anchor: center-center

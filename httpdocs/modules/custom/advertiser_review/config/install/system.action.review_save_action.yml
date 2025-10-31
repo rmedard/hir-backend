@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - advertiser_review
+id: review_save_action
+label: 'Save reviews'
+type: review
+plugin: entity:save_action:review
+configuration: {  }

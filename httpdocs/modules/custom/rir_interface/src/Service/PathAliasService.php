@@ -33,7 +33,11 @@ class PathAliasService {
    */
   public function updateNodeRelativePath(PathAliasInterface $pathAlias): void {
     preg_match('/node\/(\d+)/', $pathAlias->getPath(), $matches);
-    $node = Node::load($matches[1]);
+    $id = count($matches) > 1 ? $matches[1] : 0;
+    if (!isset($id) or !$id or $id == 0) {
+      return;
+    }
+    $node = Node::load($id);
     if ($node instanceof NodeInterface) {
       try {
         switch ($node->bundle()) {

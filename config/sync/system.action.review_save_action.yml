@@ -1,0 +1,13 @@
+uuid: 470f2bb4-cd8c-43c9-b7d1-a3d872879696
+langcode: en
+status: true
+dependencies:
+  module:
+    - advertiser_review
+_core:
+  default_config_hash: a3ybKI86B_IJ07oyZreCtLIpyP4fBZ7JZarD8hTguwA
+id: review_save_action
+label: 'Save reviews'
+type: review
+plugin: 'entity:save_action:review'
+configuration: {  }

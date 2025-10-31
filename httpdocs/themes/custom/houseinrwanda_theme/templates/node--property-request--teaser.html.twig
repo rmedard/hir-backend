@@ -69,11 +69,11 @@
   'clearfix',
 ] %}
 {% set cardClasses = [
-  'node__content', 'clearfix', 'card', 'border-info', 'm-0'
+  'node__content', 'clearfix', 'card', 'border-0', 'm-0', 'shadow-sm'
 ] %}
 <article{{ attributes.addClass(classes) }}>
   <div{{ content_attributes.addClass(cardClasses) }}>
-    <div class="card-header bg-info text-white d-flex justify-content-between gap-2">
+    <div class="card-header bg-success-subtle text-success-emphasis d-flex justify-content-between gap-2 border-0">
       <div class="text-nowrap overflow-hidden">{{ 'Property request from ' }}{{ content.field_pr_first_name|field_value }}</div>
       <strong class="text-nowrap">N° {{ content.field_pr_reference|field_value }}</strong>
     </div>
@@ -82,10 +82,10 @@
       <div><strong>Budget:</strong> {{ node.field_pr_maximum.value|number_format }} ({{ content.field_pr_currency|field_value }}) {% if content.field_pr_request_type|field_value == 'rent' %}<small>/{{ content.field_pr_payable|field_value }}</small>{% endif %}</div>
       <div><strong>Bedrooms:</strong> {{ node.field_pr_minimum_bedrooms.value|number_format }}, <strong>Bathrooms:</strong> {{ node.field_pr_minimum_bathrooms.value }}</div>
     </div>
-    <div class="card-footer d-flex justify-content-between border-0">
+    <div class="card-footer d-flex justify-content-between border-0 bg-white">
       <div class="badges">
-        <span class="badge bg-danger">{{ content.field_pr_request_type|field_value }}</span>
-        <span class="badge bg-danger">{{ content.field_pr_property_type|field_value }}</span>
+        <span class="badge bg-danger-subtle text-danger-emphasis">{{ content.field_pr_request_type|field_value }}</span>
+        <span class="badge bg-danger-subtle text-danger-emphasis">{{ content.field_pr_property_type|field_value }}</span>
       </div>
       <a href="{{ url }}">{{ 'Read more' }}</a>
     </div>

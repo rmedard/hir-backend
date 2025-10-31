@@ -1,5 +1,5 @@
 let gulp = require('gulp'),
-  sass = require('gulp-sass')(require('sass')), // Correct syntax for Dart Sass
+  sass = require('gulp-sass')(require('sass')),
   sourcemaps = require('gulp-sourcemaps'),
   $ = require('gulp-load-plugins')(),
   cleanCss = require('gulp-clean-css'),
@@ -31,8 +31,14 @@ const paths = {
     bootstrap: './node_modules/bootstrap/dist/js/bootstrap.min.js',
     bootstrap_map: './node_modules/bootstrap/dist/js/bootstrap.min.js.map',
     popper: './node_modules/@popperjs/core/dist/umd/popper.min.js',
-    barrio: '../../contrib/bootstrap_barrio/js/barrio.js',
+    barrio: '../../contrib/bootstrap_barrio/js/*.js',
     dest: './js'
+  },
+  // Add TomSelect paths
+  tomselect: {
+    js: './node_modules/tom-select/dist/js/*.js',
+    css: './node_modules/tom-select/dist/css/*.css',
+    dest: '../../../libraries/tom-select'
   }
 }
 
@@ -45,8 +51,7 @@ function styles() {
         './node_modules/bootstrap/scss',
         '../../contrib/bootstrap_barrio/scss'
       ],
-      // Suppress deprecation warnings - optional but recommended for cleaner output
-      quietDeps: true, // Silence warnings from dependencies
+      quietDeps: true,
       silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'abs-percent', 'legacy-js-api']
     }).on('error', sass.logError))
     .pipe($.postcss(postcssProcessors))
@@ -77,6 +82,13 @@ function js() {
     .pipe(browserSync.stream())
 }
 
+// Copy TomSelect assets to libraries directory
+function tomSelect() {
+  return gulp.src([paths.tomselect.js, paths.tomselect.css])
+    .pipe(gulp.dest(paths.tomselect.dest))
+    .pipe(browserSync.stream())
+}
+
 // Static Server + watching scss/html files
 function serve() {
   browserSync.init({
@@ -87,10 +99,14 @@ function serve() {
   gulp.watch([paths.scss.watch, paths.scss.bootstrap], styles).on('change', browserSync.reload)
 }
 
-const build = gulp.series(styles, gulp.parallel(js, serve))
+// Update build tasks to include tomselect
+const build = gulp.series(styles, gulp.parallel(js, tomSelect, serve))
+const buildWithoutServe = gulp.series(styles, gulp.parallel(js, tomSelect))
 
 exports.styles = styles
 exports.js = js
+exports.tomselect = tomSelect
 exports.serve = serve
+exports.build = buildWithoutServe
 
 exports.default = build

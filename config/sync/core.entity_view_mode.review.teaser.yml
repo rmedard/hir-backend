@@ -1,0 +1,11 @@
+uuid: 861a0e2c-ad61-42fe-98aa-215436fb26a1
+langcode: en
+status: true
+dependencies:
+  module:
+    - advertiser_review
+id: review.teaser
+label: Teaser
+description: ''
+targetEntityType: review
+cache: true

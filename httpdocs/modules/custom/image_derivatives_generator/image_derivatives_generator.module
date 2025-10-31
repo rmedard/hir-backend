@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Image Derivatives Generator module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function image_derivatives_generator_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.image_derivatives_generator':
+      return '<p>' . t('Generate image derivatives in bulk for existing images.') . '</p>';
+  }
+}

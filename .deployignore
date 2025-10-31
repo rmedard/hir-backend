@@ -1,0 +1,20 @@
+.git
+.github
+deployment-files
+httpdocs/sites/default/settings.php
+httpdocs/sites/default/settings.local.php
+httpdocs/sites/default/files
+tmp
+private
+logs
+dev.houseinrwanda.com/
+*.log
+.env
+.env.local
+composer.phar
+.DS_Store
+Thumbs.db
+
+# Exclude node_modules directories
+node_modules
+httpdocs/themes/custom/*/node_modules

@@ -1,0 +1,22 @@
+advertiser_rating:
+  css:
+    component:
+      css/advertiser-rating-widget.css: {}
+
+star-rating:
+  version: 1.x
+  js:
+    js/star-rating.js: {}
+  css:
+    theme:
+      css/star-rating.css: {}
+  dependencies:
+    - core/drupal
+
+agent-tabs:
+  version: 1.x
+  js:
+    js/agent-tabs.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings

@@ -1,0 +1,7 @@
+name: 'Image Derivatives Generator'
+type: module
+description: 'A util module to generate images per existing image styles. Generation can be done in bulk.'
+package: Custom
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:image
