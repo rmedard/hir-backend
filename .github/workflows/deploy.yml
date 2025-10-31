@@ -124,8 +124,12 @@ jobs:
             # Create server-side exclusions to preserve critical files
             cat > /tmp_cicd/server-rsync-excludes.txt << 'EOF'
             httpdocs/sites/default
+            subdomains
             tmp
             private
+            .ssh
+            .git
+            .github
             EOF
 
             # Verify exclusions file was created properly
