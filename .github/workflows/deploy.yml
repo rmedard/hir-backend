@@ -69,8 +69,8 @@ jobs:
       - name: Transfer files to server via SCP
         uses: appleboy/scp-action@v0.1.3
         with:
-          host: ${{ github.ref_name == 'main' && secrets.PRODUCTION_HOST || secrets.STAGING_HOST }}
-          username: ${{ github.ref_name == 'main' && secrets.PRODUCTION_USER || secrets.STAGING_USER }}
+          host: ${{ github.ref_name == 'main' && vars.PRODUCTION_HOST || vars.STAGING_HOST }}
+          username: ${{ github.ref_name == 'main' && vars.PRODUCTION_USER || vars.STAGING_USER }}
           key: ${{ github.ref_name == 'main' && secrets.PRODUCTION_SSH_KEY || secrets.STAGING_SSH_KEY }}
           port: 22
           source: "deployment-files/*"
@@ -80,17 +80,17 @@ jobs:
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.2.2
         with:
-          host: ${{ github.ref_name == 'main' && secrets.PRODUCTION_HOST || secrets.STAGING_HOST }}
-          username: ${{ github.ref_name == 'main' && secrets.PRODUCTION_USER || secrets.STAGING_USER }}
+          host: ${{ github.ref_name == 'main' && vars.PRODUCTION_HOST || vars.STAGING_HOST }}
+          username: ${{ github.ref_name == 'main' && vars.PRODUCTION_USER || vars.STAGING_USER }}
           key: ${{ github.ref_name == 'main' && secrets.PRODUCTION_SSH_KEY || secrets.STAGING_SSH_KEY }}
           port: 22
           script: |
             # Set deployment paths
             if [ "${{ github.ref_name }}" = "main" ]; then
-              DEPLOY_PATH="${{ secrets.PRODUCTION_DEPLOY_PATH }}"
+              DEPLOY_PATH="${{ vars.PRODUCTION_DEPLOY_PATH }}"
               WEBROOT_PATH="$DEPLOY_PATH/httpdocs"
             else
-              DEPLOY_PATH="${{ secrets.STAGING_DEPLOY_PATH }}"
+              DEPLOY_PATH="${{ vars.STAGING_DEPLOY_PATH }}"
               WEBROOT_PATH="$DEPLOY_PATH/httpdocs"
             fi
 
