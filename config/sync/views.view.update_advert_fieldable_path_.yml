@@ -82,7 +82,8 @@ display:
           buttons: false
           action_title: Action
           clear_on_exposed: true
-          force_selection_info: false
+          show_multipage_selection_box: default
+          show_select_all: default
           selected_actions:
             13:
               action_id: views_bulk_edit
@@ -256,6 +257,7 @@ display:
         type: mini
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 200
           total_pages: 1
           id: 0
@@ -270,7 +272,6 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -402,36 +403,36 @@ display:
           grouping: {  }
           row_class: ''
           default_row_class: true
-          override: 1
-          sticky: 0
-          caption: ''
-          summary: ''
-          description: ''
           columns:
             title: title
             field_advert_relative_path: field_advert_relative_path
+          default: '-1'
           info:
             title:
-              sortable: 0
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
-              empty_column: 0
+              empty_column: false
               responsive: ''
             field_advert_relative_path:
-              sortable: 0
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
-              empty_column: 0
+              empty_column: false
               responsive: ''
-          default: '-1'
-          empty_table: 0
-          responsive: 0
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+          responsive: false
           bootstrap_styles:
-            striped: 0
-            bordered: 0
-            hover: 0
+            bordered: '0'
+            hover: '0'
+            striped: '0'
             condensed: 0
       row:
         type: 'entity:node'

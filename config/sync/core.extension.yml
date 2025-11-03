@@ -106,6 +106,9 @@ module:
   serialization: 0
   shortcut: 0
   shs: 0
+  simple_sitemap: 0
+  simple_sitemap_engines: 0
+  simple_sitemap_views: 0
   smart_ip: 0
   smart_ip_ipinfodb_web_service: 0
   smtp: 0

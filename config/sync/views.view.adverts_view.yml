@@ -27,7 +27,7 @@ dependencies:
 id: adverts_view
 label: Adverts
 module: views
-description: ''
+description: 'Adverts are advertisers publications'
 tag: ''
 base_table: node_field_data
 base_field: nid
