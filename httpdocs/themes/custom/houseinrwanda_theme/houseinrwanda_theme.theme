@@ -9,6 +9,7 @@ use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Template\AttributeString;
+use Drupal\node\Entity\Node as NodeAlias;
 use Drupal\node\NodeInterface;
 use Drupal\views\ResultRow;
 use Drupal\views\ViewExecutable;
@@ -82,12 +83,13 @@ function houseinrwanda_theme_preprocess_node(&$variables): void
                   }
               }
 
-              if ($node->field_advert_is_agent->value) {
-                  $advertiser = $node->field_advert_advertiser->entity;
+              if ($node->get('field_advert_is_agent')->value) {
+                /** @var NodeAlias $advertiser */
+                  $advertiser = $node->get('field_advert_advertiser')->entity;
                   if (is_null($advertiser)) {
                       Drupal::logger('HiR Theme')->error('Advertiser is null. NID: ' . $node->id());
                   }
-                  $agentCategory = $advertiser->field_agent_category->value;
+                  $agentCategory = $advertiser->get('field_agent_category')->getString();
                   $agentName = $advertiser->getTitle();
                   $isFeatured = $agentCategory === 'featured';
                   $isVip = $agentCategory === 'vip';
@@ -97,7 +99,7 @@ function houseinrwanda_theme_preprocess_node(&$variables): void
                   } else {
                       $variables['content']['agent_label'] = Markup::create('<span class="d-flex align-items-center justify-content-center">' . $agentName . '</span>');
                   }
-                  $variables['content']['agent_id'] = $node->field_advert_advertiser->entity->id();
+                  $variables['content']['agent_id'] = $advertiser->id();
               }
           }
 
