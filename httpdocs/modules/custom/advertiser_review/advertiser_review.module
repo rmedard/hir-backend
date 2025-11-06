@@ -77,6 +77,11 @@ function template_preprocess_review(array &$variables): void {
       '#markup' => $truncated,
     ];
 
+    // Add full message
+    $variables['full_message'] = [
+      '#markup' => $message,
+    ];
+
     // Add formatted date
     $variables['formatted_date'] = \Drupal::service('date.formatter')
       ->format($review->get('created')->value, 'medium');
