@@ -18,7 +18,7 @@ use Exception;
  */
 
 /**
- * Class UnpublisherQueueWorker
+ * Class Un-publisherQueueWorker
  *
  * @package Drupal\hir_publisher\Plugin\QueueWorker
  * @QueueWorker(
@@ -54,7 +54,7 @@ class UnPublisherQueueWorker extends QueueWorkerBase {
      *
      * @see \Drupal\Core\Cron::processQueues()
      */
-    public function processItem($data) {
+    public function processItem($data): void {
       if ($data instanceof NodeInterface) {
         $data->setUnpublished();
         $data->save();

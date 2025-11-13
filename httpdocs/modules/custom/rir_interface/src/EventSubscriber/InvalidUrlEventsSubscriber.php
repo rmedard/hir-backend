@@ -33,8 +33,7 @@ class InvalidUrlEventsSubscriber implements EventSubscriberInterface
   /**
    * @param ResponseEvent $responseEvent
    */
-  public function onInvalidRequestUrl(ResponseEvent $responseEvent)
-  {
+  public function onInvalidRequestUrl(ResponseEvent $responseEvent): void {
     if (!RequestHelper::isCleanUrl($responseEvent->getRequest())) {
       Drupal::logger('rir_interface')->warning('with invalid Url with /index.php detected.');
       $cleanRequestUri = trim($this->cleanPath($responseEvent->getRequest()->getRequestUri()));

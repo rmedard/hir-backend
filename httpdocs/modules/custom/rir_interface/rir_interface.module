@@ -443,6 +443,8 @@ function rir_interface_theme($existing, $type, $theme, $path): array
  * Implements hook_ENTITY_TYPE_presave().
  *
  * @param \Drupal\node\NodeInterface $entity
+ *
+ * @throws \Exception
  */
 function rir_interface_node_presave(NodeInterface $entity): void
 {

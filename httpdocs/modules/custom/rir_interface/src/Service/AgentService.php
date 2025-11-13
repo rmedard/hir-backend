@@ -7,6 +7,8 @@ use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -16,16 +18,18 @@ use Drupal\node\NodeInterface;
  * Time: 13:00
  */
 
-class AgentService {
+final class AgentService {
 
-    protected EntityTypeManager $entityTypeManager;
+  protected EntityTypeManager $entityTypeManager;
+  protected LoggerChannelInterface $logger;
 
-    /**
-     * AgentService constructor.
-     *
-     * @param EntityTypeManager $entityTypeManager
-     */
-    public function __construct(EntityTypeManager $entityTypeManager) {
+  /**
+   * AgentService constructor.
+   *
+   * @param EntityTypeManager $entityTypeManager
+   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerChannelFactory
+   */
+    public function __construct(EntityTypeManager $entityTypeManager, LoggerChannelFactory $loggerChannelFactory) {
         $this->entityTypeManager = $entityTypeManager;
     }
 
@@ -47,7 +51,7 @@ class AgentService {
             $advert_ids = $query->execute();
             $data = $storage->loadMultiple($advert_ids);
         } catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
-            Drupal::logger('rir_interface')->error("Load adverts failed: " . $e->getMessage());
+            $this->logger->error("Load adverts failed: " . $e->getMessage());
         }
         return $data;
     }

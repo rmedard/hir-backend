@@ -15,23 +15,28 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\node\NodeInterface;
 use function count;
 
-class PublisherService
+final class PublisherService
 {
 
-    protected EntityTypeManagerInterface $entityTypeManager;
+  protected EntityTypeManagerInterface $entityTypeManager;
+  protected LoggerChannelInterface $logger;
 
-    /**
-     * PublisherService constructor.
-     *
-     * @param EntityTypeManagerInterface $entityTypeManager
-     */
-    public function __construct(EntityTypeManagerInterface $entityTypeManager)
+  /**
+   * PublisherService constructor.
+   *
+   * @param EntityTypeManagerInterface $entityTypeManager
+   * @param LoggerChannelFactory $loggerChannelFactory
+   */
+    public function __construct(EntityTypeManagerInterface $entityTypeManager, LoggerChannelFactory $loggerChannelFactory)
     {
         $this->entityTypeManager = $entityTypeManager;
+        $this->logger = $loggerChannelFactory->get('PublisherService');
     }
 
     public function loadExpiredAdverts($date): array
@@ -46,10 +51,10 @@ class PublisherService
             if (isset($expired_adverts_ids) and count($expired_adverts_ids) > 0) {
                 return array_values($storage->loadMultiple($expired_adverts_ids));
             } else {
-                Drupal::logger('hir_publisher')->debug('No expired adverts found');
+                $this->logger->debug('No expired adverts found');
             }
         } catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
-            Drupal::logger('hir_publisher')->error($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
         return array();
     }
@@ -67,11 +72,10 @@ class PublisherService
                 $storage = $this->entityTypeManager->getStorage('webform_submission');
                 return $storage->loadMultiple($ids);
             } else {
-                Drupal::logger('hir_publisher')
-                    ->info('No non-mapped submissions found');
+                $this->logger->info('No non-mapped submissions found');
             }
         } catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
-            Drupal::logger('hir_publisher')->error($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
         return array();
     }
@@ -92,13 +96,13 @@ class PublisherService
                   if ($pr instanceof NodeInterface) {
                     $pr->setUnpublished();
                     $pr->save();
-                    Drupal::logger('hir_publisher')->notice(t('PR ID: @pr_id unpublished after expiration.', ['@pr_id' => $prId]));
+                    $this->logger->notice(t('PR ID: @pr_id unpublished after expiration.', ['@pr_id' => $prId]));
                   }
                 }
               }
             }
         } catch (InvalidPluginDefinitionException | PluginNotFoundException | EntityStorageException $e) {
-            Drupal::logger('hir_publisher')->error($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
     }
 }

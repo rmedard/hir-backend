@@ -1,14 +1,16 @@
 services:
   rir_interface.agent_service:
     class: Drupal\rir_interface\Service\AgentService
-    arguments: ["@entity_type.manager"]
+    arguments: ["@entity_type.manager", "@logger.factory"]
   rir_interface.adverts_service:
     class: Drupal\rir_interface\Service\AdvertsService
-    arguments: ["@entity_type.manager"]
+    arguments: ["@entity_type.manager", "@logger.factory"]
   rir_interface.currency_converter_service:
     class: Drupal\rir_interface\Service\CurrencyConverterService
+    arguments: ["@logger.factory"]
   rir_interface.email_service:
     class: Drupal\rir_interface\Service\EmailService
+    arguments: ["@logger.factory"]
   rir_interface.path_alias_service:
     class: Drupal\rir_interface\Service\PathAliasService
     arguments:
@@ -19,7 +21,7 @@ services:
     class: Drupal\rir_interface\Service\LocalityService
   rir_interface.property_requests_service:
     class: Drupal\rir_interface\Service\PropertyRequestsService
-    arguments: ["@entity_type.manager"]
+    arguments: ["@entity_type.manager", "@logger.factory"]
   rir_interface.route_subscriber:
     class: Drupal\rir_interface\Routing\RouteSubscriber
     tags:
@@ -32,3 +34,5 @@ services:
     class: Drupal\rir_interface\EventSubscriber\RedirectOn403InvalidUrl
     tags:
       - { name: event_subscriber }
+    arguments:
+      ['@logger.factory']

@@ -9,7 +9,7 @@ use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\path_alias\PathAliasInterface;
 
-class PathAliasService {
+final class PathAliasService {
 
 
   /**
@@ -23,7 +23,7 @@ class PathAliasService {
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerChannelFactory
    */
   public function __construct(LoggerChannelFactory $loggerChannelFactory) {
-    $this->logger = $loggerChannelFactory->get('path_alias_service');
+    $this->logger = $loggerChannelFactory->get('PathAliasService');
   }
 
   /**

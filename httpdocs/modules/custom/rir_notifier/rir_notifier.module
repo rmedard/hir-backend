@@ -10,8 +10,7 @@ use Drupal\Core\Render\Markup;
  * Implements hook_page_attachments().
  * @param array $attachments
  */
-function rir_notifier_page_attachments(array &$attachments)
-{
+function rir_notifier_page_attachments(array &$attachments): void {
     if (Drupal::currentUser()->isAnonymous()) {
         $attachments['#attached']['library'][] = 'rir_notifier/rir_scripts';
         $attachments['#attached']['library'][] = 'core/drupal.dialog.ajax';
@@ -54,8 +53,7 @@ function getRequestCategoryReference($location, $advertType, $propertyType): str
 /**
  * Implements hook_cron().
  */
-function rir_notifier_cron()
-{
+function rir_notifier_cron(): void {
     $request_time = Drupal::time()->getRequestTime();
     $todayDate = date('dmY', $request_time);
     $dayOfWeek = date('N', $request_time);

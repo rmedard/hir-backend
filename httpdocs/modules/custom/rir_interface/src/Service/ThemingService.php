@@ -5,7 +5,7 @@ namespace Drupal\rir_interface\Service;
 use Drupal\Core\Field\FieldItemList;
 use Drupal\node\Entity\Node;
 
-class ThemingService
+final class ThemingService
 {
   public function getPropertyTypePill(Node $advert): string
   {

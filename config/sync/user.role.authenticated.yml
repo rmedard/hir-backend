@@ -56,7 +56,6 @@ permissions:
   - 'view field_advertiser_featured'
   - 'view field_agent_category'
   - 'view field_agent_relative_path'
-  - 'view field_how_to_submit_advert'
   - 'view field_pr_reference'
   - 'view field_pr_relative_path'
   - 'view field_price_in_rwf'

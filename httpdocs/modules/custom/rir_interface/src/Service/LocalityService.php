@@ -4,8 +4,9 @@ namespace Drupal\rir_interface\Service;
 
 use Drupal\rir_interface\Utils\Constants;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\taxonomy\TermInterface;
 
-class LocalityService
+final class LocalityService
 {
   public function getLocality(int $deepestTermId): array
   {
@@ -24,9 +25,7 @@ class LocalityService
   private function computeParents(array $terms, int $term_id): array
   {
     if ($term_id !== 0) {
-      /**
-       * @var \Drupal\taxonomy\TermInterface $term
-       */
+      /** @var TermInterface $term */
       $term = Term::load($term_id);
       $terms[] = $term;
       return $this->computeParents($terms, intval($term->parent->target_id));

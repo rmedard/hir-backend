@@ -58,7 +58,6 @@ module:
   history: 0
   honeypot: 0
   image: 0
-  image_derivatives_generator: 0
   jquery_ui: 0
   jquery_ui_accordion: 0
   jquery_ui_autocomplete: 0
