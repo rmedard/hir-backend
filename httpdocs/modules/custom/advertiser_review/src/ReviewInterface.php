@@ -11,6 +11,7 @@ use Drupal\user\EntityOwnerInterface;
 /**
  * Provides an interface defining a review entity type.
  */
-interface ReviewInterface extends ContentEntityInterface, EntityOwnerInterface, EntityChangedInterface {
+interface ReviewInterface extends ContentEntityInterface, EntityOwnerInterface, EntityChangedInterface
+{
 
 }

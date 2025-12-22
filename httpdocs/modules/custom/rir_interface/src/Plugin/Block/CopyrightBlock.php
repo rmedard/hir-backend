@@ -14,6 +14,7 @@ use Drupal\Core\Block\BlockBase;
 
 /**
  * Class CopyrightBlock
+ *
  * @package Drupal\rir_interface\Plugin\Block
  *
  * @Block(
@@ -22,7 +23,8 @@ use Drupal\Core\Block\BlockBase;
  *     category = @Translation("Custom RIR Blocks")
  * )
  */
-class CopyrightBlock extends BlockBase {
+class CopyrightBlock extends BlockBase
+{
 
     /**
      * Builds and returns the renderable array for this block plugin.
@@ -37,7 +39,8 @@ class CopyrightBlock extends BlockBase {
      *
      * @see \Drupal\block\BlockViewBuilder
      */
-    public function build(): array {
+    public function build(): array
+    {
         return [
           '#theme' => 'rir_copyright',
         ];

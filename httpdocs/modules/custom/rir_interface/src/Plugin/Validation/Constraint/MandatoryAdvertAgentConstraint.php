@@ -16,12 +16,13 @@ use Symfony\Component\Validator\Constraint;
  * @DCG
  * To apply this constraint, see https://www.drupal.org/docs/drupal-apis/entity-api/entity-validation-api/providing-a-custom-validation-constraint.
  */
-class MandatoryAdvertAgentConstraint extends Constraint {
+class MandatoryAdvertAgentConstraint extends Constraint
+{
 
-  public string $advertiserNotSpecified = 'The advertiser is mandatory when the publisher is a company or agency.';
+    public string $advertiserNotSpecified = 'The advertiser is mandatory when the publisher is a company or agency.';
 
-  public function validatedBy(): string
-  {
-    return MandatoryAdvertAgentConstraintValidator::class;
-  }
+    public function validatedBy(): string
+    {
+        return MandatoryAdvertAgentConstraintValidator::class;
+    }
 }

@@ -18,27 +18,29 @@ use Drupal\node\NodeInterface;
  * Time: 13:00
  */
 
-final class AgentService {
+final class AgentService
+{
 
-  protected EntityTypeManager $entityTypeManager;
-  protected LoggerChannelInterface $logger;
+    protected EntityTypeManager $entityTypeManager;
+    protected LoggerChannelInterface $logger;
 
-  /**
-   * AgentService constructor.
-   *
-   * @param EntityTypeManager $entityTypeManager
-   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerChannelFactory
-   */
-    public function __construct(EntityTypeManager $entityTypeManager, LoggerChannelFactory $loggerChannelFactory) {
+    /**
+     * AgentService constructor.
+     *
+     * @param EntityTypeManager                        $entityTypeManager
+     * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerChannelFactory
+     */
+    public function __construct(EntityTypeManager $entityTypeManager, LoggerChannelFactory $loggerChannelFactory)
+    {
         $this->entityTypeManager = $entityTypeManager;
     }
 
-  /**
-   * @param $agent_id
-   * @param int $status Status of the adverts. Defaults to PUBLISHED
-   *
-   * @return array
-   */
+    /**
+     * @param $agent_id
+     * @param int $status   Status of the adverts. Defaults to PUBLISHED
+     *
+     * @return array
+     */
     public function loadAdverts($agent_id, int $status = NodeInterface::PUBLISHED): array
     {
         $data = [];

@@ -16,6 +16,7 @@ use Drupal\node\NodeInterface;
 
 /**
  * Class RiRSimilarAdverts
+ *
  * @package Drupal\rir_interface\Plugin\Block
  * @Block(
  *   id = "rir_similar_adverts",
@@ -45,9 +46,9 @@ class RiRSimilarAdverts extends BlockBase
         $output = [];
         $output[]['#cache']['max-age'] = 0; //No cache. Very important.
         if ($node and $node instanceof NodeInterface and $node->bundle() == 'advert') {
-          /**
-           * @var \Drupal\rir_interface\Service\AdvertsService $advertsService;
-           */
+            /**
+             * @var \Drupal\rir_interface\Service\AdvertsService $advertsService;
+             */
             $advertsService = Drupal::service('rir_interface.adverts_service');
             $output[] = [
                 '#theme' => 'hir_similar_adverts',

@@ -20,49 +20,54 @@ use Drupal\Core\TypedData\DataDefinition;
  *   default_formatter = "advertiser_rating_default",
  * )
  */
-final class AdvertiserRatingItem extends FieldItemBase {
+final class AdvertiserRatingItem extends FieldItemBase
+{
 
-  /**
-   * {@inheritdoc}
-   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
-   */
-  public function isEmpty(): bool {
-    return $this->get('average_rating')->getValue() === NULL && $this->get('review_count')->getValue() === NULL;
-  }
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+     */
+    public function isEmpty(): bool
+    {
+        return $this->get('average_rating')->getValue() === null && $this->get('review_count')->getValue() === null;
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition): array {
+    /**
+     * {@inheritdoc}
+     */
+    public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition): array
+    {
 
-    $properties['average_rating'] = DataDefinition::create('float')
-      ->setLabel(t('Average Rating'));
-    $properties['review_count'] = DataDefinition::create('integer')
-      ->setLabel(t('Review Count'));
+        $properties['average_rating'] = DataDefinition::create('float')
+        ->setLabel(t('Average Rating'));
+        $properties['review_count'] = DataDefinition::create('integer')
+        ->setLabel(t('Review Count'));
 
-    return $properties;
-  }
+        return $properties;
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public static function schema(FieldStorageDefinitionInterface $field_definition): array {
+    /**
+     * {@inheritdoc}
+     */
+    public static function schema(FieldStorageDefinitionInterface $field_definition): array
+    {
 
-    $columns = [
-      'average_rating' => [
+        $columns = [
+        'average_rating' => [
         'type' => 'float',
         'size' => 'normal',
-      ],
-      'review_count' => [
+        ],
+        'review_count' => [
         'type' => 'int',
         'size' => 'normal',
-      ],
-    ];
+        ],
+        ];
 
-    return [
-      'columns' => $columns,
-      // @DCG Add indexes here if necessary.
-    ];
-  }
+        return [
+        'columns' => $columns,
+        // @DCG Add indexes here if necessary.
+        ];
+    }
 
 }

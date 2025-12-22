@@ -23,7 +23,7 @@
       ];
 
       /**
-       * Format number with thousand separators based on field type
+       * Format number with 'thousand' separators based on field type
        * @param {string|number} value - The value to format
        * @param {string} fieldType - 'decimal' or 'integer'
        * @param {number} precision - Number of decimal places

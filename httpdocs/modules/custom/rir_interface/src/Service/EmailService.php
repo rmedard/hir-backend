@@ -19,19 +19,21 @@ use Drupal\rir_interface\Utils\Constants;
 final class EmailService
 {
 
-  protected LoggerChannelInterface $logger;
+    protected LoggerChannelInterface $logger;
 
-  public function __construct(LoggerChannelFactory $loggerChannelFactory) {
-    $this->logger = $loggerChannelFactory->get('EmailService');
-  }
+    public function __construct(LoggerChannelFactory $loggerChannelFactory)
+    {
+        $this->logger = $loggerChannelFactory->get('EmailService');
+    }
 
     /**
      * @param $data
      */
-    public function send($data): void {
-      $mailManager = Drupal::service('plugin.manager.mail');
-      $module = 'rir_interface';
-      $defaultReplyTo = Drupal::config('system.site')->get('mail');
+    public function send($data): void
+    {
+        $mailManager = Drupal::service('plugin.manager.mail');
+        $module = 'rir_interface';
+        $defaultReplyTo = Drupal::config('system.site')->get('mail');
         if ($data->notificationType === Constants::ADVERT_VALIDATED) {
             $entity = $data->entity;
             if ($entity instanceof NodeInterface) {
@@ -54,22 +56,26 @@ final class EmailService
                 $params['advert_title'] = $entity->label();
                 $params['contact_name'] = $entity->get('field_visit_contact_name')->getString();
 
-//                $attachments = get_email_attachment_files();
-//                $params['attachments'][] = $attachments[0];
-//                $params['attachments'][] = $attachments[1];
-//                $params['attachments'][] = $attachments[2];
+                //                $attachments = get_email_attachment_files();
+                //                $params['attachments'][] = $attachments[0];
+                //                $params['attachments'][] = $attachments[1];
+                //                $params['attachments'][] = $attachments[2];
 
                 $langcode = Drupal::languageManager()->getDefaultLanguage()->getId();
-                $result = $mailManager->mail($module, $key, $to, $langcode, $params, $defaultReplyTo, TRUE);
+                $result = $mailManager->mail($module, $key, $to, $langcode, $params, $defaultReplyTo, true);
                 if (intval($result['result']) != 1) {
-                    $message = t('There was a problem sending notification email after creating advert id: @id.', [
+                    $message = t(
+                        'There was a problem sending notification email after creating advert id: @id.', [
                         '@id' => $entity->id(),
-                    ]);
-                    $this->logger->error($message . ' Whole Error: ' . json_encode($result, TRUE));
+                        ]
+                    );
+                    $this->logger->error($message . ' Whole Error: ' . json_encode($result, true));
                 } else {
-                    $message = t('An email notification has been sent after creating advert id: @id.', [
+                    $message = t(
+                        'An email notification has been sent after creating advert id: @id.', [
                         '@id' => $entity->id(),
-                    ]);
+                        ]
+                    );
                     $this->logger->notice($message);
                 }
             } else {
@@ -81,9 +87,9 @@ final class EmailService
             if ($entity instanceof NodeInterface) {
                 $key = Constants::ADVERT_VALIDATED_NOTIFY_PR;
 
-              /**
-               * @var \Drupal\rir_interface\Service\PropertyRequestsService $PRsService;
-               */
+                /**
+                 * @var \Drupal\rir_interface\Service\PropertyRequestsService $PRsService;
+                 */
                 $PRsService = Drupal::service('rir_interface.property_requests_service');
                 $PRs = $PRsService->loadPRsForAdvert($entity);
                 if (!empty($PRs)) {
@@ -93,19 +99,27 @@ final class EmailService
                         if ($pr instanceof NodeInterface && strlen(str_replace($dummyDomains, '', $email)) == strlen($email)) {
                             $to = $email;
                             $params['cc'] = Drupal::config('system.site')->get('mail');
-                            $params['message'] = Markup::create(getEmailHtmlContent(Constants::ADVERT_VALIDATED_NOTIFY_PR,
-                                $entity, $pr->get('field_pr_first_name')->value, ['prId' => $pr->id()]));
+                            $params['message'] = Markup::create(
+                                getEmailHtmlContent(
+                                    Constants::ADVERT_VALIDATED_NOTIFY_PR,
+                                    $entity, $pr->get('field_pr_first_name')->value, ['prId' => $pr->id()]
+                                )
+                            );
                             $langcode = Drupal::languageManager()->getDefaultLanguage()->getId();
-                            $result = $mailManager->mail($module, $key, $to, $langcode, $params, $defaultReplyTo, TRUE);
+                            $result = $mailManager->mail($module, $key, $to, $langcode, $params, $defaultReplyTo, true);
                             if (intval($result['result']) != 1) {
-                                $message = t('There was a problem sending notification email to PR for advert: @id.', [
+                                $message = t(
+                                    'There was a problem sending notification email to PR for advert: @id.', [
                                     '@id' => $entity->id(),
-                                ]);
-                                $this->logger->error($message . ' Whole Error: ' . json_encode($result, TRUE));
+                                    ]
+                                );
+                                $this->logger->error($message . ' Whole Error: ' . json_encode($result, true));
                             } else {
-                                $message = t('An email notification has been sent to PR for advert id: @id.', [
+                                $message = t(
+                                    'An email notification has been sent to PR for advert id: @id.', [
                                     '@id' => $entity->id(),
-                                ]);
+                                    ]
+                                );
                                 $this->logger->notice($message);
                             }
                         }
@@ -120,13 +134,17 @@ final class EmailService
             $key = Constants::PROPOSED_ADVERTS_TO_PR;
             $to = $pr->get('field_pr_email')->value;
             $defaultReplyTo = Drupal::config('system.site')->get('mail');
-            $params['message'] = Markup::create(getEmailHtmlContent(Constants::PROPOSED_ADVERTS_TO_PR,
-                $adverts, $pr->get('field_pr_first_name')->value, ['prId' => $pr->id()]));
+            $params['message'] = Markup::create(
+                getEmailHtmlContent(
+                    Constants::PROPOSED_ADVERTS_TO_PR,
+                    $adverts, $pr->get('field_pr_first_name')->value, ['prId' => $pr->id()]
+                )
+            );
             $langcode = Drupal::languageManager()->getDefaultLanguage()->getId();
-            $result = $mailManager->mail($module, $key, $to, $langcode, $params, $defaultReplyTo, TRUE);
+            $result = $mailManager->mail($module, $key, $to, $langcode, $params, $defaultReplyTo, true);
             if (intval($result['result']) != 1) {
                 $message = t('There was a problem sending notification email to PR.');
-                $this->logger->error($message . ' Whole Error: ' . json_encode($result, TRUE));
+                $this->logger->error($message . ' Whole Error: ' . json_encode($result, true));
             } else {
                 $message = t('An email notification has been sent to PR.');
                 $this->logger->notice($message);

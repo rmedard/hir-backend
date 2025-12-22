@@ -17,11 +17,11 @@ use JetBrains\PhpStorm\ArrayShape;
 class HirMenuActionButtons extends BlockBase
 {
 
-  #[ArrayShape(['#theme' => "string"])]
-  public function build(): array
-  {
-    return[
-      '#theme' => 'hir_menu_action_buttons'
-    ];
-  }
+    #[ArrayShape(['#theme' => "string"])]
+    public function build(): array
+    {
+        return[
+        '#theme' => 'hir_menu_action_buttons'
+        ];
+    }
 }

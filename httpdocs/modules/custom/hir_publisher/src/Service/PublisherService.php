@@ -19,20 +19,21 @@ use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\node\NodeInterface;
+use Exception;
 use function count;
 
 final class PublisherService
 {
 
-  protected EntityTypeManagerInterface $entityTypeManager;
-  protected LoggerChannelInterface $logger;
+    protected EntityTypeManagerInterface $entityTypeManager;
+    protected LoggerChannelInterface $logger;
 
-  /**
-   * PublisherService constructor.
-   *
-   * @param EntityTypeManagerInterface $entityTypeManager
-   * @param LoggerChannelFactory $loggerChannelFactory
-   */
+    /**
+     * PublisherService constructor.
+     *
+     * @param EntityTypeManagerInterface $entityTypeManager
+     * @param LoggerChannelFactory       $loggerChannelFactory
+     */
     public function __construct(EntityTypeManagerInterface $entityTypeManager, LoggerChannelFactory $loggerChannelFactory)
     {
         $this->entityTypeManager = $entityTypeManager;
@@ -43,7 +44,7 @@ final class PublisherService
     {
         try {
             $storage = $this->entityTypeManager->getStorage('node');
-            $query = $storage->getQuery()->accessCheck(FALSE)
+            $query = $storage->getQuery()->accessCheck(false)
                 ->condition('type', 'advert')
                 ->condition('status', NodeInterface::PUBLISHED)
                 ->condition('field_advert_expirydate', $date, '<');
@@ -74,32 +75,33 @@ final class PublisherService
             } else {
                 $this->logger->info('No non-mapped submissions found');
             }
-        } catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
+        } catch (InvalidPluginDefinitionException | PluginNotFoundException | Exception $e) {
             $this->logger->error($e->getMessage());
         }
         return array();
     }
 
-    public function unPublishExpiredPropertyRequests(): void {
+    public function unPublishExpiredPropertyRequests(): void
+    {
         try {
             $storage = $this->entityTypeManager->getStorage('node');
             $now = new DrupalDateTime('now');
-            $query = $storage->getQuery()->accessCheck(FALSE)
+            $query = $storage->getQuery()->accessCheck(false)
                 ->condition('type', 'property_request')
                 ->condition('status', NodeInterface::PUBLISHED)
                 ->condition('field_pr_expiry_date', $now->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT), '<');
             $prIds = $query->execute();
             if (isset($prIds) && count($prIds) > 0) {
-              $prs = $storage->loadMultiple($prIds);
-              if (count($prs) > 0) {
-                foreach ($prs as $prId => $pr){
-                  if ($pr instanceof NodeInterface) {
-                    $pr->setUnpublished();
-                    $pr->save();
-                    $this->logger->notice(t('PR ID: @pr_id unpublished after expiration.', ['@pr_id' => $prId]));
-                  }
+                $prs = $storage->loadMultiple($prIds);
+                if (count($prs) > 0) {
+                    foreach ($prs as $prId => $pr){
+                        if ($pr instanceof NodeInterface) {
+                            $pr->setUnpublished();
+                            $pr->save();
+                            $this->logger->notice(t('PR ID: @pr_id unpublished after expiration.', ['@pr_id' => $prId]));
+                        }
+                    }
                 }
-              }
             }
         } catch (InvalidPluginDefinitionException | PluginNotFoundException | EntityStorageException $e) {
             $this->logger->error($e->getMessage());

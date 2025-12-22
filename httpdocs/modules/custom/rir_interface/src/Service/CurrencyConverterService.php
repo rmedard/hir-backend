@@ -17,15 +17,17 @@ use GuzzleHttp\Exception\RequestException;
 final class CurrencyConverterService
 {
 
-  protected LoggerChannelInterface $logger;
+    protected LoggerChannelInterface $logger;
 
-  /**
-   * @param LoggerChannelFactory $loggerChannelFactory
-   */
-  public function __construct(LoggerChannelFactory $loggerChannelFactory) {
-    $this->logger = $loggerChannelFactory->get('CurrencyConverterService');
-  }
-    public function getUsdRwfRate() {
+    /**
+     * @param LoggerChannelFactory $loggerChannelFactory
+     */
+    public function __construct(LoggerChannelFactory $loggerChannelFactory)
+    {
+        $this->logger = $loggerChannelFactory->get('CurrencyConverterService');
+    }
+    public function getUsdRwfRate()
+    {
         $thisMonth = (new DrupalDateTime())->format('mY');
         $localRate = Drupal::state()->get(Constants::USD_RWF_EXCHANGE_RATE);
         $latestDayRate = Drupal::state()->get(Constants::LATEST_DAY_EXCHANGE_RATE);
@@ -46,17 +48,21 @@ final class CurrencyConverterService
                     return $rate;
                 } else {
                     $this->logger
-                        ->error(t('Currency Converter Error. Code: :code | Message: :message',
-                            [
+                        ->error(
+                            t(
+                                'Currency Converter Error. Code: :code | Message: :message',
+                                [
                                 ':code' => $response->getStatusCode(),
                                 ':message' => $response->getReasonPhrase()
-                            ]));
+                                ]
+                            )
+                        );
                 }
             } catch (RequestException $e) {
                 $this->logger->warning('Currency API not available: ' . $e->getMessage());
             }
             catch (GuzzleException $e) {
-              $this->logger->warning('Currency API not available: ' . $e->getMessage());
+                $this->logger->warning('Currency API not available: ' . $e->getMessage());
             }
         }
         return $localRate;

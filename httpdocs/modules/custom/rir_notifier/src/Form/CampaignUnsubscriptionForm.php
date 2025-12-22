@@ -13,6 +13,7 @@ use Drupal\webform\WebformSubmissionInterface;
 
 /**
  * Class CampaignUnsubscriptionForm
+ *
  * @package Drupal\rir_notifier\Form
  */
 class CampaignUnsubscriptionForm extends FormBase
@@ -38,7 +39,7 @@ class CampaignUnsubscriptionForm extends FormBase
     /**
      * Form constructor.
      *
-     * @param array $form
+     * @param array              $form
      *   An associative array containing the structure of the form.
      * @param FormStateInterface $form_state
      *   The current state of the form.
@@ -56,7 +57,7 @@ class CampaignUnsubscriptionForm extends FormBase
             '#type' => 'email',
             '#title' => $this->t('Email'),
             '#description' => $this->t('Enter the email address that has to be unsubscribed.'),
-            '#required' => TRUE,
+            '#required' => true,
         ];
         $form['actions']['#type'] = 'actions';
         $form['actions']['submit'] = array(
@@ -71,7 +72,7 @@ class CampaignUnsubscriptionForm extends FormBase
     /**
      * Form submission handler.
      *
-     * @param array $form
+     * @param array              $form
      *   An associative array containing the structure of the form.
      * @param FormStateInterface $form_state
      *   The current state of the form.
@@ -96,20 +97,20 @@ class CampaignUnsubscriptionForm extends FormBase
                     $submission->setElementData('subscription_active', '0');
                     $submission->save();
                     $form_state->setRedirect('<front>');
-                    $messenger->addMessage(t('Successfully unsubscribed!'), $messenger::TYPE_STATUS, FALSE);
+                    $messenger->addMessage(t('Successfully unsubscribed!'), $messenger::TYPE_STATUS, false);
                 } else {
                     $errorFound = true;
                 }
             } catch (EntityStorageException $ex) {
                 Drupal::logger('rir_notifier')->error('Saving unsubscription failed for sid: ' . $sid);
-                $messenger->addMessage(t('Something wrong! Contact administrator.'), $messenger::TYPE_ERROR, FALSE);
+                $messenger->addMessage(t('Something wrong! Contact administrator.'), $messenger::TYPE_ERROR, false);
             }
         } else {
             $errorFound = true;
         }
 
         if ($errorFound) {
-            $messenger->addMessage(t('Sorry, subscription not found!'), $messenger::TYPE_ERROR, FALSE);
+            $messenger->addMessage(t('Sorry, subscription not found!'), $messenger::TYPE_ERROR, false);
         }
     }
 }

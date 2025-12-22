@@ -12,7 +12,8 @@ namespace Drupal\rir_notifier\Form;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
-class CampaignAlertsConfigForm extends ConfigFormBase {
+class CampaignAlertsConfigForm extends ConfigFormBase
+{
 
     /**
      * Gets the configuration names that will be editable.
@@ -46,12 +47,13 @@ class CampaignAlertsConfigForm extends ConfigFormBase {
             '#type' => 'textfield',
             '#title' => $this->t('Crypto Secret Key'),
             '#default_value' => $config->get('crypto_secret_key'),
-            '#required' => TRUE
+            '#required' => true
         );
         return parent::buildForm($form, $form_state);
     }
 
-    public function submitForm(array &$form, FormStateInterface $form_state): void {
+    public function submitForm(array &$form, FormStateInterface $form_state): void
+    {
         $values = $form_state->getValues();
         $this->config('rir_notifier.settings')->set('crypto_secret_key', $values['crypto_secret_key'])->save();
         parent::submitForm($form, $form_state);

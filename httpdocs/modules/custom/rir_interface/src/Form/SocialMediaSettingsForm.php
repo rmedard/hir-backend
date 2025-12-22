@@ -70,7 +70,8 @@ class SocialMediaSettingsForm extends ConfigFormBase
         return parent::buildForm($form, $form_state);
     }
 
-    public function submitForm(array &$form, FormStateInterface $form_state): void {
+    public function submitForm(array &$form, FormStateInterface $form_state): void
+    {
         $this->configFactory->getEditable(static::SETTINGS)
             ->set('linkedin_page', $form_state->getValue('linkedin_page'))
             ->set('facebook_page', $form_state->getValue('facebook_page'))

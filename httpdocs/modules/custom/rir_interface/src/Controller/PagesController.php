@@ -14,14 +14,14 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class PagesController extends ControllerBase
 {
-  /**
-   * @return string[]
-   */
-  #[ArrayShape(['#theme' => "string"])]
-  public function hirManagementPage(): array
-  {
-    return array(
-      '#theme' => 'hir_management_page'
-    );
-  }
+    /**
+     * @return string[]
+     */
+    #[ArrayShape(['#theme' => "string"])]
+    public function hirManagementPage(): array
+    {
+        return array(
+        '#theme' => 'hir_management_page'
+        );
+    }
 }

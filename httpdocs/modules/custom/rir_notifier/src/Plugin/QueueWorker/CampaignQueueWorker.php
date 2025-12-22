@@ -23,7 +23,7 @@ use Exception;
 /**
  * Class CampaignQueueWorker
  *
- * @package Drupal\rir_notifier\Plugin\QueueWorker
+ * @package      Drupal\rir_notifier\Plugin\QueueWorker
  * @QueueWorker(
  *  id = "campaigns_processor",
  *  title = "Campaigns Queue Worker",
@@ -61,7 +61,8 @@ class CampaignQueueWorker extends QueueWorkerBase
      *
      * @see \Drupal\Core\Cron::processQueues()
      */
-    public function processItem($data): void {
+    public function processItem($data): void
+    {
         if (isset($data)) {
             $mailManager = Drupal::service('plugin.manager.mail');
             $module = 'rir_interface';
@@ -78,15 +79,17 @@ class CampaignQueueWorker extends QueueWorkerBase
                 $params['message'] = Markup::create(getCampaignHtmlContent($sid, $submission->getElementData('notif_firstname'), $adverts));
 
                 $langcode = Drupal::languageManager()->getDefaultLanguage()->getId();
-                $send = TRUE;
+                $send = true;
                 $result = $mailManager->mail($module, $key, $to, $langcode, $params, $reply, $send);
 
                 if (intval($result['result']) !== 1) {
                     $message = t('There was a problem sending campaign email to @email', ['@email' => $to]);
                     Drupal::logger('rir_notifier')->error($message);
                 } else {
-                    $message = t('An campaign email has been sent to @email with advertIds: @ids',
-                        ['@email' => $to, '@ids' => implode('|', $advertIds)]);
+                    $message = t(
+                        'An campaign email has been sent to @email with advertIds: @ids',
+                        ['@email' => $to, '@ids' => implode('|', $advertIds)]
+                    );
                     Drupal::logger('rir_notifier')->info($message);
                 }
             }

@@ -17,25 +17,30 @@ use Drupal\Core\Session\AccountInterface;
  *   type = "review"
  * )
  */
-class EnableReview extends ActionBase {
+class EnableReview extends ActionBase
+{
 
-  /**
-   * {@inheritdoc}
-   */
-  public function access($object, ?AccountInterface $account = NULL, $return_as_object = FALSE): bool|AccessResultInterface {
-    /** @var \Drupal\advertiser_review\ReviewInterface $object */
-    $result = $object->access('update', $account, TRUE);
-    return $return_as_object ? $result : $result->isAllowed();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function execute($entity = NULL): void {
-    if ($entity && $entity->hasField('status')) {
-      $entity->set('status', TRUE);
-      $entity->save();
+    /**
+     * {@inheritdoc}
+     */
+    public function access($object, ?AccountInterface $account = null, $return_as_object = false): bool|AccessResultInterface
+    {
+        /**
+   * @var \Drupal\advertiser_review\ReviewInterface $object 
+*/
+        $result = $object->access('update', $account, true);
+        return $return_as_object ? $result : $result->isAllowed();
     }
-  }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function execute($entity = null): void
+    {
+        if ($entity && $entity->hasField('status')) {
+            $entity->set('status', true);
+            $entity->save();
+        }
+    }
 
 }

@@ -8,33 +8,35 @@ use Drupal\taxonomy\TermInterface;
 
 final class LocalityService
 {
-  public function getLocality(int $deepestTermId): array
-  {
-    $locality = [];
-    $terms = $this->computeParents([], $deepestTermId);
-    $divisions = $this->localityDivisions();
-    foreach ($terms as $key => $term) {
-      if ($term instanceof Term) {
-        $division = $divisions[count($divisions) - count($terms) + $key];
-        $locality[$division] = $term->getName();
-      }
+    public function getLocality(int $deepestTermId): array
+    {
+        $locality = [];
+        $terms = $this->computeParents([], $deepestTermId);
+        $divisions = $this->localityDivisions();
+        foreach ($terms as $key => $term) {
+            if ($term instanceof Term) {
+                $division = $divisions[count($divisions) - count($terms) + $key];
+                $locality[$division] = $term->getName();
+            }
+        }
+        return $locality;
     }
-    return $locality;
-  }
 
-  private function computeParents(array $terms, int $term_id): array
-  {
-    if ($term_id !== 0) {
-      /** @var TermInterface $term */
-      $term = Term::load($term_id);
-      $terms[] = $term;
-      return $this->computeParents($terms, intval($term->parent->target_id));
+    private function computeParents(array $terms, int $term_id): array
+    {
+        if ($term_id !== 0) {
+            /**
+     * @var TermInterface $term 
+*/
+            $term = Term::load($term_id);
+            $terms[] = $term;
+            return $this->computeParents($terms, intval($term->parent->target_id));
+        }
+        return $terms;
     }
-    return $terms;
-  }
 
-  private function localityDivisions(): array
-  {
-    return [0 => Constants::SECTOR, 1 => Constants::DISTRICT, 2 => Constants::PROVINCE];
-  }
+    private function localityDivisions(): array
+    {
+        return [0 => Constants::SECTOR, 1 => Constants::DISTRICT, 2 => Constants::PROVINCE];
+    }
 }

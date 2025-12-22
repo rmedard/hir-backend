@@ -16,7 +16,7 @@ use Drupal\webform\WebformSubmissionInterface;
 /**
  * Class DetailsRequestWebformHandler
  *
- * @package Drupal\rir_interface\Plugin\WebformHandler
+ * @package         Drupal\rir_interface\Plugin\WebformHandler
  * @WebformHandler(
  *   id = "details_request_email",
  *   label = @Translation("Details Request Email"),
@@ -55,9 +55,11 @@ class DetailsRequestWebformHandler extends EmailWebformHandler
             }
             $message['to_mail'] = $recipients;
             $message['reply_to'] = $email;
-            $message['subject'] = $this->t('Request for more details about your property on @site',
-                array('@site' => Drupal::config('system.site')->get('name')), $options);
-            $message['html'] = TRUE;
+            $message['subject'] = $this->t(
+                'Request for more details about your property on @site',
+                array('@site' => Drupal::config('system.site')->get('name')), $options
+            );
+            $message['html'] = true;
 
             $message['body'] = getHtmlContent($node, $contact_name, $phone, $email, $names, $email_message, $purposes, $timeframe);
             Drupal::logger('rir_interface')->debug('Request for further info sent by: ' . $email);
@@ -82,6 +84,6 @@ function getHtmlContent($advert, $contact_name, $phone, $email, $names, $message
     ];
     $themePath = Drupal::service('extension.list.theme')->getPath('houseinrwanda_theme');
     return Drupal::service('twig')
-      ->load($themePath . '/emails/rir-request-info.html.twig')
-      ->render($variables);
+        ->load($themePath . '/emails/rir-request-info.html.twig')
+        ->render($variables);
 }

@@ -12,7 +12,8 @@ namespace Drupal\rir_interface\Routing;
 use Drupal\Core\Routing\RouteSubscriberBase;
 use Symfony\Component\Routing\RouteCollection;
 
-class RouteSubscriber extends RouteSubscriberBase {
+class RouteSubscriber extends RouteSubscriberBase
+{
 
     /**
      * Alters existing routes for a specific collection.
@@ -20,7 +21,8 @@ class RouteSubscriber extends RouteSubscriberBase {
      * @param RouteCollection $collection
      *   The route collection for adding routes.
      */
-    protected function alterRoutes(RouteCollection $collection): void {
+    protected function alterRoutes(RouteCollection $collection): void
+    {
         $management_routes = [
             'view.adverts.page_manage_adverts',
             'view.agents.page_manage_advertisers',

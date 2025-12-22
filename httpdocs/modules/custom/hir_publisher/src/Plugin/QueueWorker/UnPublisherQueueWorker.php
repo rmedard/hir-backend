@@ -20,14 +20,15 @@ use Exception;
 /**
  * Class Un-publisherQueueWorker
  *
- * @package Drupal\hir_publisher\Plugin\QueueWorker
+ * @package      Drupal\hir_publisher\Plugin\QueueWorker
  * @QueueWorker(
  *  id = "unpublisher_processor",
  *  title = "UnPublisher Queue Worker",
  *  cron = {"time" = 90}
  * )
  */
-class UnPublisherQueueWorker extends QueueWorkerBase {
+class UnPublisherQueueWorker extends QueueWorkerBase
+{
 
     /**
      * Works on a single queue item.
@@ -54,11 +55,12 @@ class UnPublisherQueueWorker extends QueueWorkerBase {
      *
      * @see \Drupal\Core\Cron::processQueues()
      */
-    public function processItem($data): void {
-      if ($data instanceof NodeInterface) {
-        $data->setUnpublished();
-        $data->save();
-        Drupal::logger('hir_publisher')->notice(t('Advert ID: @advert_id unpublished after expiration.', ['@advert_id' => $data->id()]));
-      }
+    public function processItem($data): void
+    {
+        if ($data instanceof NodeInterface) {
+            $data->setUnpublished();
+            $data->save();
+            Drupal::logger('UnPublisherQueueWorker')->notice(t('Advert ID: @advert_id unpublished after expiration.', ['@advert_id' => $data->id()]));
+        }
     }
 }

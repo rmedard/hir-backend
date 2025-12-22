@@ -23,7 +23,8 @@ use Drupal\Core\Block\BlockBase;
  *   category = @Translation("Custom RIR Blocks")
  * )
  */
-class RiRRealTimeFigures extends BlockBase {
+class RiRRealTimeFigures extends BlockBase
+{
 
     /**
      * Builds and returns the renderable array for this block plugin.
@@ -42,34 +43,34 @@ class RiRRealTimeFigures extends BlockBase {
     public function build(): array
     {
         $rent = Drupal::entityQuery('node')
-          ->accessCheck(false)
-          ->condition('type', 'advert')
-          ->condition('field_advert_type', 'rent')
-          ->count();
+            ->accessCheck(false)
+            ->condition('type', 'advert')
+            ->condition('field_advert_type', 'rent')
+            ->count();
         $rent_count = $rent->execute();
 
         $sale = Drupal::entityQuery('node')
-          ->accessCheck(false)
-          ->condition('type', 'advert')
-          ->condition('field_advert_type', 'buy')
-          ->count();
+            ->accessCheck(false)
+            ->condition('type', 'advert')
+            ->condition('field_advert_type', 'buy')
+            ->count();
         $sale_count = $sale->execute();
 
         $auction = Drupal::entityQuery('node')
-          ->accessCheck(false)
-          ->condition('type', 'advert')
-          ->condition('field_advert_type', 'auction')
-          ->count();
+            ->accessCheck(false)
+            ->condition('type', 'advert')
+            ->condition('field_advert_type', 'auction')
+            ->count();
         $auction_count = $auction->execute();
 
         $agents = Drupal::entityQuery('node')
-          ->accessCheck(false)
-          ->condition('type', 'agent')
-          ->count();
+            ->accessCheck(false)
+            ->condition('type', 'agent')
+            ->count();
         $agents_count = $agents->execute();
 
         $prs = Drupal::entityQuery('node')
-          ->accessCheck(false)
+            ->accessCheck(false)
             ->condition('type', 'property_request')
             ->count();
         $prs_count = $prs->execute();

@@ -19,12 +19,12 @@ use JetBrains\PhpStorm\ArrayShape;
 class GooglePlacesApiAttributionBlock extends BlockBase
 {
 
-  /**
-   * {@inheritdoc}
-   */
-  #[ArrayShape(['#markup' => "string"])]
-  public function build(): array
-  {
-    return ['#markup' => '<span id="geolocation-google-places-api-attribution"></span>'];
-  }
+    /**
+     * {@inheritdoc}
+     */
+    #[ArrayShape(['#markup' => "string"])]
+    public function build(): array
+    {
+        return ['#markup' => '<span id="geolocation-google-places-api-attribution"></span>'];
+    }
 }

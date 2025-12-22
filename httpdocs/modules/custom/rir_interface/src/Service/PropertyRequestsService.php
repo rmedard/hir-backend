@@ -19,14 +19,14 @@ use Drupal\node\NodeInterface;
 final class PropertyRequestsService
 {
     protected EntityTypeManager $entityTypeManager;
-  protected LoggerChannelInterface $logger;
+    protected LoggerChannelInterface $logger;
 
-  /**
-   * PropertyRequestsService constructor.
-   *
-   * @param EntityTypeManager $entityTypeManager
-   * @param LoggerChannelFactory $loggerChannelFactory
-   */
+    /**
+     * PropertyRequestsService constructor.
+     *
+     * @param EntityTypeManager    $entityTypeManager
+     * @param LoggerChannelFactory $loggerChannelFactory
+     */
     public function __construct(EntityTypeManager $entityTypeManager, LoggerChannelFactory $loggerChannelFactory)
     {
         $this->entityTypeManager = $entityTypeManager;
@@ -41,7 +41,8 @@ final class PropertyRequestsService
                 [
                     'type' => 'property_request',
                     'field_pr_proposed_properties' => $advert->id()
-                ]);
+                ]
+            );
         } catch (InvalidPluginDefinitionException $e) {
             $this->logger->error('Invalid plugin: ' . $e->getMessage());
         } catch (PluginNotFoundException $e) {

@@ -8,6 +8,7 @@ use Exception;
 
 /**
  * Class SecurityService
+ *
  * @package Drupal\rir_notifier\Service
  */
 class SecurityService
@@ -22,7 +23,7 @@ class SecurityService
             $config_factory->getEditable('rir_notifier.settings')->set('crypto_secret_key', $key)->save();
         }
         try {
-//            $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+            //            $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
             $encrypted = sodium_crypto_secretbox($value, $nonce, $key);
         } catch (Exception $e) {
             Drupal::logger('rir_notifier')->error('Error while encrypting value: ' . $value);

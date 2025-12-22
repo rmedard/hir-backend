@@ -32,7 +32,7 @@ class DirectAccessForm extends FormBase
     /**
      * Form constructor.
      *
-     * @param array $form
+     * @param array              $form
      *   An associative array containing the structure of the form.
      * @param FormStateInterface $form_state
      *   The current state of the form.
@@ -42,14 +42,14 @@ class DirectAccessForm extends FormBase
      */
     public function buildForm(array $form, FormStateInterface $form_state): array
     {
-      $form['search_group'] = [
+        $form['search_group'] = [
         '#type' => 'container',
         '#attributes' => [
           'class' => ['input-group']
         ],
-      ];
+        ];
 
-      $form['search_group']['reference_number'] = [
+        $form['search_group']['reference_number'] = [
         '#type' => 'textfield',
         '#attributes' => [
           'placeholder' => $this->t('Reference number'),
@@ -63,8 +63,8 @@ class DirectAccessForm extends FormBase
           'class' => [] // This target the wrapper div
         ],
         '#theme_wrappers' => []
-      ];
-      $form['search_group']['submit'] = [
+        ];
+        $form['search_group']['submit'] = [
         '#type' => 'submit',
         '#value' => $this->t('Find'),
         '#attributes' => [
@@ -75,11 +75,12 @@ class DirectAccessForm extends FormBase
         '#wrapper_attributes' => [
           'class' => [] // Remove default wrapper classes
         ]
-      ];
-      return $form;
+        ];
+        return $form;
     }
 
-    public function validateForm(array &$form, FormStateInterface $form_state): void {
+    public function validateForm(array &$form, FormStateInterface $form_state): void
+    {
         if ($form_state->isValueEmpty('reference_number')) {
             $form_state->setErrorByName('reference_number', t('Provide reference number'));
         }
@@ -88,12 +89,13 @@ class DirectAccessForm extends FormBase
     /**
      * Form submission handler.
      *
-     * @param array $form
+     * @param array              $form
      *   An associative array containing the structure of the form.
      * @param FormStateInterface $form_state
      *   The current state of the form.
      */
-    public function submitForm(array &$form, FormStateInterface $form_state): void {
+    public function submitForm(array &$form, FormStateInterface $form_state): void
+    {
         $reference = trim($form_state->getValue('reference_number'));
         $nodeQuery = Drupal::entityQuery('node')->accessCheck()
             ->condition('type', 'advert')

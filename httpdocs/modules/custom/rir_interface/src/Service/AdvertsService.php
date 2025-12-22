@@ -24,12 +24,12 @@ final class AdvertsService
     protected EntityTypeManager $entityTypeManager;
     protected LoggerChannelInterface $logger;
 
-  /**
-   * AdvertsService constructor.
-   *
-   * @param EntityTypeManager $entityTypeManager
-   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerChannelFactory
-   */
+    /**
+     * AdvertsService constructor.
+     *
+     * @param EntityTypeManager                        $entityTypeManager
+     * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerChannelFactory
+     */
     public function __construct(EntityTypeManager $entityTypeManager, LoggerChannelFactory $loggerChannelFactory)
     {
         $this->entityTypeManager = $entityTypeManager;
@@ -45,11 +45,12 @@ final class AdvertsService
                 ->condition('type', 'advert')
                 ->condition('status', NodeInterface::PUBLISHED)
                 ->condition('field_advert_type', $advert_node->get('field_advert_type')->getString())
-//                ->condition('field_advert_district.target_id', $advert_node->get('field_advert_district')->target_id)
+            //                ->condition('field_advert_district.target_id', $advert_node->get('field_advert_district')->target_id)
             ;
 
-            if ($advert_node->get('field_advert_type')->getString() != 'auction' and
-                $advert_node->get('field_advert_price_negociable')->value == '0') {
+            if ($advert_node->get('field_advert_type')->getString() != 'auction' 
+                and $advert_node->get('field_advert_price_negociable')->value == '0'
+            ) {
                 $price = intval($advert_node->get('field_price_in_rwf')->value);
                 $min_price = intval($price - ($price * 0.1));
                 $max_price = intval($price + ($price * 0.1));
@@ -67,7 +68,8 @@ final class AdvertsService
         return $advertIds;
     }
 
-    public function setProposedAdvertOnPR($advertId, $prId): void {
+    public function setProposedAdvertOnPR($advertId, $prId): void
+    {
         try {
             $storage = $this->entityTypeManager->getStorage('node');
             $pr = $storage->load($prId);
