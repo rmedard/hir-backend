@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - block_content.type.banner_block
     - filter.format.full_html
     - node.type.advert
     - node.type.agent
@@ -10,7 +11,7 @@ dependencies:
     - node.type.property_request
   module:
     - advertiser_review
-    - block_content_permissions
+    - block_content
     - field_permissions
     - file
     - filter
@@ -38,6 +39,7 @@ permissions:
   - 'delete own files'
   - 'edit any advert content'
   - 'edit any agent content'
+  - 'edit any banner_block block content'
   - 'edit any news content'
   - 'edit any property_request content'
   - 'edit field_advert_business_comment'
@@ -52,7 +54,6 @@ permissions:
   - 'edit own field_agent_category'
   - 'edit own field_pr_proposed_properties'
   - 'set advert published on date'
-  - 'update any banner_block block content'
   - 'use text format full_html'
   - 'view any webform submission'
   - 'view field_advert_business_comment'
