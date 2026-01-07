@@ -26,8 +26,7 @@ final class AdvertiserRatingWidget extends WidgetBase
      */
     public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array
     {
-
-        $element['average_rating'] = [
+      $element['average_rating'] = [
         '#type' => 'number',
         '#title' => t('Average Rating'),
         '#default_value' => isset($items[$delta]->average_rating) ? $items[$delta]->average_rating : 0,
@@ -35,23 +34,23 @@ final class AdvertiserRatingWidget extends WidgetBase
         '#min' => 0,
         '#max' => 5,
         '#disabled' => true,
-        '#description' => t('This field is automatically calculated.'),
-        ];
+        '#description' => t('This field is automatically calculated.')
+      ];
 
-        $element['review_count'] = [
+      $element['review_count'] = [
         '#type' => 'number',
         '#title' => t('Review Count'),
         '#default_value' => isset($items[$delta]->review_count) ? $items[$delta]->review_count : 0,
         '#min' => 0,
         '#disabled' => true,
-        '#description' => t('This field is automatically calculated.'),
-        ];
+        '#description' => t('This field is automatically calculated.')
+      ];
 
-        $element['#theme_wrappers'] = ['container', 'form_element'];
-        $element['#attributes']['class'][] = 'container-inline';
-        $element['#attributes']['class'][] = 'advertiser-rating-elements';
-        $element['#attached']['library'][] = 'advertiser_review/advertiser_rating';
+      $element['#theme_wrappers'] = ['container', 'form_element'];
+      $element['#attributes']['class'][] = 'container-inline';
+      $element['#attributes']['class'][] = 'advertiser-rating-elements';
+      $element['#attached']['library'][] = 'advertiser_review/advertiser_rating';
 
-        return $element;
+      return $element;
     }
 }

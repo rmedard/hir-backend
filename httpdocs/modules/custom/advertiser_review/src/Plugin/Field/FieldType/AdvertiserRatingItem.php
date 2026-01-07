@@ -38,13 +38,9 @@ final class AdvertiserRatingItem extends FieldItemBase
      */
     public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition): array
     {
-
-        $properties['average_rating'] = DataDefinition::create('float')
-        ->setLabel(t('Average Rating'));
-        $properties['review_count'] = DataDefinition::create('integer')
-        ->setLabel(t('Review Count'));
-
-        return $properties;
+      $properties['average_rating'] = DataDefinition::create('float')->setLabel(t('Average Rating'));
+      $properties['review_count'] = DataDefinition::create('integer')->setLabel(t('Review Count'));
+      return $properties;
     }
 
     /**
@@ -52,22 +48,20 @@ final class AdvertiserRatingItem extends FieldItemBase
      */
     public static function schema(FieldStorageDefinitionInterface $field_definition): array
     {
-
-        $columns = [
+      $columns = [
         'average_rating' => [
         'type' => 'float',
-        'size' => 'normal',
+        'size' => 'normal'
         ],
         'review_count' => [
         'type' => 'int',
-        'size' => 'normal',
-        ],
-        ];
+        'size' => 'normal'
+        ]
+      ];
 
-        return [
-        'columns' => $columns,
-        // @DCG Add indexes here if necessary.
-        ];
+      return [
+      'columns' => $columns,
+      // @DCG Add indexes here if necessary.
+      ];
     }
-
 }
