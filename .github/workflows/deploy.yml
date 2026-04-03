@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -29,7 +29,7 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -57,19 +57,16 @@ jobs:
               --exclude='node_modules' \
               --exclude='httpdocs/sites/default' \
               --exclude='subdomains' \
-              --exclude='.ssh'
+              --exclude='.ssh' \
               ./ deployment-files/
             echo "Using manual exclusions (no .deployignore found)"
           fi
-
-          # Copy vendor
-          cp -r vendor deployment-files/ 2>/dev/null || echo "Vendor directory not found"
 
           echo "Deployment files prepared"
           du -sh deployment-files/
 
       - name: Transfer files to server via SCP
-        uses: appleboy/scp-action@v0.1.3
+        uses: appleboy/scp-action@v1
         with:
           host: ${{ github.ref_name == 'main' && vars.PRODUCTION_HOST || vars.STAGING_HOST }}
           username: ${{ github.ref_name == 'main' && vars.PRODUCTION_USER || vars.STAGING_USER }}
@@ -80,7 +77,7 @@ jobs:
           strip_components: 1
 
       - name: Deploy to server
-        uses: appleboy/ssh-action@v1.2.2
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ github.ref_name == 'main' && vars.PRODUCTION_HOST || vars.STAGING_HOST }}
           username: ${{ github.ref_name == 'main' && vars.PRODUCTION_USER || vars.STAGING_USER }}
@@ -90,11 +87,10 @@ jobs:
             # Set deployment paths
             if [ "${{ github.ref_name }}" = "main" ]; then
               DEPLOY_PATH="${{ vars.PRODUCTION_DEPLOY_PATH }}"
-              WEBROOT_PATH="$DEPLOY_PATH/httpdocs"
             else
               DEPLOY_PATH="${{ vars.STAGING_DEPLOY_PATH }}"
-              WEBROOT_PATH="$DEPLOY_PATH/httpdocs"
             fi
+            WEBROOT_PATH="$DEPLOY_PATH/httpdocs"
 
             echo "=== DEPLOYING TO: $DEPLOY_PATH ==="
 
@@ -104,22 +100,36 @@ jobs:
               exit 1
             fi
 
-            # Backup current deployment (if exists)
-            echo "Creating backup..."
-            if [ -d "$DEPLOY_PATH" ]; then
-              BACKUP_DIR="/tmp_cicd/backup-$(date +%Y%m%d-%H%M%S)"
-              # Backup using rsync, excluding only the large files directory
+            # Rollback function
+            rollback() {
+              echo "=== ROLLING BACK ==="
+              if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ]; then
+                rsync -a --quiet \
+                  --exclude='httpdocs/sites/default' \
+                  --exclude='subdomains' \
+                  --exclude='.ssh' \
+                  "$BACKUP_DIR/" "$DEPLOY_PATH/"
+                echo "✅ Rollback completed from $BACKUP_DIR"
+              else
+                echo "❌ No backup available for rollback"
+              fi
+            }
 
-              rsync -a --quiet \
+            # Backup current deployment
+            echo "Creating backup..."
+            BACKUP_DIR="/tmp_cicd/backup-$(date +%Y%m%d-%H%M%S)"
+            rsync -a --quiet \
               --exclude='httpdocs/sites/default' \
               --exclude='subdomains' \
               --exclude='.ssh' \
               --exclude='.github' \
               --exclude='.git' \
               "$DEPLOY_PATH/" "$BACKUP_DIR/" 2>/dev/null && \
-              echo "✅ Backup created (excluding user files): $BACKUP_DIR" || \
+              echo "✅ Backup created: $BACKUP_DIR" || \
               echo "⚠️ Backup failed, continuing..."
-            fi
+
+            # Clean up old backups (keep last 3)
+            ls -dt /tmp_cicd/backup-* 2>/dev/null | tail -n +4 | xargs rm -rf 2>/dev/null || true
 
             # Create server-side exclusions to preserve critical files
             cat > /tmp_cicd/server-rsync-excludes.txt << 'EOF'
@@ -132,10 +142,8 @@ jobs:
             .git
             .github
             EOF
-
-            # Verify exclusions file was created properly
-            echo "Verifying exclusion file contents:"
-            cat /tmp_cicd/server-rsync-excludes.txt
+            # Strip leading whitespace from exclude patterns
+            sed -i 's/^[[:space:]]*//' /tmp_cicd/server-rsync-excludes.txt
 
             # Check if critical files exist before sync
             echo "Checking critical files before sync:"
@@ -172,7 +180,6 @@ jobs:
             -not -path "$WEBROOT_PATH/sites/default/files*" \
             -exec chmod 644 {} + 2>/dev/null &
 
-            # Wait for background jobs with timeout
             wait
 
             echo "✅ Permissions set (code only)"
@@ -223,10 +230,9 @@ jobs:
               # Navigate to theme directory
               cd $WEBROOT_PATH/themes/custom/houseinrwanda_theme
 
-              # CRITICAL FIX: Set up PATH to include Plesk Node.js binaries
+              # Set up PATH to include Plesk Node.js binaries
               export PATH="/opt/plesk/node/20/bin:$PATH"
 
-              # Verify PATH is set correctly
               echo "PATH updated to include Plesk Node.js"
               echo "Node.js location: $(which node)"
               echo "npm location: $(which npm)"
@@ -235,14 +241,13 @@ jobs:
               echo "Installing npm dependencies..."
               if [ -d "node_modules" ]; then
                 echo "Found existing node_modules, checking if update needed..."
-                # Check if package-lock.json is newer than node_modules
                 if [ -f "package-lock.json" ] && [ "package-lock.json" -nt "node_modules" ]; then
                   echo "Package lock file is newer, updating dependencies..."
                   rm -rf node_modules
                 fi
               fi
 
-              # Install npm dependencies (now using PATH instead of full paths)
+              # Install npm dependencies
               if [ -f "package-lock.json" ]; then
                 npm ci --silent --production=false
               else
@@ -250,59 +255,49 @@ jobs:
               fi
               echo "✅ npm dependencies installed"
 
-              # Build theme assets (this creates the libraries directory)
+              # Build theme assets
               echo "Building theme assets including TomSelect..."
 
-              # Capture build output for debugging
               BUILD_LOG="/tmp_cicd/theme-build.log"
               if npm run build 2>&1 | tee "$BUILD_LOG"; then
                 echo "✅ Theme assets built successfully"
               else
                 echo "❌ Theme build failed!"
-                echo "Build output:"
                 cat "$BUILD_LOG"
+                rollback
                 exit 1
               fi
 
-              # CRITICAL: Verify TomSelect libraries were created - hard failure if not found
+              # Verify TomSelect libraries were created
               if [ -d "$WEBROOT_PATH/libraries/tom-select" ]; then
                 echo "✅ TomSelect libraries found at: $WEBROOT_PATH/libraries/tom-select"
-                TOMSELECT_FILES=$(ls -la $WEBROOT_PATH/libraries/tom-select/)
-                echo "$TOMSELECT_FILES"
+                ls -la $WEBROOT_PATH/libraries/tom-select/
 
-                # Verify essential files exist
                 if [ -f "$WEBROOT_PATH/libraries/tom-select/tom-select.complete.min.js" ] &&
                    [ -f "$WEBROOT_PATH/libraries/tom-select/tom-select.min.css" ]; then
                   echo "✅ Essential TomSelect files verified"
                 else
                   echo "❌ CRITICAL: Essential TomSelect files missing!"
-                  echo "Expected files not found. Deployment failed."
+                  rollback
                   exit 1
                 fi
               else
                 echo "❌ CRITICAL: TomSelect libraries not found - deployment failed!"
-                echo "Debugging information:"
                 echo "Libraries directory contents:"
                 ls -la $WEBROOT_PATH/libraries/ 2>/dev/null || echo "No libraries directory found"
                 echo "Theme directory contents:"
                 ls -la $WEBROOT_PATH/themes/custom/houseinrwanda_theme/
-                echo "Build log:"
-                cat "$BUILD_LOG" 2>/dev/null || echo "No build log found"
-                echo "Gulpfile check:"
-                ls -la $WEBROOT_PATH/themes/custom/houseinrwanda_theme/gulpfile.js 2>/dev/null || echo "No gulpfile found"
-                echo "Node.js PATH check:"
-                echo "Current PATH: $PATH"
-                echo "which node: $(which node 2>/dev/null || echo 'not found')"
+                rollback
                 exit 1
               fi
 
-              # Clean up build log
               rm -f "$BUILD_LOG"
 
             else
               echo "❌ Plesk Node.js not found"
               echo "Available Plesk Node.js versions:"
               ls -la /opt/plesk/node/ 2>/dev/null || echo "No Plesk Node.js directory found"
+              rollback
               exit 1
             fi
 
@@ -310,10 +305,9 @@ jobs:
             echo "=== RUNNING DRUSH COMMANDS ==="
             cd $DEPLOY_PATH
 
-            # Check for PHP 8.3 (matching your GitHub Actions setup)
+            # Detect PHP binary
             PHP_BINARY=""
 
-            # First check Plesk PHP installations
             for php_version in 8.3 8.2 8.1; do
               PLESK_PHP="/opt/plesk/php/$php_version/bin/php"
               if [ -f "$PLESK_PHP" ] && [ -x "$PLESK_PHP" ]; then
@@ -326,7 +320,6 @@ jobs:
               fi
             done
 
-            # Fallback to system PHP if Plesk PHP not found
             if [ -z "$PHP_BINARY" ]; then
               for php_version in php8.3 php83 php8.2 php82 php8.1 php81 php; do
                 if command -v $php_version >/dev/null 2>&1; then
@@ -342,7 +335,6 @@ jobs:
 
             if [ -z "$PHP_BINARY" ]; then
               echo "❌ No compatible PHP version found (need PHP 8.1+)"
-              echo "Available PHP versions:"
               echo "Plesk PHP installations:"
               for php_check in 8.3 8.2 8.1; do
                 PLESK_PHP_CHECK="/opt/plesk/php/$php_check/bin/php"
@@ -350,193 +342,74 @@ jobs:
                   echo "  - $PLESK_PHP_CHECK: $($PLESK_PHP_CHECK --version 2>/dev/null | head -1)"
                 fi
               done
-              echo "System PHP installations:"
-              for php_check in php php8.3 php83 php8.2 php82 php8.1 php81; do
-                if command -v $php_check >/dev/null 2>&1; then
-                  echo "  - $php_check: $($php_check --version 2>/dev/null | head -1)"
-                fi
-              done
+              rollback
               exit 1
             fi
 
-            # Check if Drush is available and executable
-            DRUSH="$DEPLOY_PATH/vendor/drush/drush/drush"
-            if [ ! -f "$DRUSH" ]; then
-              echo "❌ Drush not found at expected location: $DRUSH"
-              echo "Searching for Drush in vendor directory..."
+            # Set up drush execution environment
+            export PATH="/opt/plesk/php/8.3/bin:$PATH"
+            export COMPOSER_ALLOW_SUPERUSER=1
+            export COMPOSER_DISABLE_XDEBUG_WARN=1
+            export COMPOSER_PLATFORM_CHECK=0
+
+            DRUSH_PHP="$DEPLOY_PATH/vendor/drush/drush/drush.php"
+            if [ ! -f "$DRUSH_PHP" ]; then
+              echo "❌ Drush not found at: $DRUSH_PHP"
               find $DEPLOY_PATH/vendor -name "drush" -type f 2>/dev/null || echo "No drush binary found"
+              rollback
               exit 1
             fi
 
-            # Ensure Drush is executable
-            if [ ! -x "$DRUSH" ]; then
-              echo "⚠️ Drush found but not executable, fixing permissions..."
-              chmod 755 "$DRUSH"
-            fi
+            # Helper function for running drush
+            run_drush() {
+              $PHP_BINARY "$DRUSH_PHP" "$@"
+            }
 
-            # Create Drush wrapper that uses correct PHP version
-            DRUSH_WRAPPER="$DEPLOY_PATH/drush-wrapper"
-            cat > "$DRUSH_WRAPPER" << 'EOF'
-            #!/bin/bash
-            export PATH="/opt/plesk/php/8.3/bin:$PATH"
-            export PHP_BINARY="__PHP_BINARY_PLACEHOLDER__"
-            export COMPOSER_ALLOW_SUPERUSER=1
-            export COMPOSER_DISABLE_XDEBUG_WARN=1
-            # Disable Composer platform checks that cause PHP version conflicts
-            export COMPOSER_PLATFORM_CHECK=0
-            $PHP_BINARY __DEPLOY_PATH_PLACEHOLDER__/vendor/drush/drush/drush.php "$@"
-            EOF
-
-            # Replace placeholders with actual values
-            sed -i "s|__PHP_BINARY_PLACEHOLDER__|$PHP_BINARY|g" "$DRUSH_WRAPPER"
-            sed -i "s|__DEPLOY_PATH_PLACEHOLDER__|$DEPLOY_PATH|g" "$DRUSH_WRAPPER"
-
-            # Set permissions and verify
-            chmod 755 "$DRUSH_WRAPPER"
-            if [ ! -x "$DRUSH_WRAPPER" ]; then
-              echo "⚠️ Setting execute permission failed, trying alternative location..."
-              DRUSH_WRAPPER="$HOME/drush-wrapper"
-              cat > "$DRUSH_WRAPPER" << EOF
-            #!/bin/bash
-            export PATH="/opt/plesk/php/8.3/bin:$PATH"
-            export COMPOSER_ALLOW_SUPERUSER=1
-            export COMPOSER_DISABLE_XDEBUG_WARN=1
-            export COMPOSER_PLATFORM_CHECK=0
-            $PHP_BINARY $DEPLOY_PATH/vendor/drush/drush/drush.php "\$@"
-            EOF
-              chmod 755 "$DRUSH_WRAPPER"
-            fi
-
-            # Verify wrapper is executable
-            if [ ! -x "$DRUSH_WRAPPER" ]; then
-              echo "❌ Cannot create executable Drush wrapper"
-              echo "Trying direct PHP execution..."
-              # Fallback: test Drush directly with PHP
-              if $PHP_BINARY $DEPLOY_PATH/vendor/drush/drush/drush.php --version >/dev/null 2>&1; then
-                echo "✅ Drush works with direct PHP execution"
-                # Define a function instead of a script file
-                run_drush() {
-                  # Set environment variables for this session
-                  export PATH="/opt/plesk/php/8.3/bin:$PATH"
-                  export COMPOSER_ALLOW_SUPERUSER=1
-                  export COMPOSER_DISABLE_XDEBUG_WARN=1
-                  # Disable Composer platform checks that cause PHP version conflicts
-                  export COMPOSER_PLATFORM_CHECK=0
-                  $PHP_BINARY $DEPLOY_PATH/vendor/drush/drush/drush.php "$@"
-                }
-                DRUSH_WRAPPER="run_drush"
-              else
-                echo "❌ Drush not working with PHP $PHP_BINARY"
-                exit 1
-              fi
-            else
-              echo "✅ Drush wrapper created successfully at $DRUSH_WRAPPER"
-            fi
-
-            # Verify Drush works with correct PHP
+            # Verify Drush works
             echo "Testing Drush..."
-            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
-              # Using function approach
-              if run_drush --version >/dev/null 2>&1; then
-                echo "✅ Drush verified and ready with $PHP_BINARY (function mode)"
-              else
-                echo "❌ Drush function test failed"
-                run_drush --version 2>&1 || echo "Failed to get Drush version"
-                exit 1
-              fi
+            if run_drush --version >/dev/null 2>&1; then
+              echo "✅ Drush verified and ready with $PHP_BINARY"
             else
-              # Using wrapper file approach
-              if $DRUSH_WRAPPER --version >/dev/null 2>&1; then
-                echo "✅ Drush verified and ready with $PHP_BINARY (wrapper mode)"
-              else
-                echo "❌ Drush wrapper test failed"
-                $DRUSH_WRAPPER --version 2>&1 || echo "Failed to get Drush version"
-                exit 1
-              fi
+              echo "❌ Drush test failed"
+              run_drush --version 2>&1 || true
+              rollback
+              exit 1
             fi
 
             echo "Clearing cache..."
-            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
-              run_drush_result=$(run_drush cr 2>&1)
-              drush_exit_code=$?
-            else
-              run_drush_result=$($DRUSH_WRAPPER cr 2>&1)
-              drush_exit_code=$?
-            fi
-
-            if [ $drush_exit_code -eq 0 ]; then
+            if run_drush cr 2>&1; then
               echo "✅ Cache cleared"
             else
               echo "❌ Cache clear failed"
-              echo "$run_drush_result"
+              rollback
               exit 1
             fi
 
             echo "Importing configuration..."
-            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
-              run_drush_result=$(run_drush cim -y 2>&1)
-              drush_exit_code=$?
-            else
-              run_drush_result=$($DRUSH_WRAPPER cim -y 2>&1)
-              drush_exit_code=$?
-            fi
-
-            if [ $drush_exit_code -eq 0 ]; then
+            if run_drush cim -y 2>&1; then
               echo "✅ Configuration imported"
             else
               echo "❌ Configuration import failed"
-              echo "$run_drush_result"
+              rollback
               exit 1
             fi
 
             echo "Running database updates..."
-            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
-              run_drush_result=$(run_drush updb -y 2>&1)
-              drush_exit_code=$?
-            else
-              run_drush_result=$($DRUSH_WRAPPER updb -y 2>&1)
-              drush_exit_code=$?
-            fi
-
-            if [ $drush_exit_code -eq 0 ]; then
+            if run_drush updb -y 2>&1; then
               echo "✅ Database updates completed"
             else
               echo "❌ Database updates failed"
-              echo "$run_drush_result"
+              rollback
               exit 1
             fi
 
-            echo "Final cache clear..."
-            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
-              run_drush_result=$(run_drush cr 2>&1)
-              drush_exit_code=$?
+            echo "Final cache rebuild..."
+            if run_drush cr 2>&1; then
+              echo "✅ Cache rebuilt"
             else
-              run_drush_result=$($DRUSH_WRAPPER cr 2>&1)
-              drush_exit_code=$?
-            fi
-
-            if [ $drush_exit_code -eq 0 ]; then
-              echo "✅ Final cache cleared"
-            else
-              echo "❌ Final cache clear failed"
-              echo "$run_drush_result"
+              echo "❌ Cache rebuild failed"
+              rollback
               exit 1
-            fi
-
-            # Optional: Rebuild cache for better performance
-            echo "Rebuilding cache for optimal performance..."
-            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
-              if run_drush cache:rebuild >/dev/null 2>&1; then
-                echo "✅ Cache rebuilt"
-              else
-                echo "⚠️ Cache rebuild failed, but continuing..."
-              fi
-            else
-              if $DRUSH_WRAPPER cache:rebuild >/dev/null 2>&1; then
-                echo "✅ Cache rebuilt"
-              else
-                echo "⚠️ Cache rebuild failed, but continuing..."
-              fi
             fi
 
             # Clean up temporary files
@@ -545,7 +418,7 @@ jobs:
             rm -f /tmp_cicd/server-rsync-excludes.txt
             echo "✅ Temporary files cleaned up"
 
-            # Final comprehensive verification
+            # Final verification
             echo "=== DEPLOYMENT VERIFICATION ==="
             echo "Deployed to: $DEPLOY_PATH"
             echo "Web root: $WEBROOT_PATH"
@@ -567,27 +440,16 @@ jobs:
             if [ -d "$WEBROOT_PATH/libraries/tom-select" ]; then
               echo "✅ TomSelect libraries deployed"
               FILE_COUNT=$(ls -1 $WEBROOT_PATH/libraries/tom-select/ | wc -l)
-              echo "   - $FILE_COUNT files in tom-select directory"
+              echo "  - $FILE_COUNT files in tom-select directory"
             else
               echo "❌ TomSelect libraries missing!"
             fi
 
-            if [ "$DRUSH_WRAPPER" = "run_drush" ]; then
-              if run_drush status --field=bootstrap 2>/dev/null | grep -q "Successful"; then
-                echo "✅ Drupal bootstrap successful"
-              else
-                echo "⚠️ Drupal bootstrap check failed"
-              fi
+            if run_drush status --field=bootstrap 2>/dev/null | grep -q "Successful"; then
+              echo "✅ Drupal bootstrap successful"
             else
-              if $DRUSH_WRAPPER status --field=bootstrap 2>/dev/null | grep -q "Successful"; then
-                echo "✅ Drupal bootstrap successful"
-              else
-                echo "⚠️ Drupal bootstrap check failed"
-              fi
+              echo "⚠️ Drupal bootstrap check failed"
             fi
-
-            # Clean up Drush wrapper
-            rm -f "$DRUSH_WRAPPER"
 
             echo ""
             echo "🎉 DEPLOYMENT COMPLETED SUCCESSFULLY! 🎉"
