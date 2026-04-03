@@ -3,9 +3,8 @@ type: module
 description: 'This RIR module handles all GUI manipulations.'
 package: HiR Custom
 core_version_requirement: ^10 || ^11
-
+version: '1.0.1'
 dependencies:
   - smart_ip:smart_ip
   - twig_tweak:twig_tweak
   - block
-version: '1.0.0'
