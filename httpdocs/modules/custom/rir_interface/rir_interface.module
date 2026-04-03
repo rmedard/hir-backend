@@ -656,7 +656,7 @@ function getEmailHtmlContent($email_type, $emailPayload, $recipientName = NULL, 
     case 'advert_received':
       $variables = [
         'advert' => $emailPayload,
-        'phone' => Drupal::config('system.site')->get('phone'),
+        'phone' => Drupal::config('rir_interface.settings')->get('phone'),
       ];
       $template_path = '/emails/hir-advert-received.html.twig';
       break;
@@ -761,31 +761,31 @@ function rir_interface_mail($key, &$message, $params): void
  */
 function rir_interface_form_system_site_information_settings_alter(&$form, FormStateInterface $form_state, $form_id): void
 {
-  $siteConfig = Drupal::config('system.site');
+  $rirConfig = Drupal::config('rir_interface.settings');
   $form['site_phone'] = [
     '#type' => 'tel',
     '#title' => t('Site phone'),
-    '#default_value' => $siteConfig->get('phone'),
+    '#default_value' => $rirConfig->get('phone'),
   ];
   $form['site_default_email_sender'] = [
     '#type' => 'email',
     '#title' => t('Site default email sender'),
-    '#default_value' => $siteConfig->get('emailSender'),
+    '#default_value' => $rirConfig->get('emailSender'),
   ];
   $form['site_default_email_replyto'] = [
     '#type' => 'email',
     '#title' => t('Site default email \'reply to\''),
-    '#default_value' => $siteConfig->get('emailReplyTo'),
+    '#default_value' => $rirConfig->get('emailReplyTo'),
   ];
   $form['site_default_android_play_link'] = [
     '#type' => 'url',
     '#title' => t('Android app: Play store link'),
-    '#default_value' => $siteConfig->get('playStoreLink'),
+    '#default_value' => $rirConfig->get('playStoreLink'),
   ];
   $form['site_default_apple_store_link'] = [
     '#type' => 'url',
     '#title' => t('IOS App: Apple Store link'),
-    '#default_value' => $siteConfig->get('appleStoreLink'),
+    '#default_value' => $rirConfig->get('appleStoreLink'),
   ];
   $form['#submit'][] = 'rir_interface_site_information_submit';
 }
@@ -798,12 +798,13 @@ function rir_interface_form_system_site_information_settings_alter(&$form, FormS
  */
 function rir_interface_site_information_submit(array &$form, FormStateInterface $formState): void
 {
-  $config = Drupal::configFactory()->getEditable('system.site');
-  $config->set('phone', $formState->getValue('site_phone'))->save();
-  $config->set('emailSender', $formState->getValue('site_default_email_sender'))->save();
-  $config->set('emailReplyTo', $formState->getValue('site_default_email_replyto'))->save();
-  $config->set('playStoreLink', $formState->getValue('site_default_android_play_link'))->save();
-  $config->set('appleStoreLink', $formState->getValue('site_default_apple_store_link'))->save();
+  $config = Drupal::configFactory()->getEditable('rir_interface.settings');
+  $config->set('phone', $formState->getValue('site_phone'));
+  $config->set('emailSender', $formState->getValue('site_default_email_sender'));
+  $config->set('emailReplyTo', $formState->getValue('site_default_email_replyto'));
+  $config->set('playStoreLink', $formState->getValue('site_default_android_play_link'));
+  $config->set('appleStoreLink', $formState->getValue('site_default_apple_store_link'));
+  $config->save();
 }
 
 /**
@@ -914,11 +915,11 @@ function rir_interface_tokens($type, $tokens, array $data, array $options, Bubbl
 {
   $replacements = [];
   $socialMediaConfig = Drupal::config(SocialMediaSettingsForm::SETTINGS);
-  $systemConfig = Drupal::config('system.site');
+  $rirConfig = Drupal::config('rir_interface.settings');
   foreach ($tokens as $name => $original) {
     switch ($name) {
       case 'phone':
-        $text = $systemConfig->get('phone');
+        $text = $rirConfig->get('phone');
         $replacements[$original] = $text;
         break;
       case 'facebook':
@@ -946,11 +947,11 @@ function rir_interface_tokens($type, $tokens, array $data, array $options, Bubbl
         $replacements[$original] = $text;
         break;
       case 'android':
-        $text = $systemConfig->get('playStoreLink');
+        $text = $rirConfig->get('playStoreLink');
         $replacements[$original] = $text;
         break;
       case 'ios':
-        $text = $systemConfig->get('appleStoreLink');
+        $text = $rirConfig->get('appleStoreLink');
         $replacements[$original] = $text;
         break;
     }

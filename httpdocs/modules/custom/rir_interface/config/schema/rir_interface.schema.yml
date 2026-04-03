@@ -1,5 +1,6 @@
-system.site:
+rir_interface.settings:
   type: config_object
+  label: 'RIR Interface settings'
   mapping:
     phone:
       type: string
