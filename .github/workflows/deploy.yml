@@ -36,10 +36,34 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: httpdocs/themes/custom/houseinrwanda_theme/package-lock.json
+
       - name: Install PHP dependencies
         run: |
           composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
-          echo "PHP dependencies installed"
+          echo "✅ PHP dependencies installed"
+
+      - name: Build theme assets
+        working-directory: httpdocs/themes/custom/houseinrwanda_theme
+        run: |
+          npm ci --silent
+          npm run build
+          echo "✅ Theme assets built"
+
+          # Verify TomSelect was built
+          if [ -f "../../../libraries/tom-select/tom-select.complete.min.js" ] &&
+             [ -f "../../../libraries/tom-select/tom-select.min.css" ]; then
+            echo "✅ TomSelect files verified"
+          else
+            echo "❌ TomSelect files missing after build!"
+            ls -la ../../../libraries/tom-select/ 2>/dev/null || echo "No tom-select directory"
+            exit 1
+          fi
 
       - name: Prepare deployment files
         run: |
@@ -47,10 +71,10 @@ jobs:
 
           # Copy everything with standard exclusions
           if [ -f ".deployignore" ]; then
-            rsync -av --exclude-from='.deployignore' ./ deployment-files/
+            rsync -a --exclude-from='.deployignore' ./ deployment-files/
             echo "Using .deployignore file for exclusions"
           else
-            rsync -av \
+            rsync -a \
               --exclude='.git' \
               --exclude='.github' \
               --exclude='deployment-files' \
@@ -62,7 +86,7 @@ jobs:
             echo "Using manual exclusions (no .deployignore found)"
           fi
 
-          echo "Deployment files prepared"
+          echo "✅ Deployment files prepared"
           du -sh deployment-files/
 
       - name: Transfer files to server via SCP
@@ -132,7 +156,7 @@ jobs:
             ls -dt /tmp_cicd/backup-* 2>/dev/null | tail -n +4 | xargs rm -rf 2>/dev/null || true
 
             # Create server-side exclusions to preserve critical files
-            cat > /tmp_cicd/server-rsync-excludes.txt << 'EOF'
+            cat > /tmp_cicd/server-rsync-excludes.txt << 'EXCLUDES'
             dev.houseinrwanda.com
             httpdocs/sites/default
             subdomains
@@ -141,213 +165,93 @@ jobs:
             .ssh
             .git
             .github
-            EOF
-            # Strip leading whitespace from exclude patterns
+            EXCLUDES
             sed -i 's/^[[:space:]]*//' /tmp_cicd/server-rsync-excludes.txt
 
-            # Check if critical files exist before sync
+            # Check critical files before sync
             echo "Checking critical files before sync:"
             ls -la "$DEPLOY_PATH/httpdocs/sites/default/settings.php" 2>/dev/null && echo "✅ settings.php exists" || echo "⚠️ settings.php not found"
             ls -la "$DEPLOY_PATH/httpdocs/sites/default/services.yml" 2>/dev/null && echo "✅ services.yml exists" || echo "⚠️ services.yml not found"
 
-            # Sync files from temporary location to deployment path
-            echo "Syncing files to deployment location (preserving server configs)..."
-            rsync -av \
+            # Sync files (quiet mode — no per-file output)
+            echo "Syncing files to deployment location..."
+            rsync -a \
               --exclude-from='/tmp_cicd/server-rsync-excludes.txt' \
-              /tmp_cicd/deployment/ $DEPLOY_PATH/ \
-              --delete
+              --delete \
+              /tmp_cicd/deployment/ "$DEPLOY_PATH/"
 
-            # Verify critical files still exist after sync
+            # Verify critical files after sync
             echo "Checking critical files after sync:"
             ls -la "$DEPLOY_PATH/httpdocs/sites/default/settings.php" 2>/dev/null && echo "✅ settings.php preserved" || echo "❌ settings.php was deleted!"
             ls -la "$DEPLOY_PATH/httpdocs/sites/default/services.yml" 2>/dev/null && echo "✅ services.yml preserved" || echo "❌ services.yml was deleted!"
 
             echo "✅ Files synced, server configurations preserved"
 
-            # Set proper permissions (excluding user uploads to avoid timeout)
+            # Set permissions — targeted instead of full-tree find
             echo "Setting permissions..."
+            chmod 755 "$DEPLOY_PATH" "$WEBROOT_PATH" 2>/dev/null || true
 
-            # Set permissions on deployment root and webroot
-            chmod 755 $DEPLOY_PATH 2>/dev/null || true
-            chmod 755 $WEBROOT_PATH 2>/dev/null || true
-
-            # Set permissions on code directories only (exclude user files)
-            find $DEPLOY_PATH -type d \
-            -not -path "$WEBROOT_PATH/sites/default/files*" \
-            -exec chmod 755 {} + 2>/dev/null &
-
-            find $DEPLOY_PATH -type f \
-            -not -path "$WEBROOT_PATH/sites/default/files*" \
-            -exec chmod 644 {} + 2>/dev/null &
-
+            # Set permissions only on newly synced code (exclude sites/default/files)
+            find "$DEPLOY_PATH/vendor" "$DEPLOY_PATH/httpdocs/core" "$DEPLOY_PATH/httpdocs/modules" "$DEPLOY_PATH/httpdocs/themes" "$DEPLOY_PATH/httpdocs/libraries" \
+              -type d -exec chmod 755 {} + 2>/dev/null &
+            find "$DEPLOY_PATH/vendor" "$DEPLOY_PATH/httpdocs/core" "$DEPLOY_PATH/httpdocs/modules" "$DEPLOY_PATH/httpdocs/themes" "$DEPLOY_PATH/httpdocs/libraries" \
+              -type f -exec chmod 644 {} + 2>/dev/null &
             wait
 
-            echo "✅ Permissions set (code only)"
-
-            # Set executable permissions for binaries
-            echo "Setting executable permissions for binaries..."
-            find $DEPLOY_PATH/vendor -name "drush" -type f -exec chmod 755 {} \;
-            find $DEPLOY_PATH/vendor -name "drush.php" -type f -exec chmod 755 {} \;
-            find $DEPLOY_PATH/vendor -path "*/bin/*" -type f -exec chmod 755 {} \;
-            find $DEPLOY_PATH/vendor -name "*.php" -path "*/drush/*" -type f -exec chmod 755 {} \;
+            # Set executable permissions for vendor binaries (single find)
+            find "$DEPLOY_PATH/vendor" \( -path "*/bin/*" -o -name "drush" -o -name "drush.php" \) -type f -exec chmod 755 {} + 2>/dev/null
 
             # Ensure web server can write to files directory
             if [ -d "$WEBROOT_PATH/sites/default/files" ]; then
               chmod -R 775 "$WEBROOT_PATH/sites/default/files"
-              echo "✅ Files directory permissions set"
             fi
 
             echo "✅ Permissions set"
 
-            # Build theme assets on server after files are deployed
-            echo "=== BUILDING THEME ASSETS ON SERVER ==="
-
-            # Auto-detect Plesk Node.js installation (prefer latest version)
-            PLESK_NODE=""
-            PLESK_NPM=""
-
-            # Look for Node.js 20 first (your current version)
-            if [ -f "/opt/plesk/node/20/bin/node" ] && [ -f "/opt/plesk/node/20/bin/npm" ]; then
-              PLESK_NODE="/opt/plesk/node/20/bin/node"
-              PLESK_NPM="/opt/plesk/node/20/bin/npm"
+            # Verify TomSelect libraries from pre-built assets
+            echo "Verifying theme assets..."
+            if [ -f "$WEBROOT_PATH/libraries/tom-select/tom-select.complete.min.js" ] &&
+               [ -f "$WEBROOT_PATH/libraries/tom-select/tom-select.min.css" ]; then
+              echo "✅ TomSelect libraries verified"
             else
-              # Auto-detect any available Plesk Node.js version
-              for version in $(ls -1 /opt/plesk/node/ 2>/dev/null | sort -nr); do
-                if [ -f "/opt/plesk/node/$version/bin/node" ] && [ -f "/opt/plesk/node/$version/bin/npm" ]; then
-                  PLESK_NODE="/opt/plesk/node/$version/bin/node"
-                  PLESK_NPM="/opt/plesk/node/$version/bin/npm"
-                  echo "✅ Found Plesk Node.js version: $version"
-                  break
-                fi
-              done
-            fi
-
-            if [ -n "$PLESK_NODE" ] && [ -n "$PLESK_NPM" ]; then
-              echo "✅ Using Plesk Node.js at: $PLESK_NODE"
-              echo "Node.js version: $($PLESK_NODE --version)"
-              echo "npm version: $($PLESK_NPM --version)"
-
-              # Navigate to theme directory
-              cd $WEBROOT_PATH/themes/custom/houseinrwanda_theme
-
-              # Set up PATH to include Plesk Node.js binaries
-              export PATH="/opt/plesk/node/20/bin:$PATH"
-
-              echo "PATH updated to include Plesk Node.js"
-              echo "Node.js location: $(which node)"
-              echo "npm location: $(which npm)"
-
-              # Cache npm packages optimization
-              echo "Installing npm dependencies..."
-              if [ -d "node_modules" ]; then
-                echo "Found existing node_modules, checking if update needed..."
-                if [ -f "package-lock.json" ] && [ "package-lock.json" -nt "node_modules" ]; then
-                  echo "Package lock file is newer, updating dependencies..."
-                  rm -rf node_modules
-                fi
-              fi
-
-              # Install npm dependencies
-              if [ -f "package-lock.json" ]; then
-                npm ci --silent --production=false
-              else
-                npm install --silent
-              fi
-              echo "✅ npm dependencies installed"
-
-              # Build theme assets
-              echo "Building theme assets including TomSelect..."
-
-              BUILD_LOG="/tmp_cicd/theme-build.log"
-              if npm run build 2>&1 | tee "$BUILD_LOG"; then
-                echo "✅ Theme assets built successfully"
-              else
-                echo "❌ Theme build failed!"
-                cat "$BUILD_LOG"
-                rollback
-                exit 1
-              fi
-
-              # Verify TomSelect libraries were created
-              if [ -d "$WEBROOT_PATH/libraries/tom-select" ]; then
-                echo "✅ TomSelect libraries found at: $WEBROOT_PATH/libraries/tom-select"
-                ls -la $WEBROOT_PATH/libraries/tom-select/
-
-                if [ -f "$WEBROOT_PATH/libraries/tom-select/tom-select.complete.min.js" ] &&
-                   [ -f "$WEBROOT_PATH/libraries/tom-select/tom-select.min.css" ]; then
-                  echo "✅ Essential TomSelect files verified"
-                else
-                  echo "❌ CRITICAL: Essential TomSelect files missing!"
-                  rollback
-                  exit 1
-                fi
-              else
-                echo "❌ CRITICAL: TomSelect libraries not found - deployment failed!"
-                echo "Libraries directory contents:"
-                ls -la $WEBROOT_PATH/libraries/ 2>/dev/null || echo "No libraries directory found"
-                echo "Theme directory contents:"
-                ls -la $WEBROOT_PATH/themes/custom/houseinrwanda_theme/
-                rollback
-                exit 1
-              fi
-
-              rm -f "$BUILD_LOG"
-
-            else
-              echo "❌ Plesk Node.js not found"
-              echo "Available Plesk Node.js versions:"
-              ls -la /opt/plesk/node/ 2>/dev/null || echo "No Plesk Node.js directory found"
+              echo "❌ CRITICAL: TomSelect libraries missing!"
+              ls -la "$WEBROOT_PATH/libraries/tom-select/" 2>/dev/null || echo "No tom-select directory"
               rollback
               exit 1
             fi
 
             # Drush commands
             echo "=== RUNNING DRUSH COMMANDS ==="
-            cd $DEPLOY_PATH
+            cd "$DEPLOY_PATH"
 
             # Detect PHP binary
             PHP_BINARY=""
-
             for php_version in 8.3 8.2 8.1; do
               PLESK_PHP="/opt/plesk/php/$php_version/bin/php"
               if [ -f "$PLESK_PHP" ] && [ -x "$PLESK_PHP" ]; then
-                PHP_VERSION_OUTPUT=$($PLESK_PHP --version 2>/dev/null | head -1)
-                if echo "$PHP_VERSION_OUTPUT" | grep -q "PHP 8\.[1-3]"; then
-                  PHP_BINARY=$PLESK_PHP
-                  echo "✅ Found Plesk PHP: $PHP_VERSION_OUTPUT at $PLESK_PHP"
-                  break
-                fi
+                PHP_BINARY="$PLESK_PHP"
+                echo "✅ Found Plesk PHP $php_version"
+                break
               fi
             done
 
             if [ -z "$PHP_BINARY" ]; then
-              for php_version in php8.3 php83 php8.2 php82 php8.1 php81 php; do
-                if command -v $php_version >/dev/null 2>&1; then
-                  PHP_VERSION_OUTPUT=$($php_version --version 2>/dev/null | head -1)
-                  if echo "$PHP_VERSION_OUTPUT" | grep -q "PHP 8\.[1-3]"; then
-                    PHP_BINARY=$php_version
-                    echo "✅ Found system PHP: $PHP_VERSION_OUTPUT"
-                    break
-                  fi
+              for php_cmd in php8.3 php8.2 php8.1 php; do
+                if command -v "$php_cmd" >/dev/null 2>&1; then
+                  PHP_BINARY="$php_cmd"
+                  echo "✅ Found system PHP: $php_cmd"
+                  break
                 fi
               done
             fi
 
             if [ -z "$PHP_BINARY" ]; then
               echo "❌ No compatible PHP version found (need PHP 8.1+)"
-              echo "Plesk PHP installations:"
-              for php_check in 8.3 8.2 8.1; do
-                PLESK_PHP_CHECK="/opt/plesk/php/$php_check/bin/php"
-                if [ -f "$PLESK_PHP_CHECK" ]; then
-                  echo "  - $PLESK_PHP_CHECK: $($PLESK_PHP_CHECK --version 2>/dev/null | head -1)"
-                fi
-              done
               rollback
               exit 1
             fi
 
             # Set up drush execution environment
-            export PATH="/opt/plesk/php/8.3/bin:$PATH"
             export COMPOSER_ALLOW_SUPERUSER=1
             export COMPOSER_DISABLE_XDEBUG_WARN=1
             export COMPOSER_PLATFORM_CHECK=0
@@ -355,12 +259,10 @@ jobs:
             DRUSH_PHP="$DEPLOY_PATH/vendor/drush/drush/drush.php"
             if [ ! -f "$DRUSH_PHP" ]; then
               echo "❌ Drush not found at: $DRUSH_PHP"
-              find $DEPLOY_PATH/vendor -name "drush" -type f 2>/dev/null || echo "No drush binary found"
               rollback
               exit 1
             fi
 
-            # Helper function for running drush
             run_drush() {
               $PHP_BINARY "$DRUSH_PHP" "$@"
             }
@@ -368,10 +270,9 @@ jobs:
             # Verify Drush works
             echo "Testing Drush..."
             if run_drush --version >/dev/null 2>&1; then
-              echo "✅ Drush verified and ready with $PHP_BINARY"
+              echo "✅ Drush verified and ready"
             else
               echo "❌ Drush test failed"
-              run_drush --version 2>&1 || true
               rollback
               exit 1
             fi
@@ -412,7 +313,7 @@ jobs:
               exit 1
             fi
 
-            # Clean up temporary files
+            # Clean up
             echo "=== CLEANING UP ==="
             rm -rf /tmp_cicd/deployment
             rm -f /tmp_cicd/server-rsync-excludes.txt
@@ -421,29 +322,10 @@ jobs:
             # Final verification
             echo "=== DEPLOYMENT VERIFICATION ==="
             echo "Deployed to: $DEPLOY_PATH"
-            echo "Web root: $WEBROOT_PATH"
 
-            echo "Critical file checks:"
-            if [ -f "$WEBROOT_PATH/sites/default/settings.php" ]; then
-              echo "✅ settings.php preserved"
-            else
-              echo "❌ settings.php missing!"
-            fi
-
-            if [ -d "$WEBROOT_PATH/sites/default/files" ]; then
-              FILE_COUNT=$(find "$WEBROOT_PATH/sites/default/files" -type f | wc -l)
-              echo "✅ files directory preserved with $FILE_COUNT files"
-            else
-              echo "❌ files directory missing!"
-            fi
-
-            if [ -d "$WEBROOT_PATH/libraries/tom-select" ]; then
-              echo "✅ TomSelect libraries deployed"
-              FILE_COUNT=$(ls -1 $WEBROOT_PATH/libraries/tom-select/ | wc -l)
-              echo "  - $FILE_COUNT files in tom-select directory"
-            else
-              echo "❌ TomSelect libraries missing!"
-            fi
+            [ -f "$WEBROOT_PATH/sites/default/settings.php" ] && echo "✅ settings.php preserved" || echo "❌ settings.php missing!"
+            [ -d "$WEBROOT_PATH/sites/default/files" ] && echo "✅ files directory preserved" || echo "❌ files directory missing!"
+            [ -d "$WEBROOT_PATH/libraries/tom-select" ] && echo "✅ TomSelect libraries deployed" || echo "❌ TomSelect libraries missing!"
 
             if run_drush status --field=bootstrap 2>/dev/null | grep -q "Successful"; then
               echo "✅ Drupal bootstrap successful"
