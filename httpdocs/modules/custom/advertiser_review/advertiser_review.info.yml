@@ -1,4 +1,4 @@
-name: 'Advertiser Review'
+name: Advertiser Review
 type: module
 description: 'Custom module to manage HiR advertisers reviews'
 package: HiR Custom
