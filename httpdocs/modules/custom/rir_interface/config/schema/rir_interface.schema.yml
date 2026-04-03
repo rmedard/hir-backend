@@ -1,0 +1,18 @@
+system.site:
+  type: config_object
+  mapping:
+    phone:
+      type: string
+      label: 'Site phone number'
+    emailSender:
+      type: string
+      label: 'Site default email sender'
+    emailReplyTo:
+      type: string
+      label: 'Site default email reply-to'
+    playStoreLink:
+      type: string
+      label: 'Android Play Store link'
+    appleStoreLink:
+      type: string
+      label: 'Apple App Store link'

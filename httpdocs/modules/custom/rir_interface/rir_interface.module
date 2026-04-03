@@ -13,12 +13,10 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\TypedData\Exception\MissingDataException;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\image\Plugin\ImageEffect\ScaleAndCropImageEffect;
@@ -26,7 +24,6 @@ use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\path_alias\PathAliasInterface;
 use Drupal\rir_interface\Form\SocialMediaSettingsForm;
-use Drupal\rir_interface\Plugin\Field\ActiveAgentJobsCountComputedField;
 use Drupal\rir_interface\Utils\Constants;
 use Drupal\smart_ip\SmartIpLocation;
 use Drupal\taxonomy\TermInterface;
@@ -756,21 +753,6 @@ function rir_interface_mail($key, &$message, $params): void
 }
 
 /**
- * Implements hook_swiftmailer_alter().
- *
- * @param Swift_Mailer $swiftMailer
- * @param Swift_Message $swiftMessage
- * @param $message
- */
-function rir_interface_swiftmailer_alter(Swift_Mailer &$swiftMailer, Swift_Message &$swiftMessage, $message): void
-{
-  $siteConfig = Drupal::config('system.site');
-  $siteName = $siteConfig->get('name');
-  $defaultEmailSender = $siteConfig->get('emailSender') ?: $siteConfig->get('mail');
-  $swiftMessage->setFrom($defaultEmailSender, $siteName);
-}
-
-/**
  * Implements hook_form_FORM_ID_alter().
  *
  * @param $form
@@ -779,31 +761,31 @@ function rir_interface_swiftmailer_alter(Swift_Mailer &$swiftMailer, Swift_Messa
  */
 function rir_interface_form_system_site_information_settings_alter(&$form, FormStateInterface $form_state, $form_id): void
 {
-
+  $siteConfig = Drupal::config('system.site');
   $form['site_phone'] = [
     '#type' => 'tel',
     '#title' => t('Site phone'),
-    '#default_value' => Drupal::config('system.site')->get('phone'),
+    '#default_value' => $siteConfig->get('phone'),
   ];
   $form['site_default_email_sender'] = [
     '#type' => 'email',
     '#title' => t('Site default email sender'),
-    '#default_value' => Drupal::config('system.site')->get('emailSender'),
+    '#default_value' => $siteConfig->get('emailSender'),
   ];
   $form['site_default_email_replyto'] = [
     '#type' => 'email',
     '#title' => t('Site default email \'reply to\''),
-    '#default_value' => Drupal::config('system.site')->get('emailReplyTo'),
+    '#default_value' => $siteConfig->get('emailReplyTo'),
   ];
   $form['site_default_android_play_link'] = [
     '#type' => 'url',
     '#title' => t('Android app: Play store link'),
-    '#default_value' => Drupal::config('system.site')->get('playStoreLink'),
+    '#default_value' => $siteConfig->get('playStoreLink'),
   ];
   $form['site_default_apple_store_link'] = [
     '#type' => 'url',
     '#title' => t('IOS App: Apple Store link'),
-    '#default_value' => Drupal::config('system.site')->get('appleStoreLink'),
+    '#default_value' => $siteConfig->get('appleStoreLink'),
   ];
   $form['#submit'][] = 'rir_interface_site_information_submit';
 }
