@@ -20,8 +20,6 @@ settings:
   label: '11 A huge plot of land for sale (7 hectares) suitable for multipurpose use on the Kigali-Bugesera road, just 20 minutes from sonatubes'
   label_display: '0'
   provider: block_content
-  status: true
-  info: ''
   view_mode: full
 visibility:
   request_path:

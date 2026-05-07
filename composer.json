@@ -118,7 +118,7 @@
         }
     },
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.3",
         "ext-pdo": "*",
         "composer/installers": "^1.9",
         "drupal/addtoany": "^2.0",
@@ -127,17 +127,17 @@
         "drupal/back_to_top": "^3.0",
         "drupal/better_exposed_filters": "^7.1@beta",
         "drupal/bootstrap_barrio": "^5.5",
-        "drupal/bpmn_io": "^2.0",
+        "drupal/bpmn_io": "^3.0",
         "drupal/clientside_validation": "^4.0",
         "drupal/colorbox": "^2.0",
         "drupal/conditional_fields": "^4.0@alpha",
-        "drupal/core-composer-scaffold": "^10",
-        "drupal/core-project-message": "^10",
-        "drupal/core-recommended": "^10.3",
+        "drupal/core-composer-scaffold": "^11",
+        "drupal/core-project-message": "^11",
+        "drupal/core-recommended": "^11",
         "drupal/csv_serialization": "^4.0",
         "drupal/devel": "^5.1",
         "drupal/devel_kint_extras": "^1.0",
-        "drupal/eca": "^2.1",
+        "drupal/eca": "^3.0",
         "drupal/editor_advanced_link": "^2.2",
         "drupal/field_group": "^4.0",
         "drupal/field_permissions": "^1.2",
@@ -185,7 +185,6 @@
         "drupal/views_bulk_operations": "^4.4",
         "drupal/views_data_export": "^1.8",
         "drupal/views_list_sort": "^1.4",
-        "drupal/votingapi": "^3.0@beta",
         "drupal/webform": "^6.3@beta",
         "drupal/webform_rest": "^4.2",
         "drupal/webform_views": "^5.2",
@@ -201,7 +200,7 @@
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^1.2",
-        "drupal/core-dev": "^10"
+        "drupal/core-dev": "^11"
     },
     "conflict": {
         "drupal/drupal": "*"

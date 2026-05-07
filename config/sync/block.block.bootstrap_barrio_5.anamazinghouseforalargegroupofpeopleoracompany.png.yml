@@ -20,8 +20,6 @@ settings:
   label: '5. An amazing house for a large group of people or a company.png'
   label_display: '0'
   provider: block_content
-  status: true
-  info: ''
   view_mode: full
 visibility:
   request_path:

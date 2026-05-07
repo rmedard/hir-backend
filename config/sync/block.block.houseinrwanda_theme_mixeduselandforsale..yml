@@ -19,7 +19,5 @@ settings:
   label: 'Mixed-Use Land For Sale.'
   label_display: '0'
   provider: block_content
-  status: true
-  info: ''
   view_mode: full
 visibility: {  }

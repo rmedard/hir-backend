@@ -2,6 +2,8 @@ uuid: 82702b4b-9799-48ee-a1be-f2af742e29d9
 langcode: en
 status: true
 dependencies:
+  config:
+    - node.type.advert
   module:
     - node
 id: adverts_pattern
@@ -12,7 +14,6 @@ selection_criteria:
   02ca97b5-2255-46d0-bf57-5605966c6cec:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 02ca97b5-2255-46d0-bf57-5605966c6cec
     context_mapping:
       node: node
     bundles:

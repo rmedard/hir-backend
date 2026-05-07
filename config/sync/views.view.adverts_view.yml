@@ -1209,10 +1209,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1364,10 +1360,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1520,10 +1512,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1788,10 +1776,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1942,10 +1926,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -2096,10 +2076,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -2252,10 +2228,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -2407,10 +2379,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -2562,10 +2530,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -2718,10 +2682,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -3051,10 +3011,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -3207,10 +3163,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -3362,10 +3314,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -3517,10 +3465,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -3696,10 +3640,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -3850,10 +3790,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -4112,10 +4048,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -4265,10 +4197,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -4418,10 +4346,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -4571,10 +4495,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -4738,10 +4658,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -4783,10 +4699,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -5055,10 +4967,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
           is_grouped: false
           group_info:
             label: ''
@@ -5097,10 +5005,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              site_manager: '0'
-              validator: '0'
             placeholder: ''
             autocomplete_filter: 1
             autocomplete_min_chars: '1'

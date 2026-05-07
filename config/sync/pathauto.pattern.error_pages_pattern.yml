@@ -2,6 +2,8 @@ uuid: 22c2963f-d78d-461a-b510-ded6376ae22f
 langcode: en
 status: true
 dependencies:
+  config:
+    - node.type.error_page
   module:
     - node
 id: error_pages_pattern
@@ -12,7 +14,6 @@ selection_criteria:
   c807597d-2003-4578-a58d-509523520a4d:
     id: 'entity_bundle:node'
     negate: false
-    uuid: c807597d-2003-4578-a58d-509523520a4d
     context_mapping:
       node: node
     bundles:

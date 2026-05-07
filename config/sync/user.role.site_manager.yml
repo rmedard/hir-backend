@@ -53,6 +53,7 @@ permissions:
   - 'edit own field_advertiser_featured'
   - 'edit own field_agent_category'
   - 'edit own field_pr_proposed_properties'
+  - 'rebuild node access permissions'
   - 'set advert published on date'
   - 'use text format full_html'
   - 'view any webform submission'

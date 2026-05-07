@@ -19,7 +19,5 @@ settings:
   label: '10 A well constructed house for sale located in Nyamirambo '
   label_display: '0'
   provider: block_content
-  status: true
-  info: ''
   view_mode: full
 visibility: {  }

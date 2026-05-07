@@ -2,6 +2,8 @@ uuid: b7be6940-3702-462f-8cd6-55a1d6461610
 langcode: en
 status: true
 dependencies:
+  config:
+    - node.type.agent
   module:
     - node
 id: agents_pattern
@@ -12,7 +14,6 @@ selection_criteria:
   43fb6b0d-d78f-4038-9dde-2a9598d9d59c:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 43fb6b0d-d78f-4038-9dde-2a9598d9d59c
     context_mapping:
       node: node
     bundles:
