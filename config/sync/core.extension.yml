@@ -78,7 +78,6 @@ module:
   metatag_open_graph: 0
   migrate: 0
   migrate_drupal: 0
-  migrate_drupal_ui: 0
   modeler_api: 0
   module_filter: 0
   mysql: 0
