@@ -177,6 +177,10 @@ jobs:
             .ssh
             .git
             .github
+            cgi-bin
+            document_errors
+            logs
+            stats
             EXCLUDES
             sed -i 's/^[[:space:]]*//' "$TMP_DIR/server-rsync-excludes.txt"
 
