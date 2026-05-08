@@ -322,7 +322,7 @@ jobs:
             fi
 
             # Disable maintenance mode and rebuild caches
-            echo "Disabling maintenance mode..."
+            echo "Disabling maintenance mode...!"
             run_drush sset system.maintenance_mode 0 -y || true
             if run_drush cr 2>&1; then
               echo "✅ Cache rebuilt"
