@@ -46,7 +46,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: httpdocs/themes/custom/houseinrwanda_theme/package-lock.json
+          cache-dependency-path: public_html/themes/custom/houseinrwanda_theme/package-lock.json
 
       - name: Install PHP dependencies
         run: |
@@ -54,7 +54,7 @@ jobs:
           echo "✅ PHP dependencies installed"
 
       - name: Build theme assets
-        working-directory: httpdocs/themes/custom/houseinrwanda_theme
+        working-directory: public_html/themes/custom/houseinrwanda_theme
         run: |
           npm ci --silent
           npm run build
@@ -84,7 +84,7 @@ jobs:
               --exclude='.github' \
               --exclude='deployment-files' \
               --exclude='node_modules' \
-              --exclude='httpdocs/sites/default' \
+              --exclude='public_html/sites/default' \
               --exclude='.ssh' \
               ./ deployment-files/
             echo "Using manual exclusions (no .deployignore found)"
@@ -118,7 +118,7 @@ jobs:
             else
               DEPLOY_PATH="${{ vars.STAGING_DEPLOY_PATH }}"
             fi
-            WEBROOT_PATH="$DEPLOY_PATH/httpdocs"
+            WEBROOT_PATH="$DEPLOY_PATH/public_html"
             TMP_DIR="${{ env.TMP_DIR }}"
             DEPLOY_TMP="$TMP_DIR/${{ github.ref_name }}"
 
@@ -135,7 +135,7 @@ jobs:
               echo "=== ROLLING BACK ==="
               if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ]; then
                 rsync -a --quiet \
-                  --exclude='httpdocs/sites/default' \
+                  --exclude='public_html/sites/default' \
                   --exclude='.ssh' \
                   "$BACKUP_DIR/" "$DEPLOY_PATH/"
                 echo "✅ Files rolled back from $BACKUP_DIR"
@@ -157,7 +157,7 @@ jobs:
             echo "Creating backup..."
             BACKUP_DIR="$TMP_DIR/backup-$(date +%Y%m%d-%H%M%S)"
             rsync -a --quiet \
-              --exclude='httpdocs/sites/default' \
+              --exclude='public_html/sites/default' \
               --exclude='.ssh' \
               --exclude='.github' \
               --exclude='.git' \
@@ -171,7 +171,7 @@ jobs:
             # Create server-side exclusions to preserve critical files
             cat > "$TMP_DIR/server-rsync-excludes.txt" << 'EXCLUDES'
             dev.houseinrwanda.com
-            httpdocs/sites/default
+            public_html/sites/default
             tmp
             private
             .ssh
@@ -182,8 +182,8 @@ jobs:
 
             # Check critical files before sync
             echo "Checking critical files before sync:"
-            ls -la "$DEPLOY_PATH/httpdocs/sites/default/settings.php" 2>/dev/null && echo "✅ settings.php exists" || echo "⚠️ settings.php not found"
-            ls -la "$DEPLOY_PATH/httpdocs/sites/default/services.yml" 2>/dev/null && echo "✅ services.yml exists" || echo "⚠️ services.yml not found"
+            ls -la "$DEPLOY_PATH/public_html/sites/default/settings.php" 2>/dev/null && echo "✅ settings.php exists" || echo "⚠️ settings.php not found"
+            ls -la "$DEPLOY_PATH/public_html/sites/default/services.yml" 2>/dev/null && echo "✅ services.yml exists" || echo "⚠️ services.yml not found"
 
             # Sync files (quiet mode — no per-file output)
             echo "Syncing files to deployment location..."
@@ -194,8 +194,8 @@ jobs:
 
             # Verify critical files after sync
             echo "Checking critical files after sync:"
-            ls -la "$DEPLOY_PATH/httpdocs/sites/default/settings.php" 2>/dev/null && echo "✅ settings.php preserved" || echo "❌ settings.php was deleted!"
-            ls -la "$DEPLOY_PATH/httpdocs/sites/default/services.yml" 2>/dev/null && echo "✅ services.yml preserved" || echo "❌ services.yml was deleted!"
+            ls -la "$DEPLOY_PATH/public_html/sites/default/settings.php" 2>/dev/null && echo "✅ settings.php preserved" || echo "❌ settings.php was deleted!"
+            ls -la "$DEPLOY_PATH/public_html/sites/default/services.yml" 2>/dev/null && echo "✅ services.yml preserved" || echo "❌ services.yml was deleted!"
 
             echo "✅ Files synced, server configurations preserved"
 
@@ -204,9 +204,9 @@ jobs:
             chmod 755 "$DEPLOY_PATH" "$WEBROOT_PATH" 2>/dev/null || true
 
             # Set permissions only on newly synced code (exclude sites/default/files)
-            find "$DEPLOY_PATH/vendor" "$DEPLOY_PATH/httpdocs/core" "$DEPLOY_PATH/httpdocs/modules" "$DEPLOY_PATH/httpdocs/themes" "$DEPLOY_PATH/httpdocs/libraries" \
+            find "$DEPLOY_PATH/vendor" "$DEPLOY_PATH/public_html/core" "$DEPLOY_PATH/public_html/modules" "$DEPLOY_PATH/public_html/themes" "$DEPLOY_PATH/public_html/libraries" \
               -type d -exec chmod 755 {} + 2>/dev/null &
-            find "$DEPLOY_PATH/vendor" "$DEPLOY_PATH/httpdocs/core" "$DEPLOY_PATH/httpdocs/modules" "$DEPLOY_PATH/httpdocs/themes" "$DEPLOY_PATH/httpdocs/libraries" \
+            find "$DEPLOY_PATH/vendor" "$DEPLOY_PATH/public_html/core" "$DEPLOY_PATH/public_html/modules" "$DEPLOY_PATH/public_html/themes" "$DEPLOY_PATH/public_html/libraries" \
               -type f -exec chmod 644 {} + 2>/dev/null &
             wait
 

@@ -1,7 +1,7 @@
 .git
 .github
 deployment-files
-httpdocs/sites/default
+public_html/sites/default
 tmp
 private
 logs
@@ -17,4 +17,4 @@ Thumbs.db
 
 # Exclude node_modules directories
 node_modules
-httpdocs/themes/custom/*/node_modules
+public_html/themes/custom/*/node_modules

@@ -227,29 +227,29 @@
                 ".gitattributes": ".gitattributes"
             },
             "locations": {
-                "web-root": "httpdocs/"
+                "web-root": "public_html/"
             }
         },
         "installer-paths": {
-            "httpdocs/core": [
+            "public_html/core": [
                 "type:drupal-core"
             ],
-            "httpdocs/libraries/{$name}": [
+            "public_html/libraries/{$name}": [
                 "type:drupal-library", "type:npm-asset", "type:bower-asset"
             ],
-            "httpdocs/modules/contrib/{$name}": [
+            "public_html/modules/contrib/{$name}": [
                 "type:drupal-module"
             ],
-            "httpdocs/modules/custom/{$name}": [
+            "public_html/modules/custom/{$name}": [
                 "type:drupal-custom-module"
             ],
-            "httpdocs/profiles/contrib/{$name}": [
+            "public_html/profiles/contrib/{$name}": [
                 "type:drupal-profile"
             ],
-            "httpdocs/themes/contrib/{$name}": [
+            "public_html/themes/contrib/{$name}": [
                 "type:drupal-theme"
             ],
-            "httpdocs/themes/custom/{$name}": [
+            "public_html/themes/custom/{$name}": [
                 "type:drupal-custom-theme"
             ]
         },

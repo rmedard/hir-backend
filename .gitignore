@@ -1,40 +1,40 @@
 # Drupal Files and Directories
-/httpdocs/sites/*/settings*.php
-!/httpdocs/sites/*/settings.php
-/httpdocs/sites/*/services*.yml
-!/httpdocs/sites/*/services.yml
-/httpdocs/sites/*/files
-/httpdocs/sites/*/private
-/httpdocs/sites/default/default.settings.php
-/httpdocs/sites/default/default.services.yml
-/httpdocs/libraries
+/public_html/sites/*/settings*.php
+!/public_html/sites/*/settings.php
+/public_html/sites/*/services*.yml
+!/public_html/sites/*/services.yml
+/public_html/sites/*/files
+/public_html/sites/*/private
+/public_html/sites/default/default.settings.php
+/public_html/sites/default/default.services.yml
+/public_html/libraries
 
 # Ignore sensitive configuration
-/httpdocs/sites/*/settings.local.php
-/httpdocs/sites/*/settings.ddev.php
+/public_html/sites/*/settings.local.php
+/public_html/sites/*/settings.ddev.php
 
 # Files directory
-/httpdocs/sites/default/files/
-/httpdocs/sites/*/files/
+/public_html/sites/default/files/
+/public_html/sites/*/files/
 
 # Private files
 /private/
 
 # Temporary files
 /tmp/
-/httpdocs/sites/*/tmp/
+/public_html/sites/*/tmp/
 
 # Drupal Core
-/httpdocs/core/
-/httpdocs/vendor/
-/httpdocs/autoload.php
+/public_html/core/
+/public_html/vendor/
+/public_html/autoload.php
 
 # Dependencies
 /vendor/
 /node_modules/
 
 # DDEV
-/.ddev/
+/.ddev/*
 !/.ddev/config.yaml
 
 # Database dumps
@@ -58,17 +58,17 @@ Thumbs.db
 # Logs
 *.log
 /logs/
-/httpdocs/sites/*/logs/
+/public_html/sites/*/logs/
 
 # Cache directories
-/httpdocs/sites/default/files/css/
-/httpdocs/sites/default/files/js/
-/httpdocs/sites/default/files/styles/
-/httpdocs/sites/default/files/config_*/
+/public_html/sites/default/files/css/
+/public_html/sites/default/files/js/
+/public_html/sites/default/files/styles/
+/public_html/sites/default/files/config_*/
 
 # Configuration management (keep in separate directory)
 # Only ignore if config is in sites/default/files/sync
-/httpdocs/sites/default/files/sync/
+/public_html/sites/default/files/sync/
 
 # Backup files
 *.bak
