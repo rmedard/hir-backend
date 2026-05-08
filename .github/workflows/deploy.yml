@@ -13,6 +13,8 @@ jobs:
     environment:
       name: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
       url: ${{ github.ref_name == 'main' && 'https://www.houseinrwanda.com' || 'https://dev.houseinrwanda.com' }}
+    env:
+      TMP_DIR: /home/C08945/tmp_cicd
 
     steps:
       - name: Checkout code
@@ -83,7 +85,6 @@ jobs:
               --exclude='deployment-files' \
               --exclude='node_modules' \
               --exclude='httpdocs/sites/default' \
-              --exclude='subdomains' \
               --exclude='.ssh' \
               ./ deployment-files/
             echo "Using manual exclusions (no .deployignore found)"
@@ -100,7 +101,7 @@ jobs:
           key: ${{ github.ref_name == 'main' && secrets.PRODUCTION_SSH_KEY || secrets.STAGING_SSH_KEY }}
           port: 22
           source: "deployment-files/*"
-          target: "/tmp_cicd/deployment"
+          target: "${{ env.TMP_DIR }}/${{ github.ref_name }}"
           strip_components: 1
 
       - name: Deploy to server
@@ -118,6 +119,8 @@ jobs:
               DEPLOY_PATH="${{ vars.STAGING_DEPLOY_PATH }}"
             fi
             WEBROOT_PATH="$DEPLOY_PATH/httpdocs"
+            TMP_DIR="${{ env.TMP_DIR }}"
+            DEPLOY_TMP="$TMP_DIR/${{ github.ref_name }}"
 
             echo "=== DEPLOYING TO: $DEPLOY_PATH ==="
 
@@ -127,27 +130,34 @@ jobs:
               exit 1
             fi
 
-            # Rollback function
+            # Rollback function — restores files AND database
             rollback() {
               echo "=== ROLLING BACK ==="
               if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ]; then
                 rsync -a --quiet \
                   --exclude='httpdocs/sites/default' \
-                  --exclude='subdomains' \
                   --exclude='.ssh' \
                   "$BACKUP_DIR/" "$DEPLOY_PATH/"
-                echo "✅ Rollback completed from $BACKUP_DIR"
+                echo "✅ Files rolled back from $BACKUP_DIR"
               else
-                echo "❌ No backup available for rollback"
+                echo "❌ No file backup available for rollback"
+              fi
+              if [ -n "$DB_BACKUP" ] && [ -f "$DB_BACKUP" ] && \
+                 [ -n "$PHP_BINARY" ] && [ -f "$DRUSH_PHP" ]; then
+                echo "Restoring database from $DB_BACKUP..."
+                if gunzip -c "$DB_BACKUP" | "$PHP_BINARY" "$DRUSH_PHP" sql:cli; then
+                  echo "✅ Database rolled back"
+                else
+                  echo "❌ Database rollback failed — manual intervention required: $DB_BACKUP"
+                fi
               fi
             }
 
             # Backup current deployment
             echo "Creating backup..."
-            BACKUP_DIR="/tmp_cicd/backup-$(date +%Y%m%d-%H%M%S)"
+            BACKUP_DIR="$TMP_DIR/backup-$(date +%Y%m%d-%H%M%S)"
             rsync -a --quiet \
               --exclude='httpdocs/sites/default' \
-              --exclude='subdomains' \
               --exclude='.ssh' \
               --exclude='.github' \
               --exclude='.git' \
@@ -156,20 +166,19 @@ jobs:
               echo "⚠️ Backup failed, continuing..."
 
             # Clean up old backups (keep last 3)
-            ls -dt /tmp_cicd/backup-* 2>/dev/null | tail -n +4 | xargs rm -rf 2>/dev/null || true
+            ls -dt "$TMP_DIR"/backup-* 2>/dev/null | tail -n +4 | xargs rm -rf 2>/dev/null || true
 
             # Create server-side exclusions to preserve critical files
-            cat > /tmp_cicd/server-rsync-excludes.txt << 'EXCLUDES'
+            cat > "$TMP_DIR/server-rsync-excludes.txt" << 'EXCLUDES'
             dev.houseinrwanda.com
             httpdocs/sites/default
-            subdomains
             tmp
             private
             .ssh
             .git
             .github
             EXCLUDES
-            sed -i 's/^[[:space:]]*//' /tmp_cicd/server-rsync-excludes.txt
+            sed -i 's/^[[:space:]]*//' "$TMP_DIR/server-rsync-excludes.txt"
 
             # Check critical files before sync
             echo "Checking critical files before sync:"
@@ -179,9 +188,9 @@ jobs:
             # Sync files (quiet mode — no per-file output)
             echo "Syncing files to deployment location..."
             rsync -a \
-              --exclude-from='/tmp_cicd/server-rsync-excludes.txt' \
+              --exclude-from="$TMP_DIR/server-rsync-excludes.txt" \
               --delete \
-              /tmp_cicd/deployment/ "$DEPLOY_PATH/"
+              "$DEPLOY_TMP/" "$DEPLOY_PATH/"
 
             # Verify critical files after sync
             echo "Checking critical files after sync:"
@@ -280,34 +289,37 @@ jobs:
               exit 1
             fi
 
-            echo "Clearing cache..."
-            if run_drush cr 2>&1; then
-              echo "✅ Cache cleared"
+            # Backup database before any schema changes
+            DB_BACKUP="$BACKUP_DIR/db-pre-deploy.sql.gz"
+            echo "Backing up database to $DB_BACKUP..."
+            if run_drush sql:dump --gzip --result-file="$DB_BACKUP" 2>&1; then
+              echo "✅ Database backed up"
             else
-              echo "❌ Cache clear failed"
+              echo "❌ Database backup failed — refusing to continue"
+              DB_BACKUP=""
               rollback
               exit 1
             fi
 
-            echo "Importing configuration..."
-            if run_drush cim -y 2>&1; then
-              echo "✅ Configuration imported"
+            # Enable maintenance mode for the migration window
+            echo "Enabling maintenance mode..."
+            run_drush sset system.maintenance_mode 1 -y || true
+            run_drush cr 2>&1 || true
+
+            # Canonical Drupal deploy: updb → cache:rebuild → config:import → cache:rebuild → deploy:hook
+            echo "Running drush deploy..."
+            if run_drush deploy -y 2>&1; then
+              echo "✅ Deploy completed"
             else
-              echo "❌ Configuration import failed"
+              echo "❌ Deploy failed"
+              run_drush sset system.maintenance_mode 0 -y || true
               rollback
               exit 1
             fi
 
-            echo "Running database updates..."
-            if run_drush updb -y 2>&1; then
-              echo "✅ Database updates completed"
-            else
-              echo "❌ Database updates failed"
-              rollback
-              exit 1
-            fi
-
-            echo "Final cache rebuild..."
+            # Disable maintenance mode and rebuild caches
+            echo "Disabling maintenance mode..."
+            run_drush sset system.maintenance_mode 0 -y || true
             if run_drush cr 2>&1; then
               echo "✅ Cache rebuilt"
             else
@@ -318,8 +330,8 @@ jobs:
 
             # Clean up
             echo "=== CLEANING UP ==="
-            rm -rf /tmp_cicd/deployment
-            rm -f /tmp_cicd/server-rsync-excludes.txt
+            rm -rf "$DEPLOY_TMP"
+            rm -f "$TMP_DIR/server-rsync-excludes.txt"
             echo "✅ Temporary files cleaned up"
 
             # Final verification
