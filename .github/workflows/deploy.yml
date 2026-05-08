@@ -130,13 +130,33 @@ jobs:
               exit 1
             fi
 
-            # Rollback function — restores files AND database
+            # Rollback function — restores files AND database.
+            # Skipped entirely once drush deploy has succeeded: at that point the
+            # DB schema is already migrated, so reverting files would create a
+            # mismatch that's worse than the post-deploy issue we're recovering
+            # from.
+            DEPLOY_SUCCEEDED=0
             rollback() {
+              if [ "$DEPLOY_SUCCEEDED" = "1" ]; then
+                echo "⚠️ Skipping rollback — drush deploy already migrated the DB; "
+                echo "   reverting files would put old code on new schema."
+                return 0
+              fi
               echo "=== ROLLING BACK ==="
               if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ]; then
-                rsync -a --quiet \
+                # --delete makes this a true restore (not an overlay), so files
+                # added during the failed deploy actually disappear.
+                rsync -a --quiet --delete \
                   --exclude='public_html/sites/default' \
+                  --exclude='private' \
+                  --exclude='tmp' \
+                  --exclude='logs' \
+                  --exclude='cgi-bin' \
+                  --exclude='document_errors' \
+                  --exclude='stats' \
                   --exclude='.ssh' \
+                  --exclude='.git' \
+                  --exclude='.github' \
                   "$BACKUP_DIR/" "$DEPLOY_PATH/"
                 echo "✅ Files rolled back from $BACKUP_DIR"
               else
@@ -293,10 +313,12 @@ jobs:
               exit 1
             fi
 
-            # Backup database before any schema changes
+            # Backup database before any schema changes.
+            # drush --gzip appends .gz to the result-file path, so pass the path
+            # without .gz to get a single .gz suffix on the resulting file.
             DB_BACKUP="$BACKUP_DIR/db-pre-deploy.sql.gz"
             echo "Backing up database to $DB_BACKUP..."
-            if run_drush sql:dump --gzip --result-file="$DB_BACKUP" 2>&1; then
+            if run_drush sql:dump --gzip --result-file="${DB_BACKUP%.gz}" 2>&1; then
               echo "✅ Database backed up"
             else
               echo "❌ Database backup failed — refusing to continue"
@@ -314,6 +336,7 @@ jobs:
             echo "Running drush deploy..."
             if run_drush deploy -y 2>&1; then
               echo "✅ Deploy completed"
+              DEPLOY_SUCCEEDED=1
             else
               echo "❌ Deploy failed"
               run_drush sset system.maintenance_mode 0 -y || true
@@ -321,14 +344,17 @@ jobs:
               exit 1
             fi
 
-            # Disable maintenance mode and rebuild caches
-            echo "Disabling maintenance mode...!"
+            # Disable maintenance mode and rebuild caches.
+            # If anything fails past this point we DON'T roll back — the DB has
+            # already been migrated. We surface the failure so CI is red and a
+            # human can investigate, but the site stays on the new version.
+            echo "Disabling maintenance mode..."
             run_drush sset system.maintenance_mode 0 -y || true
             if run_drush cr 2>&1; then
               echo "✅ Cache rebuilt"
             else
-              echo "❌ Cache rebuild failed"
-              rollback
+              echo "⚠️ Cache rebuild failed but drush deploy already succeeded"
+              echo "   site is on the new version — manual 'drush cr' recommended"
               exit 1
             fi
 
