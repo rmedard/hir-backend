@@ -49,6 +49,7 @@ database-backup.sql.gz
 # IDE and Editor files
 .vscode/
 .idea/
+.claude/
 *.swp
 *.swo
 *~
