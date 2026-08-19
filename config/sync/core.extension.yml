@@ -98,6 +98,8 @@ module:
   schemata: 0
   schemata_json_schema: 0
   search: 0
+  search_help: 0
+  search_node: 0
   serialization: 0
   shortcut: 0
   shs: 0
